@@ -1,0 +1,16 @@
+.navbar-custom {
+    background-color: #FCEDDA;
+    color: #F5816E;
+}
+.nav-link, .navbar-brand{
+    color: #F5816E;
+}
+.active {
+    background-color: #F5816E;
+    color: #FCEDDA;
+}
+.nav-link:hover, .navbar-brand:hover {
+    font-weight: bolder;
+    color: #F5816E;
+    transition: 0.1s;
+}

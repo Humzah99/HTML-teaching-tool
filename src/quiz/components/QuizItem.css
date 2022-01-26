@@ -1,0 +1,10 @@
+.card, .card a{
+     /*#F5816E;*/
+    background-color: #FCEDDA;
+    color: #F5816E;
+}
+
+.card a:hover {
+    opacity: 0.6;
+    transition: 0.3s;
+}
