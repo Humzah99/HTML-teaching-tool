@@ -1,0 +1,56 @@
+.navbar-custom, .card, .card a {
+  background-color: #fcedda;
+  color: #f5816e;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
+}
+.nav-link {
+  color: #f5816e;
+  transition: 0.3s;
+}
+
+.active,
+.btn {
+  background-color: #f5816e;
+  color: #fcedda !important;
+}
+.nav-link:hover {
+  color: #f5816e;
+  opacity: 0.6;
+}
+
+
+.btn {
+  opacity: 0.8;
+  transition: 0.3s;
+}
+.btn:hover {
+  color: #fcedda;
+  opacity: 1;
+}
+
+
+img {
+    max-width: 85px;
+    max-height: 100%;
+    border: 1px solid #f5816e;
+    border-radius: 1em;
+}
+
+h3, p{
+  background-color: #FCEDDA;
+  color: #F5816E;
+}
+
+.card a:hover {
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+.aligment-container {
+  margin-top: 25%;
+}
+
+
+a {
+  text-decoration: none;
+}

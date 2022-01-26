@@ -9,7 +9,7 @@ import UserProfile from "./user/pages/UserProfile";
 import Quizzes from "./quiz/pages/Quizzes";
 import Documentation from "./documentation/pages/Documentation";
 import UserForum from "./forum/pages/Forum";
-import MainNavigation from "./shared /components/Navigation/MainNavigation";
+import MainNavigation from "./shared/components/Navigation/MainNavigation";
 
 function App() {
   return (

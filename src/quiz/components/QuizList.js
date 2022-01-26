@@ -11,7 +11,7 @@ const QuizList = props => {
     );
   }
   return (
-    <ul>
+    <div className="row">
       {props.items.map(quiz => (
         <QuizItem
           key={quiz.id}
@@ -20,7 +20,7 @@ const QuizList = props => {
           questionCount={quiz.questions}
         />
       ))}
-    </ul>
+    </div>
   );
 };
 
