@@ -23,12 +23,12 @@ const NavLinks = (props) => {
           </NavLink>
         </li>
       </ul>
-      <div class="position-absolute top-0 start-50">
+      <div className="position-absolute top-0 start-50">
         <NavLink to="/">
-          <img src={WebsiteIcon} alt="Website-Logo" />
+          <img className="nav-icon shadow-lg" src={WebsiteIcon} alt="Website-Logo" />
         </NavLink>
       </div>
-      <div class="position-absolute top-0 end-0">
+      <div className="position-absolute top-0 end-0">
         <NavLink to="/login" className="btn mt-2 me-2">
           Login
         </NavLink>

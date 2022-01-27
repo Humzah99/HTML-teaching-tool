@@ -1,4 +1,4 @@
-.navbar-custom, .card, .card a {
+.navbar-custom, .card {
   background-color: #fcedda;
   color: #f5816e;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
@@ -6,6 +6,12 @@
 .nav-link {
   color: #f5816e;
   transition: 0.3s;
+  opacity: 1;
+}
+
+.nav-link:hover {
+  color: #f5816e;
+  opacity: 0.6;
 }
 
 .active,
@@ -13,11 +19,6 @@
   background-color: #f5816e;
   color: #fcedda !important;
 }
-.nav-link:hover {
-  color: #f5816e;
-  opacity: 0.6;
-}
-
 
 .btn {
   opacity: 0.8;
@@ -29,10 +30,10 @@
 }
 
 
-img {
-    max-width: 85px;
+.nav-icon {
+    max-width: 80px;
     max-height: 100%;
-    border: 1px solid #f5816e;
+    border: 2px solid #f5816e;
     border-radius: 1em;
 }
 
@@ -41,16 +42,33 @@ h3, p{
   color: #F5816E;
 }
 
+.card {
+  transition: transform 0.3s ease-out;
+}
+
 .card a:hover {
-  opacity: 0.6;
-  transition: 0.3s;
+  opacity: 1;
+  color: #F5816E;
+}
+
+.card:hover {
+  transition: transform 0.3s ease-out;
+  transform: translate(-5px, -5px);
 }
 
 .aligment-container {
-  margin-top: 25%;
+  margin-top: 5%;
 }
 
 
 a {
   text-decoration: none;
+  color: #F5816E;
+  opacity: 0.6;
+  transition: 0.3s;
+}
+
+
+.doc-card {
+  height: 100%;
 }

@@ -32,7 +32,7 @@ const ForumList = (props) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-md">
+        <div className="col-md mt-2">
           {props.items.map((question) => (
             <ForumItem
               key={question.id}
