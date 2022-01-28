@@ -10,6 +10,7 @@ import Quizzes from "./quiz/pages/Quizzes";
 import Documentation from "./documentation/pages/Documentation";
 import UserForum from "./forum/pages/Forum";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import NewForumQuestion from "./forum/pages/NewForumQuestion";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
         </Route>
         <Route path="/forum" exact>
           <UserForum />
+        </Route>
+        <Route path="/forum/new" exact>
+          <NewForumQuestion />
         </Route>
         <Redirect to="/" />
       </Switch>

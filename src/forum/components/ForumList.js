@@ -25,7 +25,7 @@ const ForumList = (props) => {
         </div>
         <div className="col-md-6">
           <div class="text-end">
-            <a href="/" className="btn">
+            <a href="/forum/new" className="btn">
               Ask question
             </a>
           </div>
