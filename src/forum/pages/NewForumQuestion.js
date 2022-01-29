@@ -1,57 +1,24 @@
-import React, { useCallback, useReducer } from "react";
+import React from "react";
 import Input from "../../shared/components/FormValidation/Input";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
 } from "../../shared/components/FormValidation/validators";
+import {useForm} from '../../shared/hooks/forms-hooks';
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid }
-        },
-        isValid: formIsValid
-      };
-    default:
-      return state;
-  }
-};
+
 const NewForumQuestion = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
-      questionTitle: {
-        value: "",
-        isValid: false
-      },
-      questionDescription: {
-        value: "",
-        isValid: false
-      }
-    },
+  const [formState, inputHandler] = useForm({
+  questionTitle: {
+    value: "",
     isValid: false
-  });
-
-  const inputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: "INPUT_CHANGE",
-      value: value,
-      isValid: isValid,
-      inputId: id
-    });
-  }, []);
-
+  },
+  questionDescription: {
+    value: "",
+    isValid: false
+  }
+}, false);
+ 
   const submitHandler = event => {
     event.preventDefault();
     console.log(formState.inputs); // Send this to the backend

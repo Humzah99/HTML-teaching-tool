@@ -24,7 +24,7 @@ const ForumList = (props) => {
           <p>{props.items.length} {props.items.length === 1 ? "question" : "questions"}</p>
         </div>
         <div className="col-md-6">
-          <div class="text-end">
+          <div className="text-end">
             <a href="/forum/new" className="btn">
               Ask question
             </a>
