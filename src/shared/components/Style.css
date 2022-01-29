@@ -1,4 +1,4 @@
-.navbar-custom, .card {
+.navbar-custom, .card, .modal-header, .modal-body, .modal-footer {
   background-color: #fcedda;
   color: #f5816e;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
@@ -42,16 +42,16 @@ h3, p{
   color: #F5816E;
 }
 
-.card {
+.doc-card, .quiz-list-card, .forum-list-card {
   transition: transform 0.3s ease-out;
 }
 
-.card a:hover {
+.card a:hover, .card button:hover {
   opacity: 1;
   color: #F5816E;
 }
 
-.card:hover {
+.doc-card:hover, .quiz-list-card:hover, .forum-list-card:hover {
   transition: transform 0.3s ease-out;
   transform: translate(-5px, -5px);
 }
@@ -61,7 +61,7 @@ h3, p{
 }
 
 
-a {
+a, button {
   text-decoration: none;
   color: #F5816E;
   opacity: 0.6;
@@ -71,4 +71,15 @@ a {
 
 .doc-card {
   height: 100%;
+}
+
+.input-form--invalid label,
+.input-form--invalid p {
+  color: red;
+}
+
+.input-form--invalid input,
+.input-form--invalid textarea {
+  border-color: red;
+  background: #ffd1d1;
 }
