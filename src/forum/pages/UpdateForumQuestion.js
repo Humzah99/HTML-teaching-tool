@@ -87,7 +87,7 @@ const UpdateForumQuestion = () => {
   }
 
   return (
-    <div className="container aligment-container">
+    <div className="container alignment-container">
       <div className="row">
         <div className="col-md">
           <h3>Update question</h3>

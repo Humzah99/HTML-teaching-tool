@@ -25,7 +25,7 @@ const NewForumQuestion = () => {
   };
 
   return (
-    <div className="container aligment-container">
+    <div className="container alignment-container">
       <div className="row">
         <div className="col-md">
           <h3>Ask a Question</h3>
