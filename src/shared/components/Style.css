@@ -1,7 +1,11 @@
-.navbar-custom, .card, .modal-header, .modal-body, .modal-footer {
+.navbar-custom,
+.card,
+.modal-header,
+.modal-body,
+.modal-footer {
   background-color: #fcedda;
   color: #f5816e;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
 }
 .nav-link {
   color: #f5816e;
@@ -29,45 +33,49 @@
   opacity: 1;
 }
 
-
 .nav-icon {
-    max-width: 80px;
-    max-height: 100%;
-    border: 2px solid #f5816e;
-    border-radius: 1em;
+  max-width: 80px;
+  max-height: 100%;
+  border: 2px solid #f5816e;
+  border-radius: 1em;
 }
 
-h3, p{
-  background-color: #FCEDDA;
-  color: #F5816E;
+h3,
+p {
+  background-color: #fcedda;
+  color: #f5816e;
 }
 
-.doc-card, .quiz-list-card, .forum-list-card {
+.doc-card,
+.quiz-list-card,
+.forum-list-card {
   transition: transform 0.3s ease-out;
 }
 
-.card a:hover, .card button:hover {
+.card a:hover,
+.card button:hover {
   opacity: 1;
-  color: #F5816E;
+  color: #f5816e;
 }
 
-.doc-card:hover, .quiz-list-card:hover, .forum-list-card:hover {
+.doc-card:hover,
+.quiz-list-card:hover,
+.forum-list-card:hover {
   transition: transform 0.3s ease-out;
   transform: translate(-5px, -5px);
 }
 
-.aligment-container {
+.alignment-container {
   margin-top: 5%;
 }
 
-
-a, button {
+a,
+button {
   text-decoration: none;
-  color: #F5816E;
+  color: #f5816e;
   opacity: 0.6;
   transition: 0.3s;
 }
-
 
 .doc-card {
   height: 100%;
@@ -82,4 +90,26 @@ a, button {
 .input-form--invalid textarea {
   border-color: red;
   background: #ffd1d1;
+}
+
+.login-card {
+  box-shadow: none;
+  border: none;
+  color: black;
+  font-weight: lighter;
+  width: 25rem;
+  height: 30rem;
+}
+
+.anchor-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  color: #f5816e;
+  opacity: 0.6;
+}
+
+.anchor-link:hover {
+  transition: 0.3s;
+  opacity: 1;
 }

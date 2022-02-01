@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../../shared/components/Style.css";
 import { Modal } from "react-bootstrap";
+import { AuthContext } from "../../shared/components/context/auth-context";
+import { Link } from "react-router-dom";
 
 const ForumItem = props => {
+  const auth = useContext(AuthContext);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const showDeleteWarningHandler = () => {
@@ -40,23 +43,26 @@ const ForumItem = props => {
         <div className="card-body">
           <h5 className="card-title">{props.heading}</h5>
           <p className="card-text">{props.text}</p>
-          <div class="d-flex bd-highlight">
-            <div class="p-2 flex-fill bd-highlight">
-              <a href={`/forum/${props.id}`} className="btn btn-warning me-2">
-                Edit
-              </a>
-              <button
-                onClick={showDeleteWarningHandler}
-                className="btn btn-danger me-2"
-              >
-                Delete
-              </button>
-            </div>
-            <div class="p-2 flex-fill bd-highlight"></div>
-            <div class="p-2 flex-fill bd-highlight text-end">
-              <a href="/" className="btn btn-success">
+          <div className="d-flex bd-highlight">
+            {auth.isLoggedIn && (
+              <div className="p-2 flex-fill bd-highlight">
+                <Link to={`/forum/${props.id}`} className="btn btn-warning me-2">
+                  Edit
+                </Link>
+
+                <button
+                  onClick={showDeleteWarningHandler}
+                  className="btn btn-danger me-2"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+            <div className="p-2 flex-fill bd-highlight"></div>
+            <div className="p-2 flex-fill bd-highlight text-end">
+              <Link to="/" className="btn btn-success">
                 View question
-              </a>
+              </Link>
             </div>
           </div>
         </div>
