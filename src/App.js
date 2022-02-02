@@ -52,7 +52,7 @@ function App() {
           <MainNavigation />
           <Quizzes />
         </Route>
-        <Route path="/userProfile" exact>
+        <Route path="/userProfile/:userId" exact>
           <MainNavigation />
           <UserProfile />
         </Route>
@@ -78,6 +78,10 @@ function App() {
           <MainNavigation />
           <UpdateForumQuestion />
         </Route>
+        <Route path="/userProfile/:userId" exact>
+          <MainNavigation />
+          <UserProfile />
+        </Route>
         <Route path="/auth" exact>
           <Auth />
         </Route>
@@ -92,9 +96,7 @@ function App() {
     <AuthContext.Provider
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
     >
-      <Router>
-        {routes}
-      </Router>
+      <Router>{routes}</Router>
     </AuthContext.Provider>
   );
 }

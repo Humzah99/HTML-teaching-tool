@@ -60,6 +60,7 @@ const Input = props => {
     ) : (
       <textarea
         id={props.id}
+        ref={props.ref}
         className={props.className}
         rows={props.rows || 3}
         placeholder={props.placeholder}

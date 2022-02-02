@@ -113,3 +113,10 @@ button {
   transition: 0.3s;
   opacity: 1;
 }
+
+.eye-icon {
+  float: right;
+  margin-right: 6px;
+  position: relative;
+  z-index: 2;
+}
