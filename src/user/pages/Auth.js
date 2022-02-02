@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import Input from "../../shared/components/FormValidation/Input";
 import {
   VALIDATOR_EMAIL,
@@ -10,9 +10,19 @@ import "../../shared/components/Style.css";
 import WebsiteIcon from "../../shared/images/website-logo.png";
 import { AuthContext } from "../../shared/components/context/auth-context";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
+
+const EyeSlash = <FontAwesomeIcon className="icon" icon={faEyeSlash} />;
+
 const Auth = () => {
-    const auth = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  const [passwordShown, setPasswordShown] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const pass = useRef();
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -27,31 +37,42 @@ const Auth = () => {
     false
   );
 
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
+
   const switchModeHandler = () => {
-      if(!isLogin) {
-          setFormData({
-              ...formState.inputs,
-              firstname: undefined,
-              surname: undefined,
-              username: undefined
-          }, formState.inputs.email.isValid && formState.inputs.password.isValid)
-      } else {
-          setFormData({
-            ...formState.inputs,
-            firstname: {
-                value: '',
-                isValid: false
-            },
-            surname: {
-                value: '',
-                isValid: false
-            },
-            username: {
-                value: '',
-                isValid: false
-            }
-          }, false)
-      }
+    if (!isLogin) {
+      setFormData(
+        {
+          ...formState.inputs,
+          firstname: undefined,
+          surname: undefined,
+          username: undefined
+        },
+        formState.inputs.email.isValid && formState.inputs.password.isValid
+      );
+    } else {
+      setFormData(
+        {
+          ...formState.inputs,
+          firstname: {
+            value: "",
+            isValid: false
+          },
+          surname: {
+            value: "",
+            isValid: false
+          },
+          username: {
+            value: "",
+            isValid: false
+          }
+        },
+        false
+      );
+    }
+    setPasswordShown(false);
     setIsLogin(prevMode => !prevMode);
   };
   const authSubmitHandler = event => {
@@ -72,7 +93,11 @@ const Auth = () => {
       </div>
       <div className="card mx-auto login-card">
         <div className="sign-up-link ms-auto">
-          <button className="anchor-link" onClick={switchModeHandler} style={{ fontWeight: "bolder" }}>
+          <button
+            className="anchor-link"
+            onClick={switchModeHandler}
+            style={{ fontWeight: "bolder" }}
+          >
             {isLogin ? "Sign up" : "Login"}
           </button>
         </div>
@@ -137,10 +162,20 @@ const Auth = () => {
           </div>
           <div className="row mb-3">
             <div className="col-sm-10">
+              {passwordShown ? (
+                <span className="eye-icon" onClick={togglePassword}>
+                  {Eye}
+                </span>
+              ) : (
+                <span className="eye-icon" onClick={togglePassword}>
+                  {EyeSlash}
+                </span>
+              )}
               <Input
+                ref={pass}
                 element="input"
                 id="password"
-                type="password"
+                type={passwordShown ? "text" : "password"}
                 label="Password"
                 className="form-control rounded-3"
                 validators={[VALIDATOR_MINLENGTH(8)]}
@@ -158,6 +193,15 @@ const Auth = () => {
             {isLogin ? "Login" : "Sign up"}
           </button>
         </form>
+        {isLogin && (
+          <a
+            href="/forgottenDetails"
+            className="mx-auto mt-3"
+            style={{ color: "black" }}
+          >
+            Forgotten password?
+          </a>
+        )}
       </div>
     </div>
   );
