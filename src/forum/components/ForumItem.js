@@ -46,7 +46,7 @@ const ForumItem = props => {
           <div className="d-flex bd-highlight">
             {auth.isLoggedIn && (
               <div className="p-2 flex-fill bd-highlight">
-                <Link to={`/forum/${props.id}`} className="btn btn-warning me-2">
+                <Link to={`/forum/update/${props.id}`} className="btn btn-warning me-2">
                   Edit
                 </Link>
 
@@ -60,7 +60,7 @@ const ForumItem = props => {
             )}
             <div className="p-2 flex-fill bd-highlight"></div>
             <div className="p-2 flex-fill bd-highlight text-end">
-              <Link to="/" className="btn btn-success">
+              <Link to={`forum/view/${props.id}`} className="btn btn-success">
                 View question
               </Link>
             </div>
