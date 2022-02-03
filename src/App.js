@@ -6,6 +6,7 @@ import {
   Switch
 } from "react-router-dom";
 import UserProfile from "./user/pages/UserProfile";
+import Codepen from "./documentation/pages/Codepen";
 import Quizzes from "./quiz/pages/Quizzes";
 import Documentation from "./documentation/pages/Documentation";
 import UserForum from "./forum/pages/Forum";
@@ -14,6 +15,7 @@ import NewForumQuestion from "./forum/pages/NewForumQuestion";
 import UpdateForumQuestion from "./forum/pages/UpdateForumQuestion";
 import Auth from "./user/pages/Auth";
 import { AuthContext } from "./shared/components/context/auth-context";
+import ForumQuestion from "./forum/pages/ForumQuestion";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,7 +43,11 @@ function App() {
           <MainNavigation />
           <NewForumQuestion />
         </Route>
-        <Route path="/forum/:questionId" exact>
+        <Route path="/forum/view/:questionId" exact>
+          <MainNavigation />
+          <ForumQuestion />
+        </Route>
+        <Route path="/forum/update/:questionId" exact>
           <MainNavigation />
           <UpdateForumQuestion />
         </Route>
@@ -55,6 +61,10 @@ function App() {
         <Route path="/userProfile/:userId" exact>
           <MainNavigation />
           <UserProfile />
+        </Route>
+        <Route path="/documentation/:docId" exact>
+          <MainNavigation />
+          <Codepen />
         </Route>
         <Redirect to="/" />
       </Switch>
@@ -74,7 +84,11 @@ function App() {
           <MainNavigation />
           <NewForumQuestion />
         </Route>
-        <Route path="/forum/:questionId" exact>
+        <Route path="/forum/view/:questionId" exact>
+          <MainNavigation />
+          <ForumQuestion />
+        </Route>
+        <Route path="/forum/update/:questionId" exact>
           <MainNavigation />
           <UpdateForumQuestion />
         </Route>
@@ -87,6 +101,10 @@ function App() {
         </Route>
         <Route path="/" exact>
           <MainNavigation />
+        </Route>
+        <Route path="/documentation/:docId" exact>
+          <MainNavigation />
+          <Codepen />
         </Route>
         <Redirect to="/auth" />
       </Switch>
