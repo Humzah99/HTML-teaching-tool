@@ -16,6 +16,7 @@ import UpdateForumQuestion from "./forum/pages/UpdateForumQuestion";
 import Auth from "./user/pages/Auth";
 import { AuthContext } from "./shared/components/context/auth-context";
 import ForumQuestion from "./forum/pages/ForumQuestion";
+import NewQuiz from "./quiz/pages/NewQuiz";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -58,6 +59,10 @@ function App() {
           <MainNavigation />
           <Quizzes />
         </Route>
+        <Route path="/quiz/:quizId" exact>
+          <MainNavigation />
+          <NewQuiz />
+        </Route>
         <Route path="/userProfile/:userId" exact>
           <MainNavigation />
           <UserProfile />
@@ -95,6 +100,10 @@ function App() {
         <Route path="/userProfile/:userId" exact>
           <MainNavigation />
           <UserProfile />
+        </Route>
+        <Route path="/quiz/:quizId" exact>
+          <MainNavigation />
+          <NewQuiz />
         </Route>
         <Route path="/auth" exact>
           <Auth />

@@ -1,3 +1,5 @@
+
+
 body {
   margin: 0;
 }
@@ -22,13 +24,21 @@ body {
   opacity: 0.6;
 }
 
-.active,
-.btn {
+.active {
   background-color: #f5816e;
   color: #fcedda !important;
+  border-radius: 5px;
+}
+
+.code-editor-link {
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 12px;
 }
 
 .btn {
+  background-color: #f5816e;
+  color: #fcedda !important;
   opacity: 0.8;
   transition: 0.3s;
 }
