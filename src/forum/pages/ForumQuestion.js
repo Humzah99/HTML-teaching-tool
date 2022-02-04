@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Editor from "../../documentation/components/Editor";
 import Input from "../../shared/components/FormValidation/Input";
 import { VALIDATOR_REQUIRE } from "../../shared/components/FormValidation/validators";
 import { useForm } from "../../shared/hooks/forms-hooks";
 import "../../shared/components/Style.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCode } from "@fortawesome/free-solid-svg-icons";
+import useLocalStorage from "../../shared/hooks/useLocalStorage";
+import { AuthContext } from "../../shared/components/context/auth-context";
 const DUMMY_QUESTIONS = [
   {
     id: "1",
@@ -91,14 +95,20 @@ const DUMMY_QUESTIONS = [
     heading: "My HTML heading does not render on screen.",
     text: "Can anyone help me identify the issue with this code that is not allowing any headings to render on to the screen?",
     image: null,
-    codeString: null,
+    codeString: "<h7>Hello world!</h7>",
     codeResponses: [],
-    answers: [],
+    answers: [
+      "You cannot render a <h7> tag. Read the HTML headings documentation on this website for more information.",
+      "Have a look at the following link for HTML headings... https://www.w3schools.com/html/html_headings.asp ",
+    ],
   },
 ];
 
 const ForumQuestion = () => {
   const questionId = useParams().questionId;
+  const auth = useContext(AuthContext);
+  const [codeEditor, setCodeEditor] = useState(false);
+  const [html, setHtml] = useLocalStorage("html");
   const [formState, inputHandler] = useForm(
     {
       answerText: {
@@ -172,30 +182,77 @@ const ForumQuestion = () => {
             )}
           </div>
         </div>
-        <div className="answers-container mt-5">
+        <div className="answers-container mt-5 mb-5">
           <h3 style={{ fontWeight: "normal" }}>
             {allAnswers.length} {allAnswers.length === 1 ? "answer" : "answers"}
           </h3>
           {allAnswers}
         </div>
-        <div className="form-container mt-5 mb-5">
-          <form onSubmit={submitHandler}>
-            <h5 className="card-title">Your answer</h5>
-            <Input
-              id="answerText"
-              className="form-control"
-              element="input"
-              type="text"
-              placeholder="Enter answer here"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="An answer is required."
-              onInput={inputHandler}
-            />
-            <button className="btn mt-3" type="submit" disabled={!formState.isValid}>
-              Post answer
-            </button>
-          </form>
-        </div>
+
+        {auth.isLoggedIn && (
+          <React.Fragment>
+            <h5>Your answer</h5>
+            <div className="card form-container mt-3 mb-5">
+              <div className="card-body">
+                <a
+                  onClick={() =>
+                    setCodeEditor((prevCodeEditor) => !prevCodeEditor)
+                  }
+                  class={`card-link ${
+                    codeEditor ? "active code-editor-link" : ""
+                  }`}
+                  title="code editor"
+                >
+                  <FontAwesomeIcon icon={faCode} size="2x" />
+                </a>
+                <form onSubmit={submitHandler}>
+                  {codeEditor ? (
+                    <React.Fragment>
+                      <div className="pane top-pane">
+                        <Editor
+                          id="answerCode"
+                          language="xml"
+                          displayName="HTML"
+                          value={html}
+                          onChange={setHtml}
+                          onInput={inputHandler}
+                        />
+                      </div>
+
+                      <Input
+                        id="answerText"
+                        className="form-control"
+                        rows="10"
+                        placeholder="Enter answer here"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="An answer is required."
+                        onInput={inputHandler}
+                      />
+                    </React.Fragment>
+                  ) : (
+                    <Input
+                      id="answerText"
+                      className="form-control"
+                      rows="10"
+                      placeholder="Enter answer here"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="An answer is required."
+                      onInput={inputHandler}
+                    />
+                  )}
+
+                  <button
+                    className="btn mt-3"
+                    type="submit"
+                    disabled={!formState.isValid}
+                  >
+                    Post answer
+                  </button>
+                </form>
+              </div>
+            </div>
+          </React.Fragment>
+        )}
       </div>
     </div>
   );
