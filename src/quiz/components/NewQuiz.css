@@ -1,0 +1,125 @@
+.quiz-title {
+    margin-top: 2%;
+    margin-left: 22.5%;
+    font-size: 38px;
+    font-weight: bolder;
+
+}
+.new-quiz-container {
+  background-color: #fcedda;
+  width: 2000px;
+  min-height: 900px;
+  height: min-content;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 10px 10px 42px 0px rgba(245, 129, 110, 0.8);
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5%;
+}
+
+.final-score {
+  display: flex;
+  font-size: 24px;
+  align-items: center;
+}
+
+/* QUESTION/TIMER/LEFT SECTION */
+.question-section {
+  width: 100%;
+  position: relative;
+}
+
+.question-count {
+  margin-bottom: 20px;
+  color: #f5816e;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.question-count span {
+  font-size: 38px;
+  color: #f5816e;
+  font-weight: bolder;
+}
+
+.question-text {
+  margin-bottom: 12px;
+}
+
+.question-text p {
+  font-size: 30px;
+}
+
+.timer-text {
+  background: rgb(230, 153, 12);
+  padding: 15px;
+  margin-top: 20px;
+  margin-right: 20px;
+  border: 5px solid rgb(255, 189, 67);
+  border-radius: 15px;
+  text-align: center;
+}
+
+/* ANSWERS/RIGHT SECTION */
+.answer-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+button {
+  width: 100%;
+  font-size: 30px;
+  color: #f5816e;
+  background-color: #fcedda;
+  border-radius: 10px;
+  display: flex;
+  padding: 25px;
+  justify-content: flex-start;
+  align-items: center;
+  border: 3px solid #f35c57;
+  cursor: pointer;
+  margin-bottom: 50px;
+}
+
+.correct {
+  background-color: #2f922f;
+}
+
+.incorrect {
+  background-color: #ff3333;
+}
+
+button:hover {
+  background-color: #f35c57;
+  transition: transform 0.3s ease-out;
+  transform: translate(-5px, -5px);
+  font-weight: bold;
+  position: relative;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #f5816e, #ffffff, #000);
+  background-size: 80%;
+  background-repeat: repeat;
+  animation: animate 5s infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes animate {
+    0% {
+      background-position: -500%;
+    }
+    100% {
+      background-position: 500%;
+    }
+  }
+
+button:focus {
+  outline: none;
+}
+
+button svg {
+  margin-right: 5px;
+}

@@ -3,7 +3,7 @@ import "../../shared/components/Style.css";
 const QuizItem = props => {
   return (
     <div className="col-sm-6">
-      <a href="/">
+      <a href={`/quiz/${props.id}`}>
         <div className="card quiz-list-card mt-5 ms-5" style={{ width: "18rem" }}>
           <div className="card-body">
             <h5 className="card-title">{props.title}</h5>
