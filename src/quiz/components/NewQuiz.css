@@ -13,15 +13,12 @@
   border-radius: 10px;
   padding: 20px;
   box-shadow: 10px 10px 42px 0px rgba(245, 129, 110, 0.8);
-  display: flex;
   justify-content: space-evenly;
   margin-top: 5%;
 }
 
 .final-score {
-  display: flex;
-  font-size: 24px;
-  align-items: center;
+  margin-top: 30%;
 }
 
 /* QUESTION/TIMER/LEFT SECTION */
@@ -69,7 +66,7 @@
   justify-content: space-between;
 }
 
-button {
+.answer-option {
   width: 100%;
   font-size: 30px;
   color: #f5816e;
@@ -92,7 +89,7 @@ button {
   background-color: #ff3333;
 }
 
-button:hover {
+.answer-option:hover {
   background-color: #f35c57;
   transition: transform 0.3s ease-out;
   transform: translate(-5px, -5px);
@@ -116,10 +113,20 @@ button:hover {
     }
   }
 
-button:focus {
+.answer-option:focus {
   outline: none;
 }
 
-button svg {
+.answer-option svg {
   margin-right: 5px;
+}
+
+.quiz-button-container {
+  margin-top: 25%;
+  align-items: center;
+  width: 100%;
+}
+
+.final-score-options {
+  width: 64%;
 }

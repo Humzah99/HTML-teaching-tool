@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "../components/NewQuiz.css";
 import "../../shared/components/Style.css";
@@ -135,13 +136,13 @@ const NewQuiz = () => {
   };
 
   const restartButtonHandler = () => {
-      setRestart(true);
-      if(restart) {
-          setShowScore(false);
-          setCurrentQuestion(0)
-      }
-      console.log(currentQuestion);
-  }
+    setRestart(true);
+    if (restart) {
+      setShowScore(false);
+      setCurrentQuestion(0);
+    }
+    console.log(currentQuestion);
+  };
 
   const currentQuiz = DUMMY_QUIZ.find((q) => q.id === quizId);
   return (
@@ -155,15 +156,34 @@ const NewQuiz = () => {
       <div className="container new-quiz-container">
         {showScore ? (
           <>
-            <div className="final-score">
-              <h3>
-                You scored {score} out of {currentQuiz.questions.length}
-              </h3>
+            <div className="row">
+              <div className="col-md-4"></div>
+              <div className="final-score col-md-4 text-center">
+                <h3>
+                  You scored {score} out of {currentQuiz.questions.length}
+                </h3>
+              </div>
+              <div className="col-md-4"></div>
             </div>
-            <div className="button-container">
-                <button className="btn" onClick={restartButtonHandler}>Restart</button>
-                <button className="btn">See {currentQuiz.title} documentation</button>
-                <button className="btn">Return to All quiz page</button>
+            <div className="row quiz-button-container">
+              <div className="col-sm-4 text-center">
+                <button
+                  className="btn final-score-options"
+                  onClick={restartButtonHandler}
+                >
+                  Restart
+                </button>
+              </div>
+              <div className="col-sm-4 text-center">
+                <Link to="/documentation" className="btn final-score-options">
+                  See {currentQuiz.title} documentation
+                </Link>
+              </div>
+              <div className="col-sm-4 text-center">
+                <Link to="/allQuizzes" className="btn final-score-options">
+                  Return to All quiz page
+                </Link>
+              </div>
             </div>
           </>
         ) : (
