@@ -17,6 +17,7 @@ import Auth from "./user/pages/Auth";
 import { AuthContext } from "./shared/components/context/auth-context";
 import ForumQuestion from "./forum/pages/ForumQuestion";
 import NewQuiz from "./quiz/pages/NewQuiz";
+import ForgottenDetails from "./user/pages/ForgottenDetails";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -107,6 +108,9 @@ function App() {
         </Route>
         <Route path="/auth" exact>
           <Auth />
+        </Route>
+        <Route path="/forgottenDetails" exact>
+          <ForgottenDetails />
         </Route>
         <Route path="/" exact>
           <MainNavigation />
