@@ -137,6 +137,7 @@ const NewQuiz = () => {
 
   const restartButtonHandler = () => {
     setRestart(true);
+    setScore(score * 0);
     if (restart) {
       setShowScore(false);
       setCurrentQuestion(0);
