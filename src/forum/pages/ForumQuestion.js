@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Editor from "../../documentation/components/Editor";
@@ -7,7 +8,6 @@ import { useForm } from "../../shared/hooks/forms-hooks";
 import "../../shared/components/Style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
-import useLocalStorage from "../../shared/hooks/useLocalStorage";
 import { AuthContext } from "../../shared/components/context/auth-context";
 const DUMMY_QUESTIONS = [
   {
@@ -108,7 +108,7 @@ const ForumQuestion = () => {
   const questionId = useParams().questionId;
   const auth = useContext(AuthContext);
   const [codeEditor, setCodeEditor] = useState(false);
-  const [html, setHtml] = useLocalStorage("html");
+  const [html, setHtml] = useState("");
   const [formState, inputHandler] = useForm(
     {
       answerText: {
@@ -198,7 +198,7 @@ const ForumQuestion = () => {
                   onClick={() =>
                     setCodeEditor((prevCodeEditor) => !prevCodeEditor)
                   }
-                  class={`card-link ${
+                  class={`card-link${
                     codeEditor ? "active code-editor-link" : ""
                   }`}
                   title="code editor"
