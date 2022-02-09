@@ -1,5 +1,3 @@
-
-
 body {
   margin: 0;
 }
@@ -24,7 +22,8 @@ body {
   opacity: 0.6;
 }
 
-.active {
+.code-editor-active,
+.nav-link.active {
   background-color: #f5816e;
   color: #fcedda !important;
   border-radius: 5px;
@@ -54,6 +53,7 @@ body {
   border-radius: 1em;
 }
 
+h2,
 h3,
 h5,
 p {
@@ -116,6 +116,17 @@ button {
   height: 30rem;
 }
 
+.loh-carousel-card {
+  width: 30rem;
+  height: 30rem;
+  border-radius: 10%;
+}
+
+.loh-carousel-image {
+  width: 100%;
+  height: 100%;
+}
+
 .anchor-link {
   background: none !important;
   border: none;
@@ -150,7 +161,7 @@ button {
   flex-basis: 0;
   display: flex;
   flex-direction: column;
-  padding: .5rem; 
+  padding: 0.5rem;
 }
 
 .editor-container.collapsed {
@@ -167,9 +178,9 @@ button {
   justify-content: space-between;
   background-color: hsl(225, 6%, 13%);
   color: #ffffff;
-  padding: .5rem .5rem .5rem 1rem;
-  border-top-right-radius: .5rem;
-  border-top-left-radius: .5rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
 }
 .CodeMirror {
   height: 100% !important;
@@ -177,8 +188,8 @@ button {
 
 .code-mirror-wrapper {
   flex-grow: 1;
-  border-bottom-right-radius: .5rem;
-  border-bottom-left-radius: .5rem;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
   overflow: hidden;
 }
 
@@ -188,3 +199,112 @@ div.hr-line {
   width: 100%;
   border-bottom: 2px solid #c5c2c2;
 }
+
+/*<div
+id="carouselExampleCaptions"
+className="carousel slide"
+data-bs-ride="carousel"
+>
+<div className="carousel-indicators">
+  <button
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide-to="0"
+    className="active"
+    aria-current="true"
+    aria-label="Slide 1"
+  ></button>
+  <button
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide-to="1"
+    aria-label="Slide 2"
+  ></button>
+  <button
+    type="button"
+    data-bs-target="#carouselExampleCaptions"
+    data-bs-slide-to="2"
+    aria-label="Slide 3"
+  ></button>
+</div>
+<div className="carousel-inner">
+  <div className="carousel-item active">
+    <div className="card loh-carousel-card">
+      <img
+        src={HtmlDocumentationCode}
+        className="card-img loh-carousel-image"
+        alt="..."
+      />
+      <div className="card-img-overlay">
+        <h5 className="card-title">Card title</h5>
+        <p className="card-text">
+          This is a wider card with supporting text below as a natural
+          lead-in to additional content. This content is a little bit
+          longer.
+        </p>
+        <p className="card-text">Last updated 3 mins ago</p>
+      </div>
+    </div>
+  </div>
+  <div className="carousel-item">
+    <div className="card loh-carousel-card">
+      <img
+        src={UserForumCode}
+        className="card-img loh-carousel-image"
+        alt="..."
+      />
+      <div className="card-img-overlay">
+        <h5 className="card-title">Card title</h5>
+        <p className="card-text">
+          This is a wider card with supporting text below as a natural
+          lead-in to additional content. This content is a little bit
+          longer.
+        </p>
+        <p className="card-text">Last updated 3 mins ago</p>
+      </div>
+    </div>
+  </div>
+  <div className="carousel-item">
+    <div className="card loh-carousel-card">
+      <img
+        src={QuizCode}
+        className="card-img loh-carousel-image"
+        alt="..."
+      />
+      <div className="card-img-overlay">
+        <h5 className="card-title">Card title</h5>
+        <p className="card-text">
+          This is a wider card with supporting text below as a natural
+          lead-in to additional content. This content is a little bit
+          longer.
+        </p>
+        <p className="card-text">Last updated 3 mins ago</p>
+      </div>
+    </div>
+  </div>
+</div>
+<button
+  className="carousel-control-prev"
+  type="button"
+  data-bs-target="#carouselExampleCaptions"
+  data-bs-slide="prev"
+>
+  <span
+    className="carousel-control-prev-icon"
+    aria-hidden="true"
+  ></span>
+  <span className="visually-hidden">Previous</span>
+</button>
+<button
+  className="carousel-control-next"
+  type="button"
+  data-bs-target="#carouselExampleCaptions"
+  data-bs-slide="next"
+>
+  <span
+    className="carousel-control-next-icon"
+    aria-hidden="true"
+  ></span>
+  <span className="visually-hidden">Next</span>
+</button>
+</div>*/

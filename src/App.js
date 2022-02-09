@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Switch
+  Switch,
 } from "react-router-dom";
 import UserProfile from "./user/pages/UserProfile";
 import Codepen from "./documentation/pages/Codepen";
@@ -18,7 +18,7 @@ import { AuthContext } from "./shared/components/context/auth-context";
 import ForumQuestion from "./forum/pages/ForumQuestion";
 import NewQuiz from "./quiz/pages/NewQuiz";
 import ForgottenDetails from "./user/pages/ForgottenDetails";
-
+import Homepage from './shared/components/Homepage/Homepage';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const login = useCallback(() => {
@@ -55,6 +55,7 @@ function App() {
         </Route>
         <Route path="/" exact>
           <MainNavigation />
+          <Homepage />
         </Route>
         <Route path="/allQuizzes" exact>
           <MainNavigation />
@@ -114,12 +115,13 @@ function App() {
         </Route>
         <Route path="/" exact>
           <MainNavigation />
+          <Homepage />
         </Route>
         <Route path="/documentation/:docId" exact>
           <MainNavigation />
           <Codepen />
         </Route>
-        <Redirect to="/auth" />
+        <Redirect to="/" />
       </Switch>
     );
   }

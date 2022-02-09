@@ -199,7 +199,7 @@ const ForumQuestion = () => {
                     setCodeEditor((prevCodeEditor) => !prevCodeEditor)
                   }
                   class={`card-link${
-                    codeEditor ? "active code-editor-link" : ""
+                    codeEditor ? "active code-editor-active code-editor-link" : ""
                   }`}
                   title="code editor"
                 >

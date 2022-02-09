@@ -1,0 +1,34 @@
+.featured-doc-card,
+.featured-quiz-card {
+  max-width: 50%;
+  border-radius: 10%;
+  margin-top: 25%;
+  margin-left: 25%;
+  transition: transform 0.3s ease-out;
+  box-shadow: 3px 5px 5px 3px rgba(0, 0, 0, 0.16);
+}
+
+.featured-doc-card:hover,
+.featured-quiz-card:hover {
+  transition: transform 0.3s ease-out;
+  transform: translate(-5px, -5px);
+}
+
+.card-img {
+  border-radius: 10%;
+}
+
+.card-title,
+.card-text {
+  background-color: transparent !important;
+}
+.first-col {
+  border-right: 1px solid #f5816e;
+  height: 1550px;
+}
+
+.featured-button-container {
+  margin-left: 40%;
+  width: 100%;
+  margin-top: 2%;
+}
