@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import "../../shared/components/Style.css";
+import DocContent from './DocContent';
 const DocumentationItem = (props) => {
   const [showDocumentationModal, setShowDocumentationModal] = useState(false);
 
@@ -22,8 +23,7 @@ const DocumentationItem = (props) => {
           <Modal.Title>HTML {props.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-body">
-          Do you want to proceed and delete this question? Please note that this
-          cannot be undone.{" "}
+          <DocContent language={"xml"} content={props}/>
         </Modal.Body>
         <Modal.Footer className="modal-footer">
           <button className="btn btn-secondary" onClick={cancelDocumentationHandler}>

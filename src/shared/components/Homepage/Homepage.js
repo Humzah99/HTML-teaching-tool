@@ -3,6 +3,7 @@ import React, { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import HtmlDocumentationCode from "../../images/blurred-html-code.png";
 import QuizCode from "../../images/quiz-ss.png";
+import UserForumCode from "../../images/user-forum-ss.png";
 import { AuthContext } from "../context/auth-context";
 import Input from "../FormValidation/Input";
 import {
@@ -23,19 +24,7 @@ const LoggedInHomepage = () => {
   const auth = useContext(AuthContext);
   const [passwordShown, setPasswordShown] = useState(false);
   const pass = useRef();
-  const [formState, inputHandler, setFormData] = useForm(
-    {
-      email: {
-        value: "",
-        isValid: false,
-      },
-      password: {
-        value: "",
-        isValid: false,
-      },
-    },
-    false
-  );
+  const [formState, inputHandler] = useForm(false);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -88,7 +77,73 @@ const LoggedInHomepage = () => {
         </div>
       ) : (
         <div className="row">
-          <div className="col-lg-6 first-col"></div>
+          <div className="col-lg-6 first-col">
+            <div class="loh-container">
+              <Link to="/documentation" className="loh-carousel-link">
+                <div class="card loh-info-card">
+                  <img
+                    src={HtmlDocumentationCode}
+                    class="loh-card-img"
+                    alt="..."
+                  />
+                  <div class="card-img-overlay">
+                    <div class="bar">
+                      <div class="emptybar"></div>
+                      <div class="filledbar"></div>
+                    </div>
+                    <div class="circle">
+                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="stroke" cx="60" cy="60" r="50" />
+                      </svg>
+                    </div>
+                    <h3 class="card-title text-center">
+                      Discover each HTML element through our documentation...
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+              <Link to="/forum" className="loh-carousel-link">
+                <div class="card loh-info-card">
+                  <img src={UserForumCode} class="loh-card-img" alt="..." />
+                  <div class="card-img-overlay">
+                    <div class="bar">
+                      <div class="emptybar"></div>
+                      <div class="filledbar"></div>
+                    </div>
+                    <div class="circle">
+                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="stroke" cx="60" cy="60" r="50" />
+                      </svg>
+                    </div>
+                    <h3 class="card-title text-center">
+                      Visit our dedicated user forum to view and ask
+                      questions...
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+              <Link to="/quiz" className="loh-carousel-link">
+                <div class="card loh-info-card">
+                  <img src={QuizCode} class="loh-card-img" alt="..." />
+                  <div class="card-img-overlay">
+                    <div class="bar">
+                      <div class="emptybar"></div>
+                      <div class="filledbar"></div>
+                    </div>
+                    <div class="circle">
+                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <circle class="stroke" cx="60" cy="60" r="50" />
+                      </svg>
+                    </div>
+                    <h3 class="card-title text-center">
+                      Test your HTML knowledge by undertaking a range of
+                      quizzes...
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
           <div className="col-lg-6">
             {" "}
             <div className="container" style={{ marginTop: "25%" }}>

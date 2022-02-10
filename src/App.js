@@ -57,7 +57,7 @@ function App() {
           <MainNavigation />
           <Homepage />
         </Route>
-        <Route path="/allQuizzes" exact>
+        <Route path="/quiz" exact>
           <MainNavigation />
           <Quizzes />
         </Route>
@@ -121,7 +121,7 @@ function App() {
           <MainNavigation />
           <Codepen />
         </Route>
-        <Redirect to="/" />
+        <Redirect to="/auth" />
       </Switch>
     );
   }
