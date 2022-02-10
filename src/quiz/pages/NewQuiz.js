@@ -181,7 +181,7 @@ const NewQuiz = () => {
                 </Link>
               </div>
               <div className="col-sm-4 text-center">
-                <Link to="/allQuizzes" className="btn final-score-options">
+                <Link to="/quiz" className="btn final-score-options">
                   Return to All quiz page
                 </Link>
               </div>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Editor from "../components/Editor";
 import "../../shared/components/Style.css";
-import useLocalStorage from "../../shared/hooks/useLocalStorage";
-const Codepen = () => {
-    const [html, setHtml] = useLocalStorage("html", );
+//import useLocalStorage from "../../shared/hooks/useLocalStorage";
+const Codepen = (givenHtml) => {
+    const [html, setHtml] = useState(`${givenHtml}`);
     const[srcDoc, setSrcDoc] = useState("");
 
   useEffect(() => {
