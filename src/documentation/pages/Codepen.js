@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Editor from "../components/Editor";
 import "../../shared/components/Style.css";
 //import useLocalStorage from "../../shared/hooks/useLocalStorage";
-const Codepen = (givenHtml) => {
+const Codepen = ({givenHtml}) => {
     const [html, setHtml] = useState(`${givenHtml}`);
     const[srcDoc, setSrcDoc] = useState("");
-
   useEffect(() => {
       const timeout = setTimeout(() => {
         setSrcDoc( `
