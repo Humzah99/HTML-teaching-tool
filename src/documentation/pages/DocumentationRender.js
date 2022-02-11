@@ -686,11 +686,11 @@ const DocumentationRender = () => {
   return (
     <>
     
-      <Modal show={showCodePenModal} onCancel={cancelCodePenHandler}>
-        <Modal.Body className="modal-body">
+      <Modal show={showCodePenModal} onCancel={cancelCodePenHandler} style={{width: "85%"}}>
+        <Modal.Body className="modal-body codepen-modal">
           <Codepen givenHtml={`${currentCodeString}`} />
         </Modal.Body>
-        <Modal.Footer className="modal-footer">
+        <Modal.Footer className="modal-footer codepen-modal">
           <button className="btn btn-secondary" onClick={cancelCodePenHandler}>
             Close
           </button>
