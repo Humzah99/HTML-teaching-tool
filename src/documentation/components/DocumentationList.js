@@ -28,8 +28,9 @@ const DocumentationList = props => {
             id={doc.id}
             title={doc.title}
             description={doc.description}
+            subTitle={doc.subTitles}
             content={doc.content}
-            codeString={doc.codeString}
+            codeString={doc.codeStringArray}
           />
         ))}
       </div>
