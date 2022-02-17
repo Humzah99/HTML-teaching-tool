@@ -49,7 +49,7 @@ const LoggedInHomepage = () => {
             </div>
             <div className="featured-button-container">
               <Link
-                to="/documentation"
+                to="/documentation/6"
                 className="btn rounded-pill mt-2"
                 style={{ width: "20%" }}
               >
