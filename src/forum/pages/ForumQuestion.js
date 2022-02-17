@@ -9,6 +9,8 @@ import "../../shared/components/Style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../shared/components/context/auth-context";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { duotoneForest } from "react-syntax-highlighter/dist/esm/styles/prism";
 const DUMMY_QUESTIONS = [
   {
     id: "1",
@@ -138,9 +140,16 @@ const ForumQuestion = () => {
         <div className="card show-answer-container mt-5">
           <div className="card-body">
             {identifiedQuestion.codeResponses != null && (
-              <div className="pane">
-                <Editor language="xml" value={codeResponse} />
-              </div>
+              // <div className="pane">
+              //   <Editor language="xml" value={codeResponse} />
+              // </div>
+               <SyntaxHighlighter
+               language="javascript"
+               style={duotoneForest}
+               key={identifiedQuestion.id}
+             >
+               {codeResponse}
+             </SyntaxHighlighter>
             )}
           </div>
         </div>
@@ -176,9 +185,16 @@ const ForumQuestion = () => {
           <div className="card-body">
             <p className="card-text">{identifiedQuestion.text}</p>
             {identifiedQuestion.codeString != null && (
-              <div className="pane">
-                <Editor language="xml" value={identifiedQuestion.codeString} />
-              </div>
+              // <div className="pane">
+              //   <Editor language="xml" value={identifiedQuestion.codeString} />
+              // </div>
+              <SyntaxHighlighter
+              language="javascript"
+              style={duotoneForest}
+              key={identifiedQuestion.id}
+            >
+              {identifiedQuestion.codeString}
+            </SyntaxHighlighter>
             )}
           </div>
         </div>
