@@ -53,6 +53,7 @@ const Input = props => {
         className={props.className}
         type={props.type}
         placeholder={props.placeholder}
+        disabled={props.disabled}
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}

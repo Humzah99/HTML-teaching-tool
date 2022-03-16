@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import "../../shared/components/Style.css";
 import ForumItem from "./ForumItem";
 import { AuthContext } from "../../shared/components/context/auth-context";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ForumList = props => {
   const auth = useContext(AuthContext);
+
   if (props.items.length === 0) {
     return (
       <div className="container">
@@ -52,6 +53,10 @@ const ForumList = props => {
               id={question.id}
               heading={question.heading}
               text={question.text}
+              user={question.user}
+              answers={question.answers}
+              createdAt={question.createdAt}
+              onDelete={props.onDeleteQuestion}
             />
           ))}
         </div>

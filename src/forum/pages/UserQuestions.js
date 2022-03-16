@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import { useHttpClient } from '../../shared/hooks/http-hook';
+import React, { useEffect, useState } from 'react';
 import ForumList from '../components/ForumList';
+import { useParams } from 'react-router-dom';
+import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 
-
-const Forum = () => {
+const UserQuestions = () => {
+    const [loadedQuestions, setLoadedQuestions] = useState();
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
-    const [loadedForum, setLoadedForum] = useState();
-    useEffect(() => {
-        const fetchForum = async () => {
-            try {
-                const responseData = await sendRequest('http://localhost:5000/api/forum');
-                console.log(responseData.forumQuestions);
-                setLoadedForum(responseData.forumQuestions);
-            } catch (err) {}
-        };
-        fetchForum();
-    }, [sendRequest]);
+    const userId = useParams().userId;
 
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                const responseData = await sendRequest(`http://localhost:5000/api/forum/user/${userId}`);
+                setLoadedQuestions(responseData.forumQuestions)
+            } catch (err) { }
+        };
+        fetchQuestions();
+    }, [sendRequest, userId]);
+
+    const questionDeletedHandler = deletedQuestionId => {
+        setLoadedQuestions(prevQuestions => prevQuestions.filter(question => question.id !== deletedQuestionId));
+    };
     return (
         <React.Fragment>
             <Modal show={!!error} onClear={clearError}>
@@ -42,9 +46,9 @@ const Forum = () => {
                     </div>
                 </div>
             )}
-            {!isLoading && loadedForum && <ForumList items={loadedForum} />}
+            {!isLoading && loadedQuestions && (<ForumList items={loadedQuestions} onDeleteQuestion={questionDeletedHandler} />)}
         </React.Fragment>
-    )
+    );
 };
 
-export default Forum;
+export default UserQuestions;

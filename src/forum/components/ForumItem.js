@@ -3,10 +3,15 @@ import "../../shared/components/Style.css";
 import { Modal } from "react-bootstrap";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const ForumItem = props => {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+  console.log(auth.userId);
+  console.log(props.user.id);
 
   const showDeleteWarningHandler = () => {
     setShowConfirmationModal(true);
@@ -16,11 +21,29 @@ const ForumItem = props => {
     setShowConfirmationModal(false);
   };
 
-  const confirmDeleteHandler = () => {
-    console.log("DELETING...");
+  const confirmDeleteHandler = async () => {
+    setShowConfirmationModal(false);
+    try {
+      await sendRequest(`http://localhost:5000/api/forum/${props.id}`, 'DELETE');
+      props.onDelete(props.id)
+    }
+    catch (err) { }
   };
   return (
-    <div>
+    <React.Fragment>
+      <Modal show={!!error} onCancel={clearError}>
+        <Modal.Header className="modal-header">
+          <Modal.Title>Warning!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="modal-body">
+          {error}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={clearError}>
+            Ok
+          </button>
+        </Modal.Footer>
+      </Modal>
       <Modal show={showConfirmationModal} onCancel={cancelDeleteHandler}>
         <Modal.Header className="modal-header">
           <Modal.Title>Confirmation</Modal.Title>
@@ -40,11 +63,20 @@ const ForumItem = props => {
       </Modal>
 
       <div className="card forum-list-card mt-3">
+        {isLoading && (
+          <div className="overlay">
+            <div className="d-flex justify-content-center">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="card-body">
           <h5 className="card-title">{props.heading}</h5>
           <p className="card-text">{props.text}</p>
           <div className="d-flex bd-highlight">
-            {auth.isLoggedIn && (
+            {auth.userId === props.user.id && (
               <div className="p-2 flex-fill bd-highlight">
                 <Link to={`/forum/update/${props.id}`} className="btn btn-warning me-2">
                   Edit
@@ -66,8 +98,11 @@ const ForumItem = props => {
             </div>
           </div>
         </div>
+        <div class="card-footer">
+          <strong><p className="float-end text-muted"> {props.user.username} asked {props.createdAt}</p></strong>
+        </div>
       </div>
-    </div>
+    </React.Fragment >
   );
 };
 

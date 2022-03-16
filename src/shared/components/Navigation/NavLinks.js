@@ -52,7 +52,7 @@ const NavLinks = props => {
       )}
       {auth.isLoggedIn && (
         <div className="position-absolute top-0 end-0">
-          <NavLink to="/userProfile/1" className="nav-item">
+          <NavLink to={`/userProfile/${auth.userId}`} className="nav-item">
             <span>
               {UserIcon}
             </span>

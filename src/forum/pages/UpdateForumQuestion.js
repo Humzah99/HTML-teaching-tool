@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../../shared/components/FormValidation/Input";
+import { Modal } from "react-bootstrap";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
 } from "../../shared/components/FormValidation/validators";
 import { useForm } from "../../shared/hooks/forms-hooks";
-
-const DUMMY_QUESTIONS = [
-  {
-    id: "1",
-    heading: "How can I construct a HTML table?",
-    text:
-      "Please can I have some information on the basics of constructing a HTML table? Here is my code..."
-  },
-  {
-    id: "2",
-    heading: "My HTML heading does not render on screen.",
-    text:
-      "Can anyone help me identify the issue with this code that is not allowing any headings to render on to the screen?"
-  }
-];
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../shared/components/context/auth-context";
 
 const UpdateForumQuestion = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedQuestion, setLoadedQuestion] = useState();
   const questionId = useParams().questionId;
-
+  const history = useHistory();
+  const auth = useContext(AuthContext);
   const [formState, inputHandler, setFormData] = useForm(
     {
       questionTitle: {
@@ -40,36 +31,61 @@ const UpdateForumQuestion = () => {
     false
   );
 
-  const identifiedQuestion = DUMMY_QUESTIONS.find(q => q.id === questionId);
-
   useEffect(() => {
-    if (identifiedQuestion) {
-      setFormData(
-        {
-          questionTitle: {
-            value: identifiedQuestion.heading,
-            isValid: true
+    const fetchQuestion = async () => {
+      try {
+        const responseData = await sendRequest(`http://localhost:5000/api/forum/${questionId}`);
+        setLoadedQuestion(responseData.forumQuestion);
+        console.log(loadedQuestion);
+        setFormData(
+          {
+            questionTitle: {
+              value: responseData.forumQuestion.heading,
+              isValid: true
+            },
+            questionDescription: {
+              value: responseData.forumQuestion.text,
+              isValid: true
+            }
           },
-          questionDescription: {
-            value: identifiedQuestion.text,
-            isValid: true
-          }
-        },
-        true
-      );
+          true
+        );
+      }
+      catch (err) { }
     }
-    setIsLoading(false);
-  }, [setFormData, identifiedQuestion]);
+    fetchQuestion();
+  }, [sendRequest, questionId])
 
-  const updateSubmitHandler = event => {
+  const updateSubmitHandler = async event => {
     event.preventDefault();
-    console.log(formState.inputs);
+    try {
+      await sendRequest(`http://localhost:5000/api/forum/${questionId}`, 'PATCH', JSON.stringify({
+        heading: formState.inputs.questionTitle.value,
+        text: formState.inputs.questionDescription.value
+      }),
+        {
+          'Content-Type': 'application/json'
+        }
+      );
+      history.push(`/forum`);
+    } catch (err) { }
   };
 
-  if (!identifiedQuestion) {
+  if (isLoading) {
+    return (
+      <div className="overlay">
+        <div className="d-flex justify-content-center">
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!loadedQuestion && !error) {
     return (
       console.log(questionId),
-      console.log(identifiedQuestion),
       (
         <div className="container">
           <h3 className="mt-5 text-center">Could not identify the question.</h3>
@@ -78,62 +94,69 @@ const UpdateForumQuestion = () => {
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="container">
-        <h5>Loading...</h5>
-      </div>
-    );
-  }
-
   return (
-    <div className="container alignment-container">
-      <div className="row">
-        <div className="col-md">
-          <h3>Update question</h3>
+    <React.Fragment>
+      <Modal show={!!error} onClear={clearError}>
+        <Modal.Header className="modal-header">
+          <Modal.Title>Warning!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="modal-body">
+          {error}
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-danger" onClick={clearError}>
+            Ok
+          </button>
+        </Modal.Footer>
+      </Modal>
+      <div className="container alignment-container">
+        <div className="row">
+          <div className="col-md">
+            <h3>Update question</h3>
+          </div>
         </div>
-      </div>
-      <div className="col-md">
-        <div className="card ask-question-container">
-          <div className="card-body">
-            <form onSubmit={updateSubmitHandler}>
-              <h5 className="card-title">Heading</h5>
-              <Input
-                id="questionTitle"
-                className="form-control"
-                element="input"
-                type="text"
-                placeholder="Enter question title"
-                validators={[VALIDATOR_REQUIRE()]}
-                errorText="Enter a suitable question heading."
-                onInput={inputHandler}
-                value={formState.inputs.questionTitle.value}
-                valid={formState.inputs.questionTitle.isValid}
-              />
-              <h5 className="card-title mt-3">Body</h5>
-              <Input
-                id="questionDescription"
-                className="form-control"
-                rows="10"
-                placeholder="Enter question description..."
-                validators={[VALIDATOR_MINLENGTH(10)]}
-                errorText="Enter a suitable question description (at least 10 characters long)."
-                onInput={inputHandler}
-                value={formState.inputs.questionDescription.value}
-                valid={formState.inputs.questionDescription.isValid}
-              />
-              <button
-                className="btn mt-3"
-                type="submit"
-                disabled={!formState.isValid}
-              >
-                Update question
-              </button>
-            </form>
+        <div className="col-md">
+          <div className="card ask-question-container">
+            <div className="card-body">
+              {!isLoading && loadedQuestion && <form onSubmit={updateSubmitHandler}>
+                <h5 className="card-title">Heading</h5>
+                <Input
+                  id="questionTitle"
+                  className="form-control"
+                  element="input"
+                  type="text"
+                  placeholder="Enter question title"
+                  validators={[VALIDATOR_REQUIRE()]}
+                  errorText="Enter a suitable question heading."
+                  onInput={inputHandler}
+                  value={loadedQuestion.heading}
+                  valid={true}
+                />
+                <h5 className="card-title mt-3">Body</h5>
+                <Input
+                  id="questionDescription"
+                  className="form-control"
+                  rows="10"
+                  placeholder="Enter question description..."
+                  validators={[VALIDATOR_MINLENGTH(10)]}
+                  errorText="Enter a suitable question description (at least 10 characters long)."
+                  onInput={inputHandler}
+                  value={loadedQuestion.text}
+                  valid={true}
+                />
+                <button
+                  className="btn mt-3"
+                  type="submit"
+                  disabled={!formState.isValid}
+                >
+                  Update question
+                </button>
+              </form>}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

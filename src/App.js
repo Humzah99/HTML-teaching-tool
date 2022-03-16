@@ -12,6 +12,7 @@ import UserForum from "./forum/pages/Forum";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import NewForumQuestion from "./forum/pages/NewForumQuestion";
 import UpdateForumQuestion from "./forum/pages/UpdateForumQuestion";
+import UserQuestions from "./forum/pages/UserQuestions";
 import Auth from "./user/pages/Auth";
 import { AuthContext } from "./shared/components/context/auth-context";
 import ForumQuestion from "./forum/pages/ForumQuestion";
@@ -21,11 +22,17 @@ import Homepage from './shared/components/Homepage/Homepage';
 import DocumentationRender from "./documentation/pages/DocumentationRender";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const login = useCallback(() => {
+  const [username, setUsername] = useState(false);
+  const [userId, setUserId] = useState(false);
+  const login = useCallback((uname, uid) => {
     setIsLoggedIn(true);
+    setUsername(uname);
+    setUserId(uid);
   }, []);
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUsername(null);
+    setUserId(null);
   }, []);
 
   let routes;
@@ -48,6 +55,10 @@ function App() {
         <Route path="/forum/view/:questionId" exact>
           <MainNavigation />
           <ForumQuestion />
+        </Route>
+        <Route path="/forum/user/:userId" exact>
+          <MainNavigation />
+          <UserQuestions />
         </Route>
         <Route path="/forum/update/:questionId" exact>
           <MainNavigation />
@@ -95,6 +106,10 @@ function App() {
           <MainNavigation />
           <ForumQuestion />
         </Route>
+        <Route path="/forum/user/:userId" exact>
+          <MainNavigation />
+          <UserQuestions />
+        </Route>
         <Route path="/forum/update/:questionId" exact>
           <MainNavigation />
           <UpdateForumQuestion />
@@ -121,13 +136,13 @@ function App() {
           <MainNavigation />
           <DocumentationRender />
         </Route>
-        <Redirect to="/auth" />
+        <Redirect to="/auth" /> 
       </Switch>
     );
   }
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      value={{ isLoggedIn: isLoggedIn, username: username, userId: userId, login: login, logout: logout }}
     >
       <Router>{routes}</Router>
     </AuthContext.Provider>
