@@ -13,11 +13,14 @@ const Forum = () => {
                 const responseData = await sendRequest('http://localhost:5000/api/forum');
                 console.log(responseData.forumQuestions);
                 setLoadedForum(responseData.forumQuestions);
-            } catch (err) {}
+            } catch (err) { }
         };
         fetchForum();
     }, [sendRequest]);
 
+    const questionDeletedHandler = deletedQuestionId => {
+        setLoadedForum(prevQuestions => prevQuestions.filter(question => question.id !== deletedQuestionId));
+    };
     return (
         <React.Fragment>
             <Modal show={!!error} onClear={clearError}>
@@ -42,7 +45,7 @@ const Forum = () => {
                     </div>
                 </div>
             )}
-            {!isLoading && loadedForum && <ForumList items={loadedForum} />}
+            {!isLoading && loadedForum && <ForumList items={loadedForum} onDeleteQuestion={questionDeletedHandler} />}
         </React.Fragment>
     )
 };

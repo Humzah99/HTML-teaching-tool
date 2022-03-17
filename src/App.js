@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -20,24 +20,15 @@ import NewQuiz from "./quiz/pages/NewQuiz";
 import ForgottenDetails from "./user/pages/ForgottenDetails";
 import Homepage from './shared/components/Homepage/Homepage';
 import DocumentationRender from "./documentation/pages/DocumentationRender";
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState(false);
-  const [userId, setUserId] = useState(false);
-  const login = useCallback((uname, uid) => {
-    setIsLoggedIn(true);
-    setUsername(uname);
-    setUserId(uid);
-  }, []);
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-    setUsername(null);
-    setUserId(null);
-  }, []);
+import { useAuth } from "./shared/hooks/auth-hook";
 
+function App() {
+
+  const { token, login, logout, userId, username } = useAuth();
+  
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path="/documentation" exact>
@@ -136,13 +127,13 @@ function App() {
           <MainNavigation />
           <DocumentationRender />
         </Route>
-        <Redirect to="/auth" /> 
+        <Redirect to="/auth" />
       </Switch>
     );
   }
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, username: username, userId: userId, login: login, logout: logout }}
+      value={{ isLoggedIn: !!token, token: token, username: username, userId: userId, login: login, logout: logout }}
     >
       <Router>{routes}</Router>
     </AuthContext.Provider>

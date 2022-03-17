@@ -219,3 +219,8 @@ iframe {
   opacity: 0.5;
   filter: alpha(opacity=50);
 }
+
+.no-questions-card {
+  width: 40% !important;
+  margin-left: 33%;
+}

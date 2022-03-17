@@ -4,15 +4,14 @@ import { Modal } from "react-bootstrap";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useHistory } from "react-router-dom";
 
 const ForumItem = props => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-
-  console.log(auth.userId);
-  console.log(props.user.id);
-
+  const history = useHistory();
+  console.log(props);
   const showDeleteWarningHandler = () => {
     setShowConfirmationModal(true);
   };
@@ -24,8 +23,9 @@ const ForumItem = props => {
   const confirmDeleteHandler = async () => {
     setShowConfirmationModal(false);
     try {
-      await sendRequest(`http://localhost:5000/api/forum/${props.id}`, 'DELETE');
+      await sendRequest(`http://localhost:5000/api/forum/${props.id}`, 'DELETE', null, {Authorization: 'Bearer ' + auth.token});
       props.onDelete(props.id)
+      history.push(`/forum`);
     }
     catch (err) { }
   };
@@ -98,7 +98,7 @@ const ForumItem = props => {
             </div>
           </div>
         </div>
-        <div class="card-footer">
+        <div className="card-footer">
           <strong><p className="float-end text-muted"> {props.user.username} asked {props.createdAt}</p></strong>
         </div>
       </div>
