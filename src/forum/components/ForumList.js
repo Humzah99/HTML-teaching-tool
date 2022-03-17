@@ -10,10 +10,18 @@ const ForumList = props => {
   if (props.items.length === 0) {
     return (
       <div className="container">
-        <button className="btn btn-lg">Ask question</button>
-        <div className="card">
-          <div className="card-body">
-            No questions found. Try to add a question...
+        <div className="card no-questions-card mt-5">
+          <div className="card-body text-center">
+            <h5>No questions found. Try to add a question...</h5>
+            {auth.isLoggedIn ? (
+            <Link to="/forum/new" className="btn mt-3">
+              Ask question
+            </Link>
+            ) : (
+              <Link to="/auth" className="btn mt-3">
+                Ask question
+              </Link>
+            )}
           </div>
         </div>
       </div>

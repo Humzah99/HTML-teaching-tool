@@ -35,10 +35,9 @@ const NewForumQuestion = () => {
         text: formState.inputs.questionDescription.value,
         // image: null,
         // codeString: formState.inputs.codeString.value,
-        user: auth.userId
       }),
-        { 'Content-Type': 'application/json' }
-      )
+        { 'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token }
+      );
       history.push('/');
     }
     //Redirect user to different page

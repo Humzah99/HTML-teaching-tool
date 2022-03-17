@@ -64,7 +64,8 @@ const UpdateForumQuestion = () => {
         text: formState.inputs.questionDescription.value
       }),
         {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + auth.token
         }
       );
       history.push(`/forum`);
