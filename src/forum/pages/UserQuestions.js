@@ -46,7 +46,9 @@ const UserQuestions = () => {
                     </div>
                 </div>
             )}
-            {!isLoading && loadedQuestions && (<ForumList items={loadedQuestions} onDeleteQuestion={questionDeletedHandler} />)}
+            {!isLoading && loadedQuestions && (
+                <ForumList items={loadedQuestions} onDeleteQuestion={questionDeletedHandler} />
+            )}
         </React.Fragment>
     );
 };
