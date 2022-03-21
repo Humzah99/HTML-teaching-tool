@@ -1,4 +1,4 @@
-import React, { useState, useContext/*, useRef*/ } from "react";
+import React, { useState, useContext } from "react";
 import Input from "../../shared/components/FormValidation/Input";
 import { Modal } from "react-bootstrap";
 import {
@@ -15,7 +15,7 @@ import { AuthContext } from "../../shared/components/context/auth-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import ImageUpload from "../../shared/components/ImageUpload/ImageUpload";
+import SignUpForm from "../components/SignUpForm";
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 
@@ -88,44 +88,26 @@ const Auth = () => {
   const authSubmitHandler = async event => {
     event.preventDefault();
 
-    console.log(formState.inputs)
-    if (isLogin) {
-      try {
-        const responseData = await sendRequest(
-          'http://localhost:5000/api/user/login',
-          'POST',
-          JSON.stringify({
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value
-          }),
-          {
-            'Content-Type': 'application/json'
-          })
-        console.log(responseData);
-        auth.login(responseData.username, responseData.userId, responseData.token);
-      } catch (err) {
-
-      }
-
-    } else {
-      try {
-        const formData = new FormData();
-        formData.append('firstname', formState.inputs.firstname.value);
-        formData.append('surname', formState.inputs.surname.value);
-        formData.append('username', formState.inputs.username.value);
-        formData.append('email', formState.inputs.email.value);
-        formData.append('password', formState.inputs.password.value);
-        formData.append('image', formState.inputs.image.value);
-        const responseData = await sendRequest(
-          'http://localhost:5000/api/user/signup',
-          'POST',
-          formData
-        );
-
-        auth.login(responseData.username, responseData.userId, responseData.token);
-      } catch (err) {
-      };
-    }
+    console.log(formState.inputs);
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:5000/api/user/login",
+        "POST",
+        JSON.stringify({
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value
+        }),
+        {
+          "Content-Type": "application/json"
+        }
+      );
+      console.log(responseData);
+      auth.login(
+        responseData.username,
+        responseData.userId,
+        responseData.token
+      );
+    } catch (err) {}
   };
   return (
     <React.Fragment>
@@ -133,9 +115,7 @@ const Auth = () => {
         <Modal.Header className="modal-header">
           <Modal.Title>Warning!</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal-body">
-          {error}
-        </Modal.Body>
+        <Modal.Body className="modal-body">{error}</Modal.Body>
         <Modal.Footer>
           <button className="btn btn-danger" onClick={clearError}>
             Ok
@@ -153,13 +133,15 @@ const Auth = () => {
           </a>
         </div>
         <div className="card mx-auto login-card">
-          {isLoading && <div className="overlay">
-            <div className="d-flex justify-content-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
+          {isLoading && (
+            <div className="overlay">
+              <div className="d-flex justify-content-center">
+                <div className="spinner-border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
               </div>
             </div>
-          </div>}
+          )}
           <div className="sign-up-link ms-auto">
             <button
               className="anchor-link"
@@ -169,99 +151,60 @@ const Auth = () => {
               {isLogin ? "Sign up" : "Login"}
             </button>
           </div>
-          <form onSubmit={authSubmitHandler} style={{ width: "121%" }}>
-            {!isLogin && (
-              <div>
+          {!isLogin ? (
+            <SignUpForm />
+          ) : (
+            <form onSubmit={authSubmitHandler} style={{ width: "100%" }}>
+              <React.Fragment>
                 <div className="row mb-3">
-                  <div className="col-sm-5">
+                  <div className="col-sm-10 login-input">
                     <Input
                       element="input"
-                      id="firstname"
-                      type="text"
-                      label="First Name"
+                      id="email"
+                      type="email"
+                      label="E-mail"
                       className="form-control rounded-3"
-                      validators={[VALIDATOR_REQUIRE()]}
-                      errorText="Please enter a valid first name."
-                      onInput={inputHandler}
-                    />
-                  </div>
-                  <div className="col-sm-5">
-                    <Input
-                      element="input"
-                      id="surname"
-                      type="text"
-                      label="Surname"
-                      className="form-control rounded-3"
-                      validators={[VALIDATOR_REQUIRE()]}
-                      errorText="Please enter a valid surname."
+                      validators={[VALIDATOR_EMAIL()]}
+                      errorText="Please enter a valid e-mail address."
                       onInput={inputHandler}
                     />
                   </div>
                 </div>
                 <div className="row mb-3">
-                  <div className="col-sm-10">
+                  <div className="col-sm-10 login-input">
+                    {passwordShown ? (
+                      <span className="eye-icon" onClick={togglePassword}>
+                        {Eye}
+                      </span>
+                    ) : (
+                      <span className="eye-icon" onClick={togglePassword}>
+                        {EyeSlash}
+                      </span>
+                    )}
                     <Input
+                      //ref={pass}
                       element="input"
-                      id="username"
-                      type="text"
-                      label="Username"
+                      id="password"
+                      type={passwordShown ? "text" : "password"}
+                      label="Password"
                       className="form-control rounded-3"
                       validators={[VALIDATOR_MINLENGTH(8)]}
-                      errorText="Please enter a valid username."
+                      errorText="Please enter a valid password, at least 8 characters long."
                       onInput={inputHandler}
                     />
                   </div>
                 </div>
-              </div>
-            )}
-            {!isLogin && <ImageUpload center id="image" onInput={inputHandler} />}
-            <div className="row mb-3">
-              <div className="col-sm-10">
-                <Input
-                  element="input"
-                  id="email"
-                  type="email"
-                  label="E-mail"
-                  className="form-control rounded-3"
-                  validators={[VALIDATOR_EMAIL()]}
-                  errorText="Please enter a valid e-mail address."
-                  onInput={inputHandler}
-                />
-              </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-sm-10">
-                {passwordShown ? (
-                  <span className="eye-icon" onClick={togglePassword}>
-                    {Eye}
-                  </span>
-                ) : (
-                  <span className="eye-icon" onClick={togglePassword}>
-                    {EyeSlash}
-                  </span>
-                )}
-                <Input
-                  //ref={pass}
-                  element="input"
-                  id="password"
-                  type={passwordShown ? "text" : "password"}
-                  label="Password"
-                  className="form-control rounded-3"
-                  validators={[VALIDATOR_MINLENGTH(8)]}
-                  errorText="Please enter a valid password, at least 8 characters long."
-                  onInput={inputHandler}
-                />
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="btn rounded-pill mt-2"
-              style={{ width: "82%" }}
-              disabled={!formState.isValid}
-            >
-              {isLogin ? "Login" : "Sign up"}
-            </button>
-          </form>
+                <button
+                  type="submit"
+                  className="btn rounded-pill mt-2"
+                  style={{ width: "100%" }}
+                  disabled={!formState.isValid}
+                >
+                  Login
+                </button>
+              </React.Fragment>
+            </form>
+          )}
           {isLogin && (
             <a
               href="/forgottenDetails"

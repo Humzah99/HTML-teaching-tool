@@ -57,11 +57,9 @@ const NewQuiz = () => {
   const restartButtonHandler = () => {
     setRestart(true);
     setScore(score * 0);
-    if (restart) {
-      setShowScore(false);
-      setCurrentQuestion(0);
-    }
-    console.log(currentQuestion);
+    console.log(restart);
+    setShowScore(false);
+    setCurrentQuestion(0);
   };
 
   if (isLoading) {
