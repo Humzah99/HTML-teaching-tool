@@ -15,6 +15,7 @@ import { AuthContext } from "../../shared/components/context/auth-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import ImageUpload from "../../shared/components/ImageUpload/ImageUpload";
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 
@@ -52,7 +53,8 @@ const Auth = () => {
           ...formState.inputs,
           firstname: undefined,
           surname: undefined,
-          username: undefined
+          username: undefined,
+          image: undefined
         },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
@@ -70,6 +72,10 @@ const Auth = () => {
           },
           username: {
             value: "",
+            isValid: false
+          },
+          image: {
+            value: null,
             isValid: false
           }
         },
@@ -95,7 +101,7 @@ const Auth = () => {
           {
             'Content-Type': 'application/json'
           })
-          console.log(responseData);
+        console.log(responseData);
         auth.login(responseData.username, responseData.userId, responseData.token);
       } catch (err) {
 
@@ -103,19 +109,19 @@ const Auth = () => {
 
     } else {
       try {
+        const formData = new FormData();
+        formData.append('firstname', formState.inputs.firstname.value);
+        formData.append('surname', formState.inputs.surname.value);
+        formData.append('username', formState.inputs.username.value);
+        formData.append('email', formState.inputs.email.value);
+        formData.append('password', formState.inputs.password.value);
+        formData.append('image', formState.inputs.image.value);
         const responseData = await sendRequest(
           'http://localhost:5000/api/user/signup',
           'POST',
-          JSON.stringify({
-            username: formState.inputs.username.value,
-            firstname: formState.inputs.firstname.value,
-            surname: formState.inputs.surname.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value
-          }),
-          {
-            'Content-Type': 'application/json'
-          })
+          formData
+        );
+
         auth.login(responseData.username, responseData.userId, responseData.token);
       } catch (err) {
       };
@@ -208,6 +214,7 @@ const Auth = () => {
                 </div>
               </div>
             )}
+            {!isLogin && <ImageUpload center id="image" onInput={inputHandler} />}
             <div className="row mb-3">
               <div className="col-sm-10">
                 <Input

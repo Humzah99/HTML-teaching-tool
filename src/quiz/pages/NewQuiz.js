@@ -41,8 +41,6 @@ const NewQuiz = () => {
         await sendRequest('http://localhost:5000/api/scores/', 'POST', JSON.stringify({
           score: score,
           quiz: quizId,
-          // image: null,
-          // codeString: formState.inputs.codeString.value,
           user: auth.userId
         }),
           { 'Content-Type': 'application/json' }

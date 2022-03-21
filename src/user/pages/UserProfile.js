@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import Input from "../../shared/components/FormValidation/Input";
 import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
@@ -10,12 +10,14 @@ import {
   VALIDATOR_REQUIRE
 } from "../../shared/components/FormValidation/validators";
 import "../../shared/components/Style.css";
+import "../../shared/components/ImageUpload/ImageUpload.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
+import { Link } from "react-router-dom";
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 
@@ -24,7 +26,6 @@ const EyeSlash = <FontAwesomeIcon className="icon" icon={faEyeSlash} />;
 const UserProfile = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const pass = useRef();
   const history = useHistory();
   const auth = useContext(AuthContext);
   const userId = useParams().userId;
@@ -62,7 +63,7 @@ const UserProfile = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(`http://localhost:5000/api/user/${userId}`);
-        console.log(responseData.user);
+        console.log(responseData.questions);
         setLoadedUser(responseData.user);
         setFormData(
           {
@@ -93,6 +94,7 @@ const UserProfile = () => {
       }
     };
     fetchUser();
+
   }, [sendRequest, userId]);
 
 
@@ -143,6 +145,7 @@ const UserProfile = () => {
     );
   }
 
+  console.log(loadedUser);
 
   return (
     <React.Fragment>
@@ -159,108 +162,107 @@ const UserProfile = () => {
           </button>
         </Modal.Footer>
       </Modal>
-      <div className="container" style={{ marginTop: "10%" }}>
-        <div className="card mx-auto login-card">
-          {!isLoading && loadedUser && <form onSubmit={updateSubmitHandler} style={{ width: "121%" }}>
-            <div>
-              <div className="row mb-3">
-                <div className="col-sm-5">
-                  <Input
-                    element="input"
-                    id="firstName"
-                    type="text"
-                    label="First Name"
-                    className="form-control rounded-3"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid first name."
-                    onInput={inputHandler}
-                    value={loadedUser.firstname}
-                    valid={true}
-                  />
+      <div className="row">
+        <div className="col-md-6" style={{ marginTop: "5%" }}>
+          <div className="card mx-auto login-card">
+            {!isLoading && loadedUser && <form onSubmit={updateSubmitHandler} style={{ width: "121%" }}>
+              <div>
+                <div className="row mb-3">
+                  <div className="col-sm-12">
+                    <img className="user-profile-image"
+                      src={`http://localhost:5000/${loadedUser.image}`} alt={loadedUser.firstname + " " + loadedUser.surname}
+                    />
+                  </div>
+                  <div className="col-sm-6">
+                    <Input
+                      element="input"
+                      id="firstName"
+                      type="text"
+                      label="First Name"
+                      className="form-control rounded-3"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please enter a valid first name."
+                      onInput={inputHandler}
+                      value={loadedUser.firstname}
+                      valid={true}
+                    />
+                  </div>
+                  <div className="col-sm-6">
+                    <Input
+                      element="input"
+                      id="surname"
+                      type="text"
+                      label="Surname"
+                      className="form-control rounded-3"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please enter a valid surname."
+                      onInput={inputHandler}
+                      value={loadedUser.surname}
+                      valid={true}
+                    />
+                  </div>
                 </div>
-                <div className="col-sm-5">
+                <div className="row mb-3">
+                  <div className="col-sm-12">
+                    <Input
+                      element="input"
+                      id="username"
+                      type="text"
+                      label="Username"
+                      className="form-control rounded-3"
+                      disabled={true}
+                      validators={[VALIDATOR_MINLENGTH(8)]}
+                      errorText="Please enter a valid username."
+                      onInput={inputHandler}
+                      value={loadedUser.username}
+                      valid={true}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row mb-3">
+                <div className="col-sm-12">
                   <Input
                     element="input"
-                    id="surname"
-                    type="text"
-                    label="Surname"
+                    id="email"
+                    type="email"
+                    label="E-mail"
                     className="form-control rounded-3"
-                    validators={[VALIDATOR_REQUIRE()]}
-                    errorText="Please enter a valid surname."
+                    disabled={true}
+                    validators={[VALIDATOR_EMAIL()]}
+                    errorText="Please enter a valid e-mail address."
                     onInput={inputHandler}
-                    value={loadedUser.surname}
+                    value={loadedUser.email}
                     valid={true}
                   />
                 </div>
               </div>
               <div className="row mb-3">
-                <div className="col-sm-10">
+                <div className="col-sm-12">
+                  {passwordShown ? (
+                    <span className="eye-icon" onClick={togglePassword}>
+                      {Eye}
+                    </span>
+                  ) : (
+                    <span className="eye-icon" onClick={togglePassword}>
+                      {EyeSlash}
+                    </span>
+                  )}
                   <Input
                     element="input"
-                    id="username"
-                    type="text"
-                    label="Username"
+                    id="password"
+                    type={passwordShown ? "text" : "password"}
+                    label="Password"
                     className="form-control rounded-3"
-                    disabled="true"
                     validators={[VALIDATOR_MINLENGTH(8)]}
-                    errorText="Please enter a valid username."
+                    errorText="Please enter a valid password, at least 8 characters long."
                     onInput={inputHandler}
-                    value={loadedUser.username}
+                    value={loadedUser.password}
                     valid={true}
                   />
                 </div>
               </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-sm-10">
-                <Input
-                  element="input"
-                  id="email"
-                  type="email"
-                  label="E-mail"
-                  className="form-control rounded-3"
-                  disabled="true"
-                  validators={[VALIDATOR_EMAIL()]}
-                  errorText="Please enter a valid e-mail address."
-                  onInput={inputHandler}
-                  value={loadedUser.email}
-                  valid={true}
-                />
-              </div>
-            </div>
-            <div className="row mb-3">
-              <div className="col-sm-10">
-                {passwordShown ? (
-                  <span className="eye-icon" onClick={togglePassword}>
-                    {Eye}
-                  </span>
-                ) : (
-                  <span className="eye-icon" onClick={togglePassword}>
-                    {EyeSlash}
-                  </span>
-                )}
-                <Input
-                  ref={pass}
-                  element="input"
-                  id="password"
-                  type={passwordShown ? "text" : "password"}
-                  label="Password"
-                  className="form-control rounded-3"
-                  validators={[VALIDATOR_MINLENGTH(8)]}
-                  errorText="Please enter a valid password, at least 8 characters long."
-                  onInput={inputHandler}
-                  value={loadedUser.password}
-                  valid={true}
-                />
-              </div>
-            </div>
-            <div className="row mt-5">
-              <div className="col-md-4" style={{ marginRight: "20%" }}>
-                <Link to="/" className="btn btn-secondary me-5">
-                  Cancel
-                </Link>
-              </div>
-              <div className="col-md-4">
+              <div className="row mt-5 text-center" style={{ width: '28%', marginLeft: '33%' }}>
                 <button
                   type="submit"
                   className="btn"
@@ -269,9 +271,109 @@ const UserProfile = () => {
                   Save Changes
                 </button>
               </div>
-              <div className="col-md-4"></div>
+            </form>}
+          </div>
+        </div>
+        <div className="col-md-6" style={{ marginTop: "5%" }}>
+          <div className="row latest-questions-card">
+            <div className="card lq-card-item">
+              <div className="card-title">
+                <div className="row mt-4 ms-2">
+                  <div className="col-md-3">
+                    <h3>Latest Questions</h3>
+                  </div>
+                  <div className="col-md-3">
+                    <button className="btn rounded-pill" to={`/forum/user/${auth.userId}`} disabled={loadedUser.questions.length <= 0}>View My Questions</button>
+                  </div>
+                </div>
+              </div>
+              {loadedUser.questions.length > 0 ? (<div className="card-body">
+                {loadedUser.questions.slice(loadedUser.questions.length - 2, loadedUser.questions.length).map(question => (
+                  <div className="card forum-list-card mt-3">
+                    <div className="card-body">
+                      <h5 className="card-title">{question.heading}</h5>
+                      <p className="card-text">{question.text}</p>
+                      <div className="d-flex bd-highlight">
+                        <div className="p-2 flex-fill bd-highlight"></div>
+                        <div className="p-2 flex-fill bd-highlight text-end">
+                          <button to={`/forum/view/${question.id}`} className="btn btn-success">
+                            View question
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>) : (
+                <React.Fragment>
+                  <div className="hr-line mt-3 mb-2"></div>
+                  <div className="card-body text-center mt-3">
+                    <h5>No questions found. Try to add a question...</h5>
+                    {auth.isLoggedIn ? (
+                      <Link to="/forum/new" className="btn rounded-pill mt-3">
+                        Ask question
+                      </Link>
+                    ) : (
+                      <button to="/auth" className="btn rounded-pill mt-3">
+                        Ask question
+                      </button>
+                    )}
+                  </div>
+                </React.Fragment>
+              )}
             </div>
-          </form>}
+          </div>
+          <div className="row latest-scores-card">
+            <div className="card ls-card-item">
+              <div className="card-title">
+                <div className="row mt-4 ms-2">
+                  <div className="col-md-3">
+                    <h3>Latest Scores</h3>
+                  </div>
+                  <div className="col-md-2">
+                    <button className="btn rounded-pill" disabled={loadedUser.scores.length <= 0}>View My Scores</button>
+                  </div>
+                </div>
+              </div>
+
+              {loadedUser.scores.length > 0 ? (<div className="card-body">
+                <table id="example" className="table table-striped" style={{ width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th>Quiz Name</th>
+                      <th>Quiz Date</th>
+                      <th>Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loadedUser.scores.slice(loadedUser.scores.length - 3, loadedUser.scores.length).sort((a, b) => a.score.quizDate - b.score.quizDate).map(score => (
+                      <tr key={score.quizDate}>
+                        <td>{score.quiz.title}</td>
+                        <td>{score.quizDate}</td>
+                        <td>{score.score}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>) : (
+                <React.Fragment>
+                  <div className="hr-line mt-3 mb-2"></div>
+                  <div className="card-body text-center mt-3">
+                    <h5>No scores found. Attempt a quiz...</h5>
+                    {auth.isLoggedIn ? (
+                      <Link to="/quiz" className="btn rounded-pill mt-3">
+                        Go To Quiz
+                      </Link>
+                    ) : (
+                      <button to="/auth" className="btn rounded-pill mt-3">
+                        Go To Quiz
+                      </button>
+                    )}
+                  </div>
+                </React.Fragment>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </React.Fragment>
