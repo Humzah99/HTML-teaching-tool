@@ -20,13 +20,58 @@ body {
 .nav-link:hover {
   color: #f5816e;
   opacity: 0.6;
+  transition: 0.3s;
+}
+
+.nav-link.dropdown-toggle {
+  margin-left: 90px;
+}
+
+.nav-link.dropdown-toggle:focus {
+  color: #fcedda !important;
+  background-color: #f5816e;
+  font-weight: bold;
+  border-radius: 30px;
+}
+
+.dropdown-menu.show {
+  background-color: #fcedda;
+}
+
+.dropdown-item:hover {
+  background: transparent;
+}
+
+.logout-btn {
+  width: 70%;
+  margin-left: 10%;
+}
+
+.dashboard-link {
+  opacity: 1;
+}
+.dashboard-link:hover {
+  color: #f5816e !important;
+  opacity: 0.6;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none !important;
+}
+
+.navbar-toggler:hover {
+  opacity: 1.4;
+  transition: 0.5s;
+}
+
+.navbar-toggler {
+  transition: 0.5s;
 }
 
 .code-editor-active,
 .nav-link.active {
-  background-color: #f5816e;
-  color: #fcedda !important;
-  border-radius: 5px;
+  border-bottom: 2px solid #f5816e;
+  color: #f5816e !important;
 }
 
 .code-editor-link {
@@ -248,15 +293,28 @@ iframe {
 .latest-scores-card {
   margin-top: 5%;
 }
-.latest-scores-card, .latest-questions-card, .no-user-questions-card, .no-scores-card {
+.latest-scores-card,
+.latest-questions-card,
+.no-user-questions-card,
+.no-scores-card {
   margin-right: 20%;
 }
 
-.ls-card-item, .lq-card-item {
+.ls-card-item,
+.lq-card-item {
   border-radius: 3%;
-  box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(39, 40, 46, 0.2);
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+    0 15px 40px rgba(39, 40, 46, 0.2);
 }
 
 .login-input {
   width: 121%;
+}
+
+/*MOBILE NAVBAR CONSTRAINTS*/
+@media only screen and (max-width: 988px) {
+  .nav-link.active {
+    border: none;
+    font-weight: bold;
+  }
 }

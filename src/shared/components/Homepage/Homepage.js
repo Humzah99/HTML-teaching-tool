@@ -6,28 +6,11 @@ import QuizCode from "../../images/quiz-ss.png";
 import UserForumCode from "../../images/user-forum-ss.png";
 import { AuthContext } from "../context/auth-context";
 import SignUpForm from "../../../user/components/SignUpForm";
-import Input from "../FormValidation/Input";
 import { useHttpClient } from "../../hooks/http-hook";
 import { Modal } from "react-bootstrap";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE
-} from "../FormValidation/validators";
 import "./Homepage.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useForm } from "../../hooks/forms-hooks";
-
-// const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
-
-// const EyeSlash = <FontAwesomeIcon className="icon" icon={faEyeSlash} />;
 const LoggedInHomepage = () => {
   const auth = useContext(AuthContext);
-  // const [passwordShown, setPasswordShown] = useState(false);
-  //const pass = useRef();
-  //const [formState, inputHandler] = useForm(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedDocumentation, setLoadedDocumentation] = useState();
   const [loadedQuiz, setLoadedQuiz] = useState();
@@ -51,36 +34,9 @@ const LoggedInHomepage = () => {
         setLoadedQuiz(responseData.quiz);
       } catch (err) {}
     };
-    fetchDocumentation();
-    fetchQuiz();
+      fetchDocumentation();
+      fetchQuiz();
   }, [sendRequest]);
-
-  console.log(auth);
-  // const togglePassword = () => {
-  //   setPasswordShown(!passwordShown);
-  // };
-
-  // const authSubmitHandler = async event => {
-  //   event.preventDefault();
-  //   console.log(formState.inputs);
-  //   try {
-  //     await sendRequest(
-  //       "http://localhost:5000/api/user/signup",
-  //       "POST",
-  //       JSON.stringify({
-  //         username: formState.inputs.username.value,
-  //         firstname: formState.inputs.firstname.value,
-  //         surname: formState.inputs.surname.value,
-  //         email: formState.inputs.email.value,
-  //         password: formState.inputs.password.value
-  //       }),
-  //       {
-  //         "Content-Type": "application/json"
-  //       }
-  //     );
-  //     auth.login();
-  //   } catch (err) {}
-  // };
 
   if (isLoading) {
     return (
@@ -230,11 +186,9 @@ const LoggedInHomepage = () => {
                 {" "}
                 {isLoading && (
                   <div class="overlay">
-                    {/* <div class="d-flex justify-content-center"> */}
                     <div class="spinner-border" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>
-                    {/* </div> */}
                   </div>
                 )}
                 <h2 className="mb-5">
