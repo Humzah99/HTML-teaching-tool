@@ -22,7 +22,7 @@ const NavLinks = props => {
   return (
     <React.Fragment>
       <button
-        class="navbar-toggler"
+        className="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNav"
@@ -30,7 +30,7 @@ const NavLinks = props => {
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon">{NavbarCollapseIcon}</span>
+        <span className="navbar-toggler-icon">{NavbarCollapseIcon}</span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">

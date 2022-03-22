@@ -9,27 +9,29 @@ import Codepen from "./Codepen";
 // import Codepen from "./Codepen";
 
 const DocumentationRender = () => {
+  var beautify_html = require("js-beautify").html;
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedDocumentation, setLoadedDocumentation] = useState();
   const [showCodePenModal, setShowCodePenModal] = useState(false);
-  const [currentCodeString, setCurrentCodeString] = useState('');
+  const [currentCodeString, setCurrentCodeString] = useState("");
   const documentationId = useParams().docId;
 
   useEffect(() => {
     const fetchDocumentation = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/api/documentation/${documentationId}`);
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/documentation/${documentationId}`
+        );
         setLoadedDocumentation(responseData.documentation);
         console.log(loadedDocumentation);
-      }
-      catch (err) { }
-    }
+      } catch (err) {}
+    };
     fetchDocumentation();
-  }, [sendRequest, documentationId])
+  }, [sendRequest, documentationId]);
 
-  const showCodePenHandler = (codeString) => {
+  const showCodePenHandler = codeString => {
     setShowCodePenModal(true);
-    setCurrentCodeString(codeString)
+    setCurrentCodeString(codeString);
   };
 
   const cancelCodePenHandler = () => {
@@ -42,16 +44,18 @@ const DocumentationRender = () => {
         <Modal.Header className="modal-header">
           <Modal.Title>Warning!</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal-body">
-          {error}
-        </Modal.Body>
+        <Modal.Body className="modal-body">{error}</Modal.Body>
         <Modal.Footer>
           <button className="btn btn-danger" onClick={clearError}>
             Ok
           </button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showCodePenModal} onCancel={cancelCodePenHandler} style={{ width: "85%" }}>
+      <Modal
+        show={showCodePenModal}
+        onCancel={cancelCodePenHandler}
+        style={{ width: "85%" }}
+      >
         <Modal.Body className="modal-body codepen-modal">
           <Codepen givenHtml={`${currentCodeString}`} />
         </Modal.Body>
@@ -71,69 +75,73 @@ const DocumentationRender = () => {
           </div>
         </div>
       )}
-      
-      {!isLoading && loadedDocumentation && <div className="container mb-5">
-        <div className="documentation-title mt-4">
-          <h2>HTML {loadedDocumentation.title}</h2>
-        </div>
-        <div className="hr-line mb-2"></div>
-        {loadedDocumentation.content.map((information, index) => {
-          return (
-            <div className="tutorial-section" key={index}>
-              <h4 className="mb-2">{information.subTitle}</h4>
-              {loadedDocumentation.content[index].information.map(
-                (information, index) => {
-                  return (
-                    <p
-                      className="content h6 mb-4"
+
+      {!isLoading && loadedDocumentation && (
+        <div className="container mb-5">
+          <div className="documentation-title mt-4">
+            <h2>HTML {loadedDocumentation.title}</h2>
+          </div>
+          <div className="hr-line mb-2"></div>
+          {loadedDocumentation.content.map((information, index) => {
+            return (
+              <div className="tutorial-section" key={index}>
+                <h4 className="mb-2">{information.subTitle}</h4>
+                {loadedDocumentation.content[index].information.map(
+                  (information, index) => {
+                    return (
+                      <p
+                        className="content h6 mb-4"
+                        key={index}
+                        style={{ fontSize: "15px" }}
+                      >
+                        {information}
+                      </p>
+                    );
+                  }
+                )}
+                {loadedDocumentation.content[index].codeString != null && (
+                  <>
+                    <SyntaxHighlighter
+                      language="javascript"
+                      style={duotoneForest}
                       key={index}
-                      style={{ fontSize: "15px" }}
                     >
-                      {information}
-                    </p>
-                  );
-                }
-              )}
-              {loadedDocumentation.content[index].codeString != null && (
-                <>
-                  <SyntaxHighlighter
-                    language="javascript"
-                    style={duotoneForest}
+                      {beautify_html(information.codeString, {
+                        indent_size: 2
+                      })}
+                    </SyntaxHighlighter>
+                    <button
+                      className="btn mb-2"
+                      onClick={() => showCodePenHandler(information.codeString)}
+                    >
+                      Try it yourself
+                    </button>
+                  </>
+                )}
+                <div className="hr-line mt-3 mb-5"></div>
+              </div>
+            );
+          })}
+          {loadedDocumentation.chapterSummary.length > 0 && (
+            <>
+              <div className="chapter-summary-title mb-3">
+                <h4>Chapter Summary</h4>
+              </div>
+              {loadedDocumentation.chapterSummary.map((summary, index) => {
+                return (
+                  <p
+                    className="content h6"
                     key={index}
+                    style={{ fontSize: "15px" }}
                   >
-                    {information.codeString}
-                  </SyntaxHighlighter>
-                  <button
-                    className="btn mb-2"
-                    onClick={() => showCodePenHandler(information.codeString)}
-                  >
-                    Try it yourself
-                  </button>
-                </>
-              )}
-              <div className="hr-line mt-3 mb-5"></div>
-            </div>
-          );
-        })}
-        {loadedDocumentation.chapterSummary.length > 0 && (
-          <>
-            <div className="chapter-summary-title mb-3">
-              <h4>Chapter Summary</h4>
-            </div>
-            {loadedDocumentation.chapterSummary.map((summary, index) => {
-              return (
-                <p
-                  className="content h6"
-                  key={index}
-                  style={{ fontSize: "15px" }}
-                >
-                  {summary}
-                </p>
-              );
-            })}
-          </>
-        )}
-      </div>}
+                    {summary}
+                  </p>
+                );
+              })}
+            </>
+          )}
+        </div>
+      )}
     </>
   );
 };

@@ -73,6 +73,10 @@ const ForumQuestion = () => {
     };
   };
 
+  const answerDeletedHandler = deletedAnswerId => {
+    setViewAnswers(prevAnswers=> prevAnswers.filter(answer => answer.id !== deletedAnswerId));
+};
+
   // for (let codeResponse of identifiedQuestion.codeResponses) {
   //   const card = (
   //     <React.Fragment>
@@ -152,7 +156,7 @@ const ForumQuestion = () => {
               <strong><p className="float-end text-muted"> Asked {viewQuestion.createdAt} by {viewQuestion.user.username}</p></strong>
             </div>
           </div>
-          {!isLoading && viewAnswers && (<ForumAnswersList items={viewAnswers} />)}
+          {!isLoading && viewAnswers && (<ForumAnswersList items={viewAnswers} onDeleteAnswer={answerDeletedHandler}/>)}
 
           {auth.isLoggedIn && (
             <React.Fragment>

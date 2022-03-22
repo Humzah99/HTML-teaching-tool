@@ -33,7 +33,7 @@ const ForumAnswersList = props => {
                         user={answer.user}
                         question={answer.question}
                         createdAt={answer.createdAt}
-                    //   onDelete={props.onDeleteQuestion}
+                        onDelete={props.onDeleteAnswer}
                     />
                 ))
             }

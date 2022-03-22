@@ -101,11 +101,14 @@ body {
 h2,
 h3,
 h4,
-h5,
 p,
 th,
 tr:nth-child(2n) {
   background-color: #fcedda;
+  color: #f5816e;
+}
+
+h5 {
   color: #f5816e;
 }
 
