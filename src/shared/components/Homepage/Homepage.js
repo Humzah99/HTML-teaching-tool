@@ -1,11 +1,14 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import HtmlDocumentationCode from "../../images/blurred-html-code.png";
+import WebsiteLogo from "../../images/website-logo.png";
+import HtmlDocumentationCode from "../../images/html-code.jpeg";
 import QuizCode from "../../images/quiz-ss.png";
 import UserForumCode from "../../images/user-forum-ss.png";
+import HtmlCarouselDoc from "../../images/html-carousel-doc.jpg"
+import HtmlCarouselQuizImg from "../../images/html-carousel-quiz.jpg"
+import HtmlCarouselForumImg from "../../images/html-carousel-forum.jpg"
 import { AuthContext } from "../context/auth-context";
-import SignUpForm from "../../../user/components/SignUpForm";
 import { useHttpClient } from "../../hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import "./Homepage.css";
@@ -23,7 +26,7 @@ const LoggedInHomepage = () => {
         );
         console.log(responseData.documentation);
         setLoadedDocumentation(responseData.documentation);
-      } catch (err) {}
+      } catch (err) { }
     };
     const fetchQuiz = async () => {
       try {
@@ -32,10 +35,10 @@ const LoggedInHomepage = () => {
         );
         console.log(responseData.quiz);
         setLoadedQuiz(responseData.quiz);
-      } catch (err) {}
+      } catch (err) { }
     };
-      fetchDocumentation();
-      fetchQuiz();
+    fetchDocumentation();
+    fetchQuiz();
   }, [sendRequest]);
 
   if (isLoading) {
@@ -64,141 +67,191 @@ const LoggedInHomepage = () => {
         </Modal.Footer>
       </Modal>
       {auth.isLoggedIn ? (
-        <div className="row">
-          {!isLoading && loadedDocumentation && (
-            <div className="col-lg-6 first-col">
-              <div className="card featured-doc-card text-center">
-                <img
-                  src={HtmlDocumentationCode}
-                  className="card-img"
-                  alt="..."
-                />
-                <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
-                  <h3 className="card-title">
-                    HTML {loadedDocumentation.title}
-                  </h3>
+        // <div className="row">
+        //   {!isLoading && loadedDocumentation && (
+        //     <div className="col-lg-6 first-col">
+        //       <div className="card featured-doc-card text-center">
+        //         <img
+        //           src={HtmlDocumentationCode}
+        //           className="card-img doc-card-img"
+        //           alt="..."
+        //         />
+        //         <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
+        //           <h3 className="card-title">
+        //             HTML {loadedDocumentation.title}
+        //           </h3>
+        //         </div>
+        //       </div>
+        //       <div className="featured-button-container">
+        //         <Link
+        //           to={`/documentation/${loadedDocumentation.id}`}
+        //           className="btn rounded-pill mt-2"
+        //           style={{ width: "20%" }}
+        //         >
+        //           Go to {loadedDocumentation.title} documentation
+        //         </Link>
+        //       </div>
+        //     </div>
+        //   )}
+        //   {!isLoading && loadedQuiz && (
+        //     <div className="col-lg-6">
+        //       <div className="card featured-quiz-card text-center">
+        //         <img src={QuizCode} className="card-img quiz-card-img" alt="..." />
+        //         <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
+        //           <h3 className="card-title">{loadedQuiz.title}</h3>
+        //         </div>
+        //       </div>
+        //       <div className="featured-button-container">
+        //         <Link
+        //           to={`/quiz/${loadedQuiz.id}`}
+        //           className="btn rounded-pill mt-2"
+        //           style={{ width: "20%" }}
+        //         >
+        //           Go to {loadedQuiz.title} quiz
+        //         </Link>
+        //       </div>
+        //     </div>
+        //   )}
+        // </div>
+        <React.Fragment>
+          <header className="logged-in-homepage-header">
+            <div className="row welcome-user float-start mt-4 ms-4">
+              <h3>Welcome {auth.username}</h3>
+            </div>
+            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="10000">
+                  <img src={HtmlCarouselDoc} class="d-block w-100 bg-image" alt="..." />
+                  <div class="carousel-caption d-none d-md-block bg-text">
+                    <h2 style={{ backgroundColor: 'transparent' }}>HTML Documentation</h2>
+                    <p>Discover the core HTML elements through our dedicated documentation...</p>
+                  </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="2000">
+                  <img src={HtmlCarouselForumImg} class="d-block w-100 bg-image" alt="..." />
+                  <div class="carousel-caption d-none d-md-block bg-text">
+                    <h2 style={{ backgroundColor: 'transparent' }}>User Forum</h2>
+                    <p>Ask and respond interatively on the go on the user forum...</p>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <img src={HtmlCarouselQuizImg} class="d-block w-100 bg-image" alt="..." />
+                  <div class="carousel-caption d-none d-md-block bg-text">
+                    <h2 style={{ backgroundColor: 'transparent' }}>Quiz</h2>
+                    <p>Test your HTML knowledge and track your learning progress by undertaking a range of quizzes...</p>
+                  </div>
                 </div>
               </div>
-              <div className="featured-button-container">
-                <Link
-                  to={`/documentation/${loadedDocumentation.id}`}
-                  className="btn rounded-pill mt-2"
-                  style={{ width: "20%" }}
-                >
-                  Go to {loadedDocumentation.title} documentation
-                </Link>
-              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
-          )}
-          {!isLoading && loadedQuiz && (
-            <div className="col-lg-6">
-              <div className="card featured-quiz-card text-center">
-                <img src={QuizCode} className="card-img" alt="..." />
-                <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
-                  <h3 className="card-title">{loadedQuiz.title}</h3>
+          </header>
+          <main>
+            <ul id="cards">
+              {!isLoading && loadedDocumentation && (<li class="homepage-card" id="card_1">
+                <div class="card__content">
+                  <div>
+                    <h2>Featured Documentation</h2>
+                    <p>HTML {loadedDocumentation.title}</p>
+                    <p><Link
+                      to={`/documentation/${loadedDocumentation.id}`}
+                      className="btn btn--accent rounded-pill"
+                    >
+                      Go to {loadedDocumentation.title} documentation
+                    </Link></p>
+                  </div>
+                  <figure>
+                    <img src={HtmlDocumentationCode} alt="Image description" />
+                  </figure>
                 </div>
-              </div>
-              <div className="featured-button-container">
-                <Link
-                  to={`/quiz/${loadedQuiz.id}`}
-                  className="btn rounded-pill mt-2"
-                  style={{ width: "20%" }}
-                >
-                  Go to {loadedQuiz.title} quiz
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
+              </li>)}
+              {!isLoading && loadedQuiz && (
+                <li class="homepage-card" id="card_3">
+                  <div class="card__content">
+                    <div>
+                      <h2>Featured Quiz</h2>
+                      <p>{loadedQuiz.title}</p>
+                      <p>
+                        <Link
+                          to={`/quiz/${loadedQuiz.id}`}
+                          className="btn btn--accent rounded-pill"
+                        >
+                          Go to {loadedQuiz.title} quiz
+                        </Link>
+                      </p>
+                    </div>
+                    <figure>
+                      <img src={QuizCode} alt="Image description" />
+                    </figure>
+                  </div>
+                </li>
+              )}
+            </ul>
+          </main>
+        </React.Fragment>
       ) : (
-        <div className="row">
-          <div className="col-lg-6 first-col">
-            <div className="loh-container">
-              <Link to="/documentation" className="loh-carousel-link">
-                <div className="card loh-info-card">
-                  <img
-                    src={HtmlDocumentationCode}
-                    className="loh-card-img"
-                    alt="..."
-                  />
-                  <div className="card-img-overlay">
-                    <div className="bar">
-                      <div className="emptybar"></div>
-                      <div className="filledbar"></div>
-                    </div>
-                    <div className="circle">
-                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="stroke" cx="60" cy="60" r="50" />
-                      </svg>
-                    </div>
-                    <h3 className="card-title text-center">
-                      Discover each HTML element through our documentation...
-                    </h3>
-                  </div>
-                </div>
-              </Link>
-              <Link to="/forum" className="loh-carousel-link">
-                <div className="card loh-info-card">
-                  <img src={UserForumCode} className="loh-card-img" alt="..." />
-                  <div className="card-img-overlay">
-                    <div className="bar">
-                      <div className="emptybar"></div>
-                      <div className="filledbar"></div>
-                    </div>
-                    <div className="circle">
-                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="stroke" cx="60" cy="60" r="50" />
-                      </svg>
-                    </div>
-                    <h3 className="card-title text-center">
-                      Visit our dedicated user forum to view and ask
-                      questions...
-                    </h3>
-                  </div>
-                </div>
-              </Link>
-              <Link to="/quiz" className="loh-carousel-link">
-                <div className="card loh-info-card">
-                  <img src={QuizCode} className="loh-card-img" alt="..." />
-                  <div className="card-img-overlay">
-                    <div className="bar">
-                      <div className="emptybar"></div>
-                      <div className="filledbar"></div>
-                    </div>
-                    <div className="circle">
-                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="stroke" cx="60" cy="60" r="50" />
-                      </svg>
-                    </div>
-                    <h3 className="card-title text-center">
-                      Test your HTML knowledge by undertaking a range of
-                      quizzes...
-                    </h3>
-                  </div>
-                </div>
-              </Link>
+        <React.Fragment>
+          <header className="homepage-header">
+            <div>
+              <img src={WebsiteLogo} alt="Logo" className="htmlearning-logo me-4" />
+              <h1>HTMLearning</h1>
+              <p className="scroll-down-tag">👇 Scroll down.</p>
             </div>
-          </div>
-          <div className="col-lg-6">
-            {" "}
-            <div className="container" style={{ marginTop: "25%" }}>
-              <div className="card mx-auto login-card">
-                {" "}
-                {isLoading && (
-                  <div class="overlay">
-                    <div class="spinner-border" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
+          </header>
+          <main>
+            <ul id="cards">
+              <li class="homepage-card" id="card_1">
+                <div class="card__content">
+                  <div>
+                    <h2>HTML Documentation</h2>
+                    <p>Discover the core HTML elements through our dedicated documentation...</p>
+                    <p><Link to="/documentation" class="btn btn--accent rounded-pill">View</Link></p>
                   </div>
-                )}
-                <h2 className="mb-5">
-                  Join the ever-growing HTML learning tool for free today!
-                </h2>
-                <SignUpForm />
-              </div>
-            </div>
-          </div>
-        </div>
+                  <figure>
+                    <img src={HtmlDocumentationCode} alt="Image description" />
+                  </figure>
+                </div>
+              </li>
+              <li class="homepage-card" id="card_2">
+                <div class="card__content">
+                  <div>
+                    <h2>User Forum</h2>
+                    <p>Ask and respond interatively on the go on the user forum...</p>
+                    <p><Link to="/forum" class="btn btn--accent rounded-pill">View</Link></p>
+                  </div>
+                  <figure>
+                    <img src={UserForumCode} alt="Image description" />
+                  </figure>
+                </div>
+              </li>
+              <li class="homepage-card" id="card_3">
+                <div class="card__content">
+                  <div>
+                    <h2>Quiz</h2>
+                    <p>Test your HTML knowledge and track your learning progress by undertaking a range of quizzes...</p>
+                    <p><Link to="/auth" class="btn btn--accent rounded-pill">Sign up</Link></p>
+                  </div>
+                  <figure>
+                    <img src={QuizCode} alt="Image description" />
+                  </figure>
+                </div>
+              </li>
+            </ul>
+          </main>
+          <aside>
+          </aside>
+        </React.Fragment>
       )}
     </>
   );

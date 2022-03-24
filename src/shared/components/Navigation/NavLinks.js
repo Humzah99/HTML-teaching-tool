@@ -13,7 +13,7 @@ const UserIcon = (
 );
 
 const NavbarCollapseIcon = (
-  <FontAwesomeIcon className="icon user-icon" icon={faBars} size="2x" />
+  <FontAwesomeIcon className="icon bar-icon" icon={faBars} size="2x" />
 );
 
 const NavLinks = props => {

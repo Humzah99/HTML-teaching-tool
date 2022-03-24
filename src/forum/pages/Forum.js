@@ -45,7 +45,7 @@ const Forum = () => {
                     </div>
                 </div>
             )}
-            {!isLoading && loadedForum && <ForumList items={loadedForum} onDeleteQuestion={questionDeletedHandler} />}
+            {!isLoading && loadedForum && <ForumList items={loadedForum} myQuestions={false} onDeleteQuestion={questionDeletedHandler} />}
         </React.Fragment>
     )
 };

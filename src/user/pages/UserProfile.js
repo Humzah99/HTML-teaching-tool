@@ -283,7 +283,7 @@ const UserProfile = () => {
                     <h3>Latest Questions</h3>
                   </div>
                   <div className="col-md-3">
-                    <button className="btn rounded-pill" to={`/forum/user/${auth.userId}`} disabled={loadedUser.questions.length <= 0}>View My Questions</button>
+                    <Link className="btn rounded-pill" to={`/forum/user/${auth.userId}`} disabled={loadedUser.questions.length <= 0}>View My Questions</Link>
                   </div>
                 </div>
               </div>
@@ -296,9 +296,9 @@ const UserProfile = () => {
                       <div className="d-flex bd-highlight">
                         <div className="p-2 flex-fill bd-highlight"></div>
                         <div className="p-2 flex-fill bd-highlight text-end">
-                          <button to={`/forum/view/${question.id}`} className="btn btn-success">
+                          <Link to={`/forum/view/${question.id}`} className="btn btn-success">
                             View question
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -331,13 +331,13 @@ const UserProfile = () => {
                     <h3>Latest Scores</h3>
                   </div>
                   <div className="col-md-2">
-                    <button className="btn rounded-pill" disabled={loadedUser.scores.length <= 0}>View My Scores</button>
+                    <Link className="btn rounded-pill" disabled={loadedUser.scores.length <= 0} to={`/userScores/${auth.userId}`}>View My Scores</Link>
                   </div>
                 </div>
               </div>
 
               {loadedUser.scores.length > 0 ? (<div className="card-body">
-                <table id="example" className="table table-striped" style={{ width: '100%' }}>
+                <table className="styled-table" style={{ width: '100%' }}>
                   <thead>
                     <tr>
                       <th>Quiz Name</th>
@@ -346,7 +346,7 @@ const UserProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {loadedUser.scores.slice(loadedUser.scores.length - 3, loadedUser.scores.length).sort((a, b) => a.score.quizDate - b.score.quizDate).map(score => (
+                    {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(loadedUser.scores.length - 3, loadedUser.scores.length).map(score => (
                       <tr key={score.quizDate}>
                         <td>{score.quiz.title}</td>
                         <td>{score.quizDate}</td>

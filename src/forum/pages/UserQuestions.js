@@ -12,8 +12,8 @@ const UserQuestions = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/forum/user/${userId}`);
-                setLoadedQuestions(responseData.forumQuestions)
+                const responseData = await sendRequest(`http://localhost:5000/api/user/${userId}`);
+                setLoadedQuestions(responseData.user.questions)
             } catch (err) { }
         };
         fetchQuestions();
@@ -47,7 +47,7 @@ const UserQuestions = () => {
                 </div>
             )}
             {!isLoading && loadedQuestions && (
-                <ForumList items={loadedQuestions} onDeleteQuestion={questionDeletedHandler} />
+                <ForumList items={loadedQuestions} myQuestions={true} onDeleteQuestion={questionDeletedHandler} />
             )}
         </React.Fragment>
     );

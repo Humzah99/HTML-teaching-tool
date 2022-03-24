@@ -32,7 +32,7 @@ const ForumList = props => {
     <div className="container alignment-container">
       <div className="row">
         <div className="col-md-6">
-        <h3>All Questions</h3>
+        <h3>{props.myQuestions ? 'My' : 'All'} Questions</h3>
           <p>
             {props.items.length}{" "}
             {props.items.length === 1 ? "question" : "questions"}
@@ -64,6 +64,7 @@ const ForumList = props => {
               user={question.user}
               answers={question.answers}
               createdAt={question.createdAt}
+              myQuestions={props.myQuestions}
               onDelete={props.onDeleteQuestion}
             />
           ))}

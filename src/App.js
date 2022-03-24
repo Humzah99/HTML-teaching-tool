@@ -17,17 +17,18 @@ import Auth from "./user/pages/Auth";
 import { AuthContext } from "./shared/components/context/auth-context";
 import ForumQuestion from "./forum/pages/ForumQuestion";
 import NewQuiz from "./quiz/pages/NewQuiz";
+import QuizLeaderboard from "./quiz/pages/QuizLeaderboard";
 import ForgottenDetails from "./user/pages/ForgottenDetails";
 import Homepage from './shared/components/Homepage/Homepage';
 import DocumentationRender from "./documentation/pages/DocumentationRender";
 import { useAuth } from "./shared/hooks/auth-hook";
+import UserScores from "./user/pages/UserScores";
 
 function App() {
 
-  const { token, login, logout, userId, username } = useAuth();
-  
-  let routes;
+  const { token, login, logout, userId, username, firstname } = useAuth();
 
+  let routes;
   if (token) {
     routes = (
       <Switch>
@@ -67,9 +68,17 @@ function App() {
           <MainNavigation />
           <NewQuiz />
         </Route>
+        <Route path="/:quizId/high-scores" exact>
+          <MainNavigation />
+          <QuizLeaderboard />
+        </Route>
         <Route path="/userProfile/:userId" exact>
           <MainNavigation />
           <UserProfile />
+        </Route>
+        <Route path="/userScores/:userId" exact>
+          <MainNavigation />
+          <UserScores />
         </Route>
         <Route path="/documentation/:docId" exact>
           <MainNavigation />
@@ -109,9 +118,17 @@ function App() {
           <MainNavigation />
           <UserProfile />
         </Route>
+        <Route path="/userScores/:userId" exact>
+          <MainNavigation />
+          <UserScores />
+        </Route>
         <Route path="/quiz/:quizId" exact>
           <MainNavigation />
           <NewQuiz />
+        </Route>
+        <Route path="/:quizId/high-scores" exact>
+          <MainNavigation />
+          <QuizLeaderboard />
         </Route>
         <Route path="/auth" exact>
           <Auth />
@@ -133,7 +150,7 @@ function App() {
   }
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId, username: username}}
+      value={{ isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId, username: username, firstname: firstname }}
     >
       <Router>{routes}</Router>
     </AuthContext.Provider>
