@@ -160,7 +160,7 @@ const ForumQuestion = () => {
 
           {auth.isLoggedIn && (
             <React.Fragment>
-              <h5>Your answer</h5>
+              <h4>Your answer</h4>
               <div className="card form-container mt-3 mb-5">
                 <div className="card-body">
                   {/* <a

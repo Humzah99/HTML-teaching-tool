@@ -4,19 +4,19 @@ body {
 }
 
 h1 {
-  font-weight: 600;
+  font-weight: 300;
   font-size: 3.5em;
   font-family: "Roboto", sans-serif !important;
 }
 
 h2 {
-  font-weight: 600;
+  font-weight: 300;
   font-size: 2.5em;
   font-family: "Roboto", sans-serif !important;
 }
 
 h3, h4, h5, h6 {
-  font-weight: 600;
+  font-weight: 300;
   font-family: "Roboto", sans-serif !important;
 }
 

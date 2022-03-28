@@ -7,7 +7,7 @@ const QuizItem = props => {
 
       <div className="card quiz-list-card mt-5 ms-5" style={{ width: "18rem" }}>
         <div className="card-body">
-          <h5 className="card-title">{props.title}</h5>
+          <h4 className="card-title">{props.title}</h4>
           <h6 className="card-subtitle mb-2 text-muted">
             10 Questions
           </h6>

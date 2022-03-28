@@ -120,7 +120,7 @@ const UpdateForumQuestion = () => {
           <div className="card ask-question-container">
             <div className="card-body">
               {!isLoading && loadedQuestion && <form onSubmit={updateSubmitHandler}>
-                <h5 className="card-title">Heading</h5>
+                <h4 className="card-title">Heading</h4>
                 <Input
                   id="questionTitle"
                   className="form-control"
@@ -133,7 +133,7 @@ const UpdateForumQuestion = () => {
                   value={loadedQuestion.heading}
                   valid={true}
                 />
-                <h5 className="card-title mt-3">Body</h5>
+                <h4 className="card-title mt-3">Body</h4>
                 <Input
                   id="questionDescription"
                   className="form-control"

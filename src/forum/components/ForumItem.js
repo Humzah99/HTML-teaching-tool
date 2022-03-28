@@ -73,7 +73,7 @@ const ForumItem = props => {
           </div>
         )}
         <div className="card-body">
-          <h5 className="card-title">{props.heading}</h5>
+          <h4 className="card-title">{props.heading}</h4>
           <p className="card-text">{props.text}</p>
           <div className="d-flex bd-highlight">
             {auth.userId === props.user.id && (

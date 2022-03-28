@@ -85,12 +85,12 @@ const DocumentationRender = () => {
           {loadedDocumentation.content.map((information, index) => {
             return (
               <div className="tutorial-section" key={index}>
-                <h4 className="mb-2">{information.subTitle}</h4>
+                <h3 className="mb-4">{information.subTitle}</h3>
                 {loadedDocumentation.content[index].information.map(
                   (information, index) => {
                     return (
                       <p
-                        className="content h6 mb-4"
+                        className="content h6 mb-3"
                         key={index}
                         style={{ fontSize: "15px" }}
                       >
@@ -105,6 +105,7 @@ const DocumentationRender = () => {
                       language="javascript"
                       style={duotoneForest}
                       key={index}
+                      className="mt-4"
                     >
                       {beautify_html(information.codeString, {
                         indent_size: 2

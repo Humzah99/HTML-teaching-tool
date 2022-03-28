@@ -78,7 +78,7 @@ const NewForumQuestion = () => {
             </div>}
             <div className="card-body">
               <form onSubmit={submitHandler}>
-                <h5 className="card-title">Heading</h5>
+                <h4 className="card-title">Heading</h4>
                 <Input
                   id="questionTitle"
                   className="form-control"
@@ -89,7 +89,7 @@ const NewForumQuestion = () => {
                   errorText="Enter a suitable question heading."
                   onInput={inputHandler}
                 />
-                <h5 className="card-title mt-3">Body</h5>
+                <h4 className="card-title mt-3">Body</h4>
                 <Input
                   id="questionDescription"
                   className="form-control"
