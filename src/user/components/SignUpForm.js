@@ -13,9 +13,11 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useHistory } from "react-router-dom";
 
 const SignUpForm = () => {
-  const auth = useContext(AuthContext);
+  // const auth = useContext(AuthContext);
+  const history = useHistory();
   const [formState, inputHandler] = useForm(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [passwordShown, setPasswordShown] = useState(false);
@@ -44,12 +46,14 @@ const SignUpForm = () => {
         "POST",
         formData
       );
-
-      auth.login(
-        responseData.username,
-        responseData.userId,
-        responseData.token
-      );
+        console.log(responseData);
+      // auth.login(
+      //   responseData.username,
+      //   responseData.userId,
+      //   responseData.token
+      // );
+      alert("Signed up successfully, please verify your email.");
+      history.push("/");
     } catch (err) {}
   };
 

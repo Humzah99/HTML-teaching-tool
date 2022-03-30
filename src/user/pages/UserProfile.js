@@ -11,27 +11,16 @@ import {
 } from "../../shared/components/FormValidation/validators";
 import "../../shared/components/Style.css";
 import "../../shared/components/ImageUpload/ImageUpload.css";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
 
-const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
-
-const EyeSlash = <FontAwesomeIcon className="icon" icon={faEyeSlash} />;
-
 const UserProfile = () => {
-  const [passwordShown, setPasswordShown] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const history = useHistory();
   const auth = useContext(AuthContext);
   const userId = useParams().userId;
   const [loadedUser, setLoadedUser] = useState();
-
-  console.log(auth);
   const [formState, inputHandler, setFormData] = useForm(
     {
       firstName: {
@@ -47,10 +36,6 @@ const UserProfile = () => {
         isValid: false
       },
       email: {
-        value: "",
-        isValid: false
-      },
-      password: {
         value: "",
         isValid: false
       }
@@ -82,11 +67,7 @@ const UserProfile = () => {
             email: {
               value: responseData.user.email,
               isValid: true
-            },
-            password: {
-              value: responseData.user.password,
-              isValid: true
-            },
+            }
           },
           true
         );
@@ -97,20 +78,12 @@ const UserProfile = () => {
 
   }, [sendRequest, userId]);
 
-
-  const togglePassword = () => {
-    setPasswordShown(!passwordShown);
-  };
-
   const updateSubmitHandler = async event => {
     event.preventDefault();
     try {
       await sendRequest(`http://localhost:5000/api/user/${userId}`, 'PATCH', JSON.stringify({
         firstname: formState.inputs.firstName.value,
         surname: formState.inputs.surname.value,
-        //username: formState.inputs.username.value,
-        //email: formState.inputs.email.value,
-        password: formState.inputs.password.value,
       }),
         {
           'Content-Type': 'application/json'
@@ -233,31 +206,6 @@ const UserProfile = () => {
                     errorText="Please enter a valid e-mail address."
                     onInput={inputHandler}
                     value={loadedUser.email}
-                    valid={true}
-                  />
-                </div>
-              </div>
-              <div className="row mb-3">
-                <div className="col-sm-12">
-                  {passwordShown ? (
-                    <span className="eye-icon" onClick={togglePassword}>
-                      {Eye}
-                    </span>
-                  ) : (
-                    <span className="eye-icon" onClick={togglePassword}>
-                      {EyeSlash}
-                    </span>
-                  )}
-                  <Input
-                    element="input"
-                    id="password"
-                    type={passwordShown ? "text" : "password"}
-                    label="Password"
-                    className="form-control rounded-3"
-                    validators={[VALIDATOR_MINLENGTH(8)]}
-                    errorText="Please enter a valid password, at least 8 characters long."
-                    onInput={inputHandler}
-                    value={loadedUser.password}
                     valid={true}
                   />
                 </div>

@@ -4,7 +4,6 @@ import { Modal } from "react-bootstrap";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE
 } from "../../shared/components/FormValidation/validators";
 import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
@@ -26,7 +25,6 @@ const Auth = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  //const pass = useRef();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -102,6 +100,7 @@ const Auth = () => {
         }
       );
       console.log(responseData);
+      console.log(auth);
       auth.login(
         responseData.username,
         responseData.userId,

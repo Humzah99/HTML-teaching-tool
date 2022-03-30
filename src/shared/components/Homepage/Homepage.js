@@ -19,6 +19,7 @@ const LoggedInHomepage = () => {
   const [loadedQuiz, setLoadedQuiz] = useState();
 
   useEffect(() => {
+    console.log(auth);
     const fetchDocumentation = async () => {
       try {
         const responseData = await sendRequest(
@@ -67,100 +68,54 @@ const LoggedInHomepage = () => {
         </Modal.Footer>
       </Modal>
       {auth.isLoggedIn ? (
-        // <div className="row">
-        //   {!isLoading && loadedDocumentation && (
-        //     <div className="col-lg-6 first-col">
-        //       <div className="card featured-doc-card text-center">
-        //         <img
-        //           src={HtmlDocumentationCode}
-        //           className="card-img doc-card-img"
-        //           alt="..."
-        //         />
-        //         <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
-        //           <h3 className="card-title">
-        //             HTML {loadedDocumentation.title}
-        //           </h3>
-        //         </div>
-        //       </div>
-        //       <div className="featured-button-container">
-        //         <Link
-        //           to={`/documentation/${loadedDocumentation.id}`}
-        //           className="btn rounded-pill mt-2"
-        //           style={{ width: "20%" }}
-        //         >
-        //           Go to {loadedDocumentation.title} documentation
-        //         </Link>
-        //       </div>
-        //     </div>
-        //   )}
-        //   {!isLoading && loadedQuiz && (
-        //     <div className="col-lg-6">
-        //       <div className="card featured-quiz-card text-center">
-        //         <img src={QuizCode} className="card-img quiz-card-img" alt="..." />
-        //         <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
-        //           <h3 className="card-title">{loadedQuiz.title}</h3>
-        //         </div>
-        //       </div>
-        //       <div className="featured-button-container">
-        //         <Link
-        //           to={`/quiz/${loadedQuiz.id}`}
-        //           className="btn rounded-pill mt-2"
-        //           style={{ width: "20%" }}
-        //         >
-        //           Go to {loadedQuiz.title} quiz
-        //         </Link>
-        //       </div>
-        //     </div>
-        //   )}
-        // </div>
         <React.Fragment>
           <header className="logged-in-homepage-header">
             <div className="row welcome-user float-start mt-4 ms-4">
               <h3>Welcome {auth.username}</h3>
             </div>
-            <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-              <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
+              <div className="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
                 <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
               </div>
-              <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="10000">
-                  <img src={HtmlCarouselDoc} class="d-block w-100 bg-image" alt="..." />
-                  <div class="carousel-caption d-none d-md-block bg-text">
+              <div className="carousel-inner">
+                <div className="carousel-item active" data-bs-interval="10000">
+                  <img src={HtmlCarouselDoc} className="d-block w-100 bg-image" alt="..." />
+                  <div className="carousel-caption d-none d-md-block bg-text">
                     <h2 style={{ backgroundColor: 'transparent' }}>HTML Documentation</h2>
                     <p>Discover the core HTML elements through our dedicated documentation...</p>
                   </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="2000">
-                  <img src={HtmlCarouselForumImg} class="d-block w-100 bg-image" alt="..." />
-                  <div class="carousel-caption d-none d-md-block bg-text">
+                <div className="carousel-item" data-bs-interval="2000">
+                  <img src={HtmlCarouselForumImg} className="d-block w-100 bg-image" alt="..." />
+                  <div className="carousel-caption d-none d-md-block bg-text">
                     <h2 style={{ backgroundColor: 'transparent' }}>User Forum</h2>
                     <p>Ask and respond interatively on the go on the user forum...</p>
                   </div>
                 </div>
-                <div class="carousel-item">
-                  <img src={HtmlCarouselQuizImg} class="d-block w-100 bg-image" alt="..." />
-                  <div class="carousel-caption d-none d-md-block bg-text">
+                <div className="carousel-item">
+                  <img src={HtmlCarouselQuizImg} className="d-block w-100 bg-image" alt="..." />
+                  <div className="carousel-caption d-none d-md-block bg-text">
                     <h2 style={{ backgroundColor: 'transparent' }}>Quiz</h2>
                     <p>Test your HTML knowledge and track your learning progress by undertaking a range of quizzes...</p>
                   </div>
                 </div>
               </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+              <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Previous</span>
               </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+              <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Next</span>
               </button>
             </div>
           </header>
           <main>
             <ul id="cards">
-              {!isLoading && loadedDocumentation && (<li class="homepage-card" id="card_1">
-                <div class="card__content">
+              {!isLoading && loadedDocumentation && (<li className="homepage-card" id="card_1">
+                <div className="card__content">
                   <div>
                     <h2>Featured Documentation</h2>
                     <p>HTML {loadedDocumentation.title}</p>
@@ -177,8 +132,8 @@ const LoggedInHomepage = () => {
                 </div>
               </li>)}
               {!isLoading && loadedQuiz && (
-                <li class="homepage-card" id="card_3">
-                  <div class="card__content">
+                <li className="homepage-card" id="card_3">
+                  <div className="card__content">
                     <div>
                       <h2>Featured Quiz</h2>
                       <p>{loadedQuiz.title}</p>
@@ -211,36 +166,36 @@ const LoggedInHomepage = () => {
           </header>
           <main>
             <ul id="cards">
-              <li class="homepage-card" id="card_1">
-                <div class="card__content">
+              <li className="homepage-card" id="card_1">
+                <div className="card__content">
                   <div>
                     <h2>HTML Documentation</h2>
                     <p>Discover the core HTML elements through our dedicated documentation...</p>
-                    <p><Link to="/documentation" class="btn btn--accent rounded-pill">View</Link></p>
+                    <p><Link to="/documentation" className="btn btn--accent rounded-pill">View</Link></p>
                   </div>
                   <figure>
                     <img src={HtmlDocumentationCode} alt="Image description" />
                   </figure>
                 </div>
               </li>
-              <li class="homepage-card" id="card_2">
-                <div class="card__content">
+              <li className="homepage-card" id="card_2">
+                <div className="card__content">
                   <div>
                     <h2>User Forum</h2>
                     <p>Ask and respond interatively on the go on the user forum...</p>
-                    <p><Link to="/forum" class="btn btn--accent rounded-pill">View</Link></p>
+                    <p><Link to="/forum" className="btn btn--accent rounded-pill">View</Link></p>
                   </div>
                   <figure>
                     <img src={UserForumCode} alt="Image description" />
                   </figure>
                 </div>
               </li>
-              <li class="homepage-card" id="card_3">
-                <div class="card__content">
+              <li className="homepage-card" id="card_3">
+                <div className="card__content">
                   <div>
                     <h2>Quiz</h2>
                     <p>Test your HTML knowledge and track your learning progress by undertaking a range of quizzes...</p>
-                    <p><Link to="/auth" class="btn btn--accent rounded-pill">Sign up</Link></p>
+                    <p><Link to="/auth" className="btn btn--accent rounded-pill">Sign up</Link></p>
                   </div>
                   <figure>
                     <img src={QuizCode} alt="Image description" />

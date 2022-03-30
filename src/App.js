@@ -23,10 +23,12 @@ import Homepage from './shared/components/Homepage/Homepage';
 import DocumentationRender from "./documentation/pages/DocumentationRender";
 import { useAuth } from "./shared/hooks/auth-hook";
 import UserScores from "./user/pages/UserScores";
+import VerifyEmail from "./user/pages/VerifyEmail";
+import ResetPassword from "./user/pages/ResetPassword";
 
 function App() {
 
-  const { token, login, logout, userId, username, firstname } = useAuth();
+  const { token, login, logout, userId, username } = useAuth();
 
   let routes;
   if (token) {
@@ -144,13 +146,19 @@ function App() {
           <MainNavigation />
           <DocumentationRender />
         </Route>
+        <Route path="/verifyEmail/:token" exact>
+          <VerifyEmail />
+        </Route>
+        <Route path="/resetPassword/:token" exact>
+          <ResetPassword />
+        </Route>
         <Redirect to="/auth" />
       </Switch>
     );
   }
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId, username: username, firstname: firstname }}
+      value={{ isLoggedIn: !!token, token: token, login: login, logout: logout, userId: userId, username: username }}
     >
       <Router>{routes}</Router>
     </AuthContext.Provider>

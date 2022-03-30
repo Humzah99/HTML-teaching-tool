@@ -11,6 +11,7 @@
     "joi": "^17.6.0",
     "jquery": "^3.6.0",
     "js-beautify": "^1.14.0",
+    "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "nodemailer": "^6.7.3",
     "react": "^16.11.0",
