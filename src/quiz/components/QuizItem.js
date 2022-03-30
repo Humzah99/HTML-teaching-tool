@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import "../../shared/components/Style.css";
 const QuizItem = props => {
   return (
-    <div className="col-sm-6">
+    <div className="col-sm-4">
 
-      <div className="card quiz-list-card mt-5 ms-5" style={{ width: "18rem" }}>
+      <div className="card quiz-list-card mt-5 ms-5" style={{ width: "21rem" }}>
         <div className="card-body">
-          <h4 className="card-title">{props.title}</h4>
+          <h5 className="card-title">{props.title}</h5>
           <h6 className="card-subtitle mb-2 text-muted">
-            10 Questions
+            {props.questionCount.length} {props.questionCount.length === 1 ? 'Question' : 'Questions'}
           </h6>
           <div className="row">
             <div className="col-md-4 float-start">

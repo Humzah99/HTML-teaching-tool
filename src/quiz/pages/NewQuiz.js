@@ -140,7 +140,7 @@ const NewQuiz = () => {
                   <p>{loadedQuiz.questions[currentQuestion].questionText}</p>
                 </div>
                 <div className="answer-section">
-                  {loadedQuiz.questions[currentQuestion].answerOptions.map(
+                  {loadedQuiz.questions[currentQuestion].answerOptions.sort(() => Math.random() - 0.25).map(
                     (answerOption) => (
                       <div className="mt-4">
                         <button
