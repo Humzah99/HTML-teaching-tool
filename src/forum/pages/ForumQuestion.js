@@ -11,6 +11,7 @@ import ForumAnswersList from "../components/ForumAnswersList";
 import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const ForumQuestion = () => {
   var beautify_html = require('js-beautify').html
@@ -32,8 +33,8 @@ const ForumQuestion = () => {
   useEffect(() => {
     const fetchQuestionAndAnswers = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/api/answers/forum/${questionId}`);
-        const responseData2 = await sendRequest(`http://localhost:5000/api/forum/${questionId}`)
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/answers/forum/${questionId}`);
+        const responseData2 = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/forum/${questionId}`)
         setViewAnswers(responseData.answers);
         setViewQuestion(responseData2.forumQuestion);
       }
@@ -46,7 +47,7 @@ const ForumQuestion = () => {
   const submitHandler = async event => {
     event.preventDefault();
     try {
-      await sendRequest('http://localhost:5000/api/answers/', 'POST', JSON.stringify({
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + '/answers/', 'POST', JSON.stringify({
         text: formState.inputs.answerText.value,
         question: questionId,
         user: auth.userId
@@ -67,13 +68,7 @@ const ForumQuestion = () => {
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+      <LoadingSpinner />
     );
   }
 

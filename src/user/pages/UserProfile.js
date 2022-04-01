@@ -15,6 +15,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
 import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UserProfile = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -48,7 +49,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/api/user/${userId}`);
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/${userId}`);
         setLoadedUser(responseData.user);
         setFormData(
           {
@@ -81,7 +82,7 @@ const UserProfile = () => {
   const updateSubmitHandler = async event => {
     event.preventDefault();
     try {
-      await sendRequest(`http://localhost:5000/api/user/${userId}`, 'PATCH', JSON.stringify({
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/${userId}`, 'PATCH', JSON.stringify({
         firstname: formState.inputs.firstName.value,
         surname: formState.inputs.surname.value,
       }),
@@ -96,13 +97,7 @@ const UserProfile = () => {
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+      <LoadingSpinner />
     );
   }
 
@@ -139,7 +134,7 @@ const UserProfile = () => {
                 <div className="row mb-3">
                   <div className="col-sm-12">
                     <img className="user-profile-image"
-                      src={`http://localhost:5000/${loadedUser.image}`} alt={loadedUser.firstname + " " + loadedUser.surname}
+                      src={`${process.env.REACT_APP_ASSET_URL}/${loadedUser.image}`} alt={loadedUser.firstname + " " + loadedUser.surname}
                     />
                   </div>
                   <div className="col-sm-6">

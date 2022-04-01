@@ -13,6 +13,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const SignUpForm = () => {
   // const auth = useContext(AuthContext);
@@ -40,7 +41,7 @@ const SignUpForm = () => {
       formData.append("password", formState.inputs.password.value);
       formData.append("image", formState.inputs.image.value);
       const responseData = await sendRequest(
-        "http://localhost:5000/api/user/signup",
+        process.env.REACT_APP_BACKEND_URL + "/user/signup",
         "POST",
         formData
       );
@@ -51,13 +52,7 @@ const SignUpForm = () => {
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+      <LoadingSpinner />
     );
   }
 

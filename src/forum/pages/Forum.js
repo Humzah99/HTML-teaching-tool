@@ -4,6 +4,7 @@ import ForumList from '../components/ForumList';
 import { Modal } from "react-bootstrap";
 import Pagination from '../../shared/components/Pagination/Pagination';
 import Footer from '../../shared/components/Footer/Footer';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 
 const Forum = () => {
@@ -26,7 +27,7 @@ const Forum = () => {
     useEffect(() => {
         const fetchForum = async () => {
             try {
-                const responseData = await sendRequest('http://localhost:5000/api/forum');
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + '/forum');
                 setLoadedForum(responseData.forumQuestions);
             } catch (err) { }
         };
@@ -59,13 +60,7 @@ const Forum = () => {
                 </Modal.Footer>
             </Modal>
             {isLoading && (
-                <div className="overlay">
-                    <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                </div>
+                <LoadingSpinner />
             )}
             {!isLoading && loadedForum &&
                 <React.Fragment>

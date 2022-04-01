@@ -8,6 +8,7 @@ import { faMedal } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const GoldMedalIcon = (
     <FontAwesomeIcon className="icon gold-medal-icon" icon={faMedal} size="4x" />
@@ -28,7 +29,7 @@ const QuizLeaderboard = () => {
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/quiz/${quizId}`);
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/quiz/${quizId}`);
                 setLoadedQuiz(responseData.quiz);
             }
             catch (err) { }
@@ -38,13 +39,7 @@ const QuizLeaderboard = () => {
 
     if (isLoading) {
         return (
-            <div className="overlay">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
+            <LoadingSpinner />
         );
     }
 
@@ -76,15 +71,15 @@ const QuizLeaderboard = () => {
                     (<div className="container">
                         <div className="row mb-5 mt-5">
                             {loadedQuiz.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(0, (loadedQuiz.scores.length - (loadedQuiz.scores.length - 3))).map((score, index) => (
-                                <div className="col-md-4">
+                                <div className="col-md-4" key={index}>
                                     <div className="card high-scores-card">
                                         <div className="card-body text-center">
-                                            <a class="position-relative image-container-btn">
+                                            <a className="position-relative image-container-btn">
                                                 <img className="high-scores-user-image"
-                                                    src={`http://localhost:5000/${score.user.image}`} alt={score.user.firstname + " " + score.user.surname}
-                                                />{index === 0 && <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">{GoldMedalIcon} <span class="visually-hidden">place</span></span>}
-                                                {index === 1 && <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">{SilverMedalIcon} <span class="visually-hidden">place</span></span>}
-                                                {index === 2 && <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill">{BronzeMedalIcon} <span class="visually-hidden">place</span></span>}
+                                                    src={`${process.env.REACT_APP_ASSET_URL}/${score.user.image}`} alt={score.user.firstname + " " + score.user.surname}
+                                                />{index === 0 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">{GoldMedalIcon} <span className="visually-hidden">place</span></span>}
+                                                {index === 1 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">{SilverMedalIcon} <span className="visually-hidden">place</span></span>}
+                                                {index === 2 && <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill">{BronzeMedalIcon} <span className="visually-hidden">place</span></span>}
                                             </a>
                                             <h3>{score.user.firstname + " " + score.user.surname}</h3>
                                             <h6 className="text-muted">{score.user.username}</h6>
@@ -105,19 +100,13 @@ const QuizLeaderboard = () => {
                             <div className="row second-leaderboard-row">
                                 <div className="card forum-list-card mt-3">
                                     {isLoading && (
-                                        <div className="overlay">
-                                            <div className="d-flex justify-content-center">
-                                                <div className="spinner-border" role="status">
-                                                    <span className="visually-hidden">Loading...</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <LoadingSpinner />
                                     )}
                                     <div className="card-body">
                                         <div className="float-start">
                                             <h3 className="ranking-number text-muted">{index + 4}<span className="ranking-ending">{(index + 4) > 20 && (index + 4) % 10 === 1 && 'st'}{(index + 4) > 20 && (index + 4) % 10 === 2 && 'nd'}{(index + 4) > 20 && (index + 4) % 10 === 3 && 'rd'}{((index + 4) % 10 !== 1 && (index + 4) % 10 !== 2 && ((index + 4) % 10 !== 3) && 'th') || ((index + 4) <= 20) && 'th'}</span></h3>
                                             <img className="lower-high-scores-user-image ms-4"
-                                                src={`http://localhost:5000/${score.user.image}`} alt={score.user.firstname + " " + score.user.surname}
+                                                src={`${process.env.REACT_APP_ASSET_URL}/${score.user.image}`} alt={score.user.firstname + " " + score.user.surname}
                                             />
                                             <div className="float-end ms-5 mt-4 text-center">
                                                 <h4>{score.user.firstname + " " + score.user.surname}</h4>

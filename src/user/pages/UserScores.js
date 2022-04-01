@@ -8,6 +8,7 @@ import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
 import Pagination from "../../shared/components/Pagination/Pagination";
 import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UserScores = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -34,7 +35,7 @@ const UserScores = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/user/${userId}`);
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/${userId}`);
                 setLoadedUser(responseData.user);
             } catch (err) {
             }
@@ -45,13 +46,7 @@ const UserScores = () => {
 
     if (isLoading) {
         return (
-            <div className="overlay">
-                <div className="d-flex justify-content-center">
-                    <div className="spinner-border" role="status">
-                        <span className="visually-hidden">Loading...</span>
-                    </div>
-                </div>
-            </div>
+            <LoadingSpinner />
         );
     }
 

@@ -5,6 +5,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { duotoneForest } from "react-syntax-highlighter/dist/esm/styles/prism";
 import Footer from "../../shared/components/Footer/Footer";
 import "../../shared/components/Style.css";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Codepen from "./Codepen";
 
@@ -20,7 +21,7 @@ const DocumentationRender = () => {
     const fetchDocumentation = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/documentation/${documentationId}`
+          process.env.REACT_APP_BACKEND_URL + `/documentation/${documentationId}`
         );
         setLoadedDocumentation(responseData.documentation);
       } catch (err) { }
@@ -66,13 +67,7 @@ const DocumentationRender = () => {
       </Modal>
 
       {isLoading && (
-        <div className="overlay">
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <LoadingSpinner />
       )}
 
       {!isLoading && loadedDocumentation && (

@@ -7,6 +7,7 @@ import { VALIDATOR_EMAIL } from "../../shared/components/FormValidation/validato
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const ForgottenDetails = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -25,7 +26,7 @@ const ForgottenDetails = () => {
     event.preventDefault();
     try {
       const responseData = await sendRequest(
-        "http://localhost:5000/api/user/forgotPassword",
+        process.env.REACT_APP_BACKEND_URL + "/user/forgotPassword",
         "POST",
         JSON.stringify({
           email: formState.inputs.email.value,
@@ -53,13 +54,7 @@ const ForgottenDetails = () => {
       </Modal>
       <div className="container" style={{ marginTop: "15%" }}>
         {isLoading && (
-          <div className="overlay">
-            <div className="d-flex justify-content-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          </div>
+          <LoadingSpinner />
         )}
         <div className="position-absolute top-0 start-0">
           <a href="/">

@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import SignUpForm from "../components/SignUpForm";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 
@@ -87,7 +88,7 @@ const Auth = () => {
     event.preventDefault();
     try {
       const responseData = await sendRequest(
-        "http://localhost:5000/api/user/login",
+        process.env.REACT_APP_BACKEND_URL + "/user/login",
         "POST",
         JSON.stringify({
           email: formState.inputs.email.value,
@@ -129,13 +130,7 @@ const Auth = () => {
         </div>
         <div className="card mx-auto login-card">
           {isLoading && (
-            <div className="overlay">
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>
+            <LoadingSpinner />
           )}
           <div className="sign-up-link ms-auto">
             <button

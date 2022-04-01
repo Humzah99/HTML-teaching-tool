@@ -11,6 +11,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UpdateForumQuestion = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -35,7 +36,7 @@ const UpdateForumQuestion = () => {
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/api/forum/${questionId}`);
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/forum/${questionId}`);
         setLoadedQuestion(responseData.forumQuestion);
         setFormData(
           {
@@ -59,7 +60,7 @@ const UpdateForumQuestion = () => {
   const updateSubmitHandler = async event => {
     event.preventDefault();
     try {
-      await sendRequest(`http://localhost:5000/api/forum/${questionId}`, 'PATCH', JSON.stringify({
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + `/forum/${questionId}`, 'PATCH', JSON.stringify({
         heading: formState.inputs.questionTitle.value,
         text: formState.inputs.questionDescription.value
       }),
@@ -74,13 +75,7 @@ const UpdateForumQuestion = () => {
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+      <LoadingSpinner />
     );
   }
 

@@ -13,6 +13,7 @@ import { useHttpClient } from "../../hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import "./Homepage.css";
 import Footer from "../Footer/Footer";
+import LoadingSpinner from "../UIElements/LoadingSpinner";
 const LoggedInHomepage = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -23,7 +24,7 @@ const LoggedInHomepage = () => {
     const fetchDocumentation = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/documentation/randDoc"
+          process.env.REACT_APP_BACKEND_URL + "/documentation/randDoc"
         );
         setLoadedDocumentation(responseData.documentation);
       } catch (err) { }
@@ -31,7 +32,7 @@ const LoggedInHomepage = () => {
     const fetchQuiz = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/quiz/randQuiz"
+          process.env.REACT_APP_BACKEND_URL + "/quiz/randQuiz"
         );
         setLoadedQuiz(responseData.quiz);
       } catch (err) { }
@@ -42,13 +43,7 @@ const LoggedInHomepage = () => {
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+     <LoadingSpinner />
     );
   }
 

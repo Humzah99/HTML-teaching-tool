@@ -5,6 +5,7 @@ import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 import Pagination from '../../shared/components/Pagination/Pagination';
 import Footer from '../../shared/components/Footer/Footer';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 const UserQuestions = () => {
     const [loadedQuestions, setLoadedQuestions] = useState();
@@ -27,7 +28,7 @@ const UserQuestions = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/user/${userId}`);
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/${userId}`);
                 setLoadedQuestions(responseData.user.questions)
             } catch (err) { }
         };
@@ -59,13 +60,7 @@ const UserQuestions = () => {
                 </Modal.Footer>
             </Modal>
             {isLoading && (
-                <div className="overlay">
-                    <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                </div>
+                <LoadingSpinner />
             )}
             {!isLoading && loadedQuestions && (
                 <React.Fragment>

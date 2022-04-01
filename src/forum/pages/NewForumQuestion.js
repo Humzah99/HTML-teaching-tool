@@ -10,6 +10,7 @@ import { useForm } from '../../shared/hooks/forms-hooks';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
 import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 
 const NewForumQuestion = () => {
@@ -30,7 +31,7 @@ const NewForumQuestion = () => {
   const submitHandler = async event => {
     event.preventDefault();
     try {
-      await sendRequest('http://localhost:5000/api/forum/', 'POST', JSON.stringify({
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + '/forum/', 'POST', JSON.stringify({
         heading: formState.inputs.questionTitle.value,
         text: formState.inputs.questionDescription.value,
         // image: null,
@@ -38,7 +39,7 @@ const NewForumQuestion = () => {
       }),
         { 'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token }
       );
-      
+
       alert("Question successfully posted.")
       history.push('/forum');
     }
@@ -71,13 +72,7 @@ const NewForumQuestion = () => {
         </div>
         <div className="col-md">
           <div className="card ask-question-container">
-            {isLoading && <div className="overlay">
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>}
+            {isLoading && <LoadingSpinner />}
             <div className="card-body">
               <form onSubmit={submitHandler}>
                 <h4 className="card-title">Heading</h4>

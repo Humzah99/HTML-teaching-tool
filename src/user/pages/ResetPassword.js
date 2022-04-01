@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import jwt_decode from 'jwt-decode';
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
 
@@ -38,7 +39,7 @@ const ResetPassword = () => {
     useEffect(() => {
         const fetchForgottenPassword = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/user/verifyToken/${token}`);
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/verifyToken/${token}`);
             }
             catch (err) { }
         }
@@ -50,7 +51,7 @@ const ResetPassword = () => {
         const {email} = jwt_decode(token);
         try {
             const responseData = await sendRequest(
-                "http://localhost:5000/api/user/resetPassword",
+                process.env.REACT_APP_BACKEND_URL + "/user/resetPassword",
                 "POST",
                 JSON.stringify({
                     email: email,
@@ -79,13 +80,7 @@ const ResetPassword = () => {
             </Modal>
             <div className="container" style={{ marginTop: "15%" }}>
                 {isLoading && (
-                    <div className="overlay">
-                        <div className="d-flex justify-content-center">
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
+                    <LoadingSpinner />
                 )}
                 <div className="position-absolute top-0 start-0">
                     <a href="/">

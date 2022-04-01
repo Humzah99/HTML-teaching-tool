@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import DocumentationList from "../components/DocumentationList";
 import Pagination from '../../shared/components/Pagination/Pagination';
 import Footer from '../../shared/components/Footer/Footer';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 function Documentation() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -24,7 +25,7 @@ function Documentation() {
   useEffect(() => {
     const fetchDocumentation = async () => {
       try {
-        const responseData = await sendRequest('http://localhost:5000/api/documentation');
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + '/documentation');
         setLoadedDocumentation(responseData.documentation);
       } catch (err) { }
     };
@@ -46,13 +47,7 @@ function Documentation() {
         </Modal.Footer>
       </Modal>
       {isLoading && (
-        <div className="overlay">
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <LoadingSpinner />
       )}
       {!isLoading && loadedDocumentation && (
         <React.Fragment>

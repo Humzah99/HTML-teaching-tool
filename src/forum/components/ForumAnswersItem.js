@@ -7,6 +7,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Input from "../../shared/components/FormValidation/Input";
 import { useForm } from "../../shared/hooks/forms-hooks";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const ForumAnswersItem = props => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -43,7 +44,7 @@ const ForumAnswersItem = props => {
     setShowConfirmationModal(false);
     try {
       await sendRequest(
-        `http://localhost:5000/api/answers/${props.id}`,
+        process.env.REACT_APP_BACKEND_URL + `/answers/${props.id}`,
         "DELETE",
         null,
         { Authorization: "Bearer " + auth.token }
@@ -57,7 +58,7 @@ const ForumAnswersItem = props => {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5000/api/answers/${props.id}`,
+        process.env.REACT_APP_BACKEND_URL + `/answers/${props.id}`,
         "PATCH",
         JSON.stringify({
           text: formState.inputs.answerText.value
@@ -105,13 +106,7 @@ const ForumAnswersItem = props => {
       {!update ? (
         <div className="card show-answer-container mt-4">
           {isLoading && (
-            <div className="overlay">
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>
+            <LoadingSpinner />
           )}
           <div className="card-body">
             {props != null && <p className="card-text">{updatedAnswer}</p>}

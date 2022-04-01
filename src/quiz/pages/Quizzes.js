@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import QuizList from "../components/QuizList";
 import Pagination from '../../shared/components/Pagination/Pagination';
 import Footer from '../../shared/components/Footer/Footer';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 function Quizzes() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedQuizzes, setLoadedQuizzes] = useState();
@@ -24,7 +25,7 @@ function Quizzes() {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const responseData = await sendRequest('http://localhost:5000/api/quiz');
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + '/quiz');
         setLoadedQuizzes(responseData.quizzes);
       } catch (err) { }
     };
@@ -46,13 +47,7 @@ function Quizzes() {
         </Modal.Footer>
       </Modal>
       {isLoading && (
-        <div className="overlay">
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <LoadingSpinner />
       )}
       {!isLoading && loadedQuizzes &&
         <React.Fragment>

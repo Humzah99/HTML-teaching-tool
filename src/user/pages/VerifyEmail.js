@@ -5,6 +5,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const VerifyEmail = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -13,7 +14,7 @@ const VerifyEmail = () => {
     useEffect(() => {
         const fetchVerifyEmail = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/user/verify/${token}`);
+                const responseData = await sendRequest(`${process.env.process.env.REACT_APP_BACKEND_URL}/user/verify/${token}`);
             }
             catch (err) { }
         }
@@ -34,13 +35,7 @@ const VerifyEmail = () => {
             </Modal>
             <div className="container" style={{ marginTop: "15%" }}>
                 {isLoading && (
-                    <div className="overlay">
-                        <div className="d-flex justify-content-center">
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
+                    <LoadingSpinner />
                 )}
                 <div className="position-absolute top-0 start-0">
                     <a href="/">
