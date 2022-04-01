@@ -9,6 +9,7 @@ const Forum = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const [loadedForum, setLoadedForum] = useState();
     const [currentPage, setCurrentPage] = useState(1);
+    const [activeLink, setActiveLink] = useState(1);
     const [questionsPerPage] = useState(4);
 
     let indexOfLastDoc = currentPage * questionsPerPage;
@@ -16,6 +17,7 @@ const Forum = () => {
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
+        setActiveLink(pageNumber);
     }
 
 
@@ -36,6 +38,7 @@ const Forum = () => {
             indexOfFirstDoc -= questionsPerPage
             indexOfLastDoc -= questionsPerPage
             setCurrentPage(currentPage - 1);
+            setActiveLink(currentPage - 1);
         }
 };
 return (
@@ -64,8 +67,8 @@ return (
         )}
         {!isLoading && loadedForum &&
             <React.Fragment>
-                <ForumList items={loadedForum.sort((a, b) => (a.createdAt > b.createdAt) ? 1 : -1).slice(indexOfFirstDoc, indexOfLastDoc)} numberOfQuestions={loadedForum.length} myQuestions={false} onDeleteQuestion={questionDeletedHandler} />
-                {loadedForum.length > 4 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedForum.length} paginate={paginate} currentPage={currentPage} />}
+                <ForumList items={loadedForum.slice(indexOfFirstDoc, indexOfLastDoc)} numberOfQuestions={loadedForum.length} myQuestions={false} onDeleteQuestion={questionDeletedHandler} />
+                {loadedForum.length > 4 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedForum.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />}
             </React.Fragment>
         }
 

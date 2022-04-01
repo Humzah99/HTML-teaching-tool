@@ -7,6 +7,7 @@ function Quizzes() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedQuizzes, setLoadedQuizzes] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeLink, setActiveLink] = useState(1);
   const [quizPerPage] = useState(12);
 
   const indexOfLastDoc = currentPage * quizPerPage;
@@ -14,6 +15,7 @@ function Quizzes() {
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber)
+    setActiveLink(pageNumber)
   }
 
 
@@ -53,7 +55,7 @@ function Quizzes() {
       {!isLoading && loadedQuizzes &&
         <React.Fragment>
           <QuizList items={loadedQuizzes.slice(indexOfFirstDoc, indexOfLastDoc)} />
-          <Pagination elementsPerPage={quizPerPage} totalElements={loadedQuizzes.length} paginate={paginate} currentPage={currentPage} />
+          <Pagination elementsPerPage={quizPerPage} totalElements={loadedQuizzes.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />
         </React.Fragment>}
     </React.Fragment>
   );

@@ -6,14 +6,11 @@ import "codemirror/mode/xml/xml";
 import { Controlled as ControlledEditor } from "react-codemirror2";
 require("../../shared/components/CodeMirror/autorefresh.ext");
 const Editor = props => {
-  // var beautify_html = require('js-beautify').html
   const { language, displayName, value, onChange } = props;
 
   const handleChange = (editor, data, value) => {
     onChange(value);
   };
-
-  // var formattedHtml = beautify_html(value, { indent_size: 2 });
   
   return (
     <div className="editor-container">
@@ -28,7 +25,6 @@ const Editor = props => {
           mode: language,
           theme: "material",
           lineNumbers: true,
-          autofocus: true,
           autoRefresh: { force: true }
         }}
       />

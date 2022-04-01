@@ -6,7 +6,6 @@ import { duotoneForest } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "../../shared/components/Style.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Codepen from "./Codepen";
-// import Codepen from "./Codepen";
 
 const DocumentationRender = () => {
   var beautify_html = require("js-beautify").html;
@@ -26,7 +25,7 @@ const DocumentationRender = () => {
       } catch (err) {}
     };
     fetchDocumentation();
-  }, [sendRequest, loadedDocumentation, documentationId]);
+  }, [sendRequest, documentationId]);
 
   const showCodePenHandler = codeString => {
     setShowCodePenModal(true);

@@ -1,0 +1,39 @@
+.main-footer {
+    color: #f5816e;
+    background-color: #fcedda;
+    padding-top: 3em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0px 0px 42px 0px rgba(245, 129, 110, 0.8);
+    margin-top: 20%;
+}
+
+.footer-info-text {
+    width: 90%;
+    margin-left: 5%;
+}
+
+.footer-icon {
+    width: 8%;
+    height: 80%;
+    border: 2px solid #f5816e;
+    border-radius: 1em;
+  }
+
+  /*
+    MEDIA QUERIES
+  */
+
+  @media only screen and (max-width: 390px) {
+    .main-footer .btn {
+        margin-left: 3% !important;
+    }
+  }
+
+  @media only screen and (max-width: 765px) {
+    .footer-icon {
+      visibility: hidden;
+    }
+  }
+  

@@ -8,6 +8,7 @@ function Documentation() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedDocumentation, setLoadedDocumentation] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeLink, setActiveLink] = useState(1);
   const [docPerPage] = useState(4);
 
   const indexOfLastDoc = currentPage * docPerPage;
@@ -15,6 +16,7 @@ function Documentation() {
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber)
+    setActiveLink(pageNumber);
   }
 
   useEffect(() => {
@@ -53,7 +55,7 @@ function Documentation() {
       {!isLoading && loadedDocumentation && (
         <React.Fragment>
           <DocumentationList items={loadedDocumentation.slice(indexOfFirstDoc, indexOfLastDoc)} />
-          <Pagination elementsPerPage={docPerPage} totalElements={loadedDocumentation.length} paginate={paginate} currentPage={currentPage} />
+          <Pagination elementsPerPage={docPerPage} totalElements={loadedDocumentation.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />
         </React.Fragment>
       )};
     </React.Fragment>

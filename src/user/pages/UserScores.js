@@ -14,6 +14,7 @@ const UserScores = () => {
     const userId = useParams().userId;
     const [loadedUser, setLoadedUser] = useState();
     const [currentPage, setCurrentPage] = useState(1);
+    const [activeLink, setActiveLink] = useState(1);
     const [questionsPerPage] = useState(5);
 
     let indexOfLastDoc = currentPage * questionsPerPage;
@@ -21,6 +22,7 @@ const UserScores = () => {
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
+        setActiveLink(pageNumber);
     }
 
 
@@ -121,7 +123,7 @@ const UserScores = () => {
                     )}
                 </div>
             </div>
-            {loadedUser.scores.length > 5 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedUser.scores.length} paginate={paginate} currentPage={currentPage} />}
+            {loadedUser.scores.length > 5 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedUser.scores.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />}
         </React.Fragment>
     );
 };
