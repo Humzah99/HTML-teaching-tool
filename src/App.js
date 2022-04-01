@@ -25,7 +25,6 @@ import { useAuth } from "./shared/hooks/auth-hook";
 import UserScores from "./user/pages/UserScores";
 import VerifyEmail from "./user/pages/VerifyEmail";
 import ResetPassword from "./user/pages/ResetPassword";
-import Footer from "./shared/components/Footer/Footer";
 
 function App() {
 
@@ -38,67 +37,54 @@ function App() {
         <Route path="/documentation" exact>
           <MainNavigation />
           <Documentation />
-          <Footer />
         </Route>
         <Route path="/forum" exact>
           <MainNavigation />
           <UserForum />
-          <Footer />
         </Route>
         <Route path="/forum/new" exact>
           <MainNavigation />
           <NewForumQuestion />
-          <Footer />
         </Route>
         <Route path="/forum/view/:questionId" exact>
           <MainNavigation />
           <ForumQuestion />
-          <Footer />
         </Route>
         <Route path="/forum/user/:userId" exact>
           <MainNavigation />
           <UserQuestions />
-          <Footer />
         </Route>
         <Route path="/forum/update/:questionId" exact>
           <MainNavigation />
           <UpdateForumQuestion />
-          <Footer />
         </Route>
         <Route path="/" exact>
           <MainNavigation />
           <Homepage />
-          <Footer />
         </Route>
         <Route path="/quiz" exact>
           <MainNavigation />
           <Quizzes />
-          <Footer />
         </Route>
         <Route path="/quiz/:quizId" exact>
           <MainNavigation />
           <NewQuiz />
-          <Footer />
         </Route>
         <Route path="/:quizId/high-scores" exact>
           <MainNavigation />
           <QuizLeaderboard />
-          <Footer />
         </Route>
         <Route path="/userProfile/:userId" exact>
           <MainNavigation />
           <UserProfile />
-          <Footer />
         </Route>
         <Route path="/userScores/:userId" exact>
           <MainNavigation />
           <UserScores />
-          <Footer />
         </Route>
         <Route path="/documentation/:docId" exact>
           <MainNavigation />
           <DocumentationRender />
-          <Footer />
         </Route>
         <Redirect to="/" />
       </Switch>
@@ -109,12 +95,10 @@ function App() {
         <Route path="/documentation" exact>
           <MainNavigation />
           <Documentation />
-          <Footer />
         </Route>
         <Route path="/forum" exact>
           <MainNavigation />
           <UserForum />
-          <Footer />
         </Route>
         <Route path="/forum/view/:questionId" exact>
           <MainNavigation />
@@ -129,12 +113,10 @@ function App() {
         <Route path="/" exact>
           <MainNavigation />
           <Homepage />
-          <Footer />
         </Route>
         <Route path="/documentation/:docId" exact>
           <MainNavigation />
           <DocumentationRender />
-          <Footer />
         </Route>
         <Route path="/verifyEmail/:token" exact>
           <VerifyEmail />
