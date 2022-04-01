@@ -28,7 +28,6 @@ const NewForumQuestion = () => {
   const history = useHistory();
   const submitHandler = async event => {
     event.preventDefault();
-    console.log(formState.inputs)
     try {
       await sendRequest('http://localhost:5000/api/forum/', 'POST', JSON.stringify({
         heading: formState.inputs.questionTitle.value,

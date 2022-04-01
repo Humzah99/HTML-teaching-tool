@@ -23,11 +23,10 @@ const DocumentationRender = () => {
           `http://localhost:5000/api/documentation/${documentationId}`
         );
         setLoadedDocumentation(responseData.documentation);
-        console.log(loadedDocumentation);
       } catch (err) {}
     };
     fetchDocumentation();
-  }, [sendRequest, documentationId]);
+  }, [sendRequest, loadedDocumentation, documentationId]);
 
   const showCodePenHandler = codeString => {
     setShowCodePenModal(true);

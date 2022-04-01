@@ -1,23 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import "../../shared/components/Style.css";
 import ForumAnswersItem from "./ForumAnswersItem";
-import { AuthContext } from "../../shared/components/context/auth-context";
 
 const ForumAnswersList = props => {
-    const auth = useContext(AuthContext);
-
-    //   if (props.items.length === 0) {
-    //     return (
-    //       <div className="container">
-    //         <button className="btn btn-lg">Ask question</button>
-    //         <div className="card">
-    //           <div className="card-body">
-    //             No questions found. Try to add a question...
-    //           </div>
-    //         </div>
-    //       </div>
-    //     );
-    //   }
 
     return (
         < div className="answers-container mt-5 mb-5" >

@@ -21,7 +21,6 @@ function Quizzes() {
     const fetchQuizzes = async () => {
       try {
         const responseData = await sendRequest('http://localhost:5000/api/quiz');
-        console.log(responseData.quizzes);
         setLoadedQuizzes(responseData.quizzes);
       } catch (err) { }
     };

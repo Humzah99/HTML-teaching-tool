@@ -23,7 +23,6 @@ const ForgottenDetails = () => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(formState.inputs);
     try {
       const responseData = await sendRequest(
         "http://localhost:5000/api/user/forgotPassword",
@@ -35,7 +34,6 @@ const ForgottenDetails = () => {
           "Content-Type": "application/json"
         }
       );
-      console.log(responseData);
       alert("Please check your email to reset the password");
       history.push("/");
     } catch (err) { }

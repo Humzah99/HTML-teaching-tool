@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import "../components/NewQuiz.css";
 import "../../shared/components/Style.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";
-import { AuthContext } from "../../shared/components/context/auth-context";
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -115,7 +114,7 @@ const QuizLeaderboard = () => {
                                     )}
                                     <div className="card-body">
                                         <div className="float-start">
-                                            <h3 className="ranking-number text-muted">{index + 4}<span className="ranking-ending">{(index + 4) > 20 && (index + 4) % 10 == 1 && 'st'}{(index + 4) > 20 && (index + 4) % 10 == 2 && 'nd'}{(index + 4) > 20 && (index + 4) % 10 == 3 && 'rd'}{((index + 4) % 10 != 1 && (index + 4) % 10 != 2 && (index + 4) % 10 != 3) && 'th' || ((index + 4) <= 20) && 'th'}</span></h3>
+                                            <h3 className="ranking-number text-muted">{index + 4}<span className="ranking-ending">{(index + 4) > 20 && (index + 4) % 10 === 1 && 'st'}{(index + 4) > 20 && (index + 4) % 10 === 2 && 'nd'}{(index + 4) > 20 && (index + 4) % 10 === 3 && 'rd'}{((index + 4) % 10 !== 1 && (index + 4) % 10 !== 2 && ((index + 4) % 10 !== 3) && 'th') || ((index + 4) <= 20) && 'th'}</span></h3>
                                             <img className="lower-high-scores-user-image ms-4"
                                                 src={`http://localhost:5000/${score.user.image}`} alt={score.user.firstname + " " + score.user.surname}
                                             />

@@ -13,11 +13,6 @@ const Pagination = ({ elementsPerPage, totalElements, paginate, currentPage }) =
     const ChevronRight = <FontAwesomeIcon className="icon" icon={faChevronRight} />;
 
     const ChevronLeft = <FontAwesomeIcon className="icon" icon={faChevronLeft} />;
-
-    console.log("noOfPages: " + noOfPages);
-    console.log("currentPage: " + currentPage)
-    console.log(totalElements);
-    console.log(elementsPerPage)
     for (let i = 1; i <= noOfPages; i++) {
         pageNumbers.push(i);
     }
@@ -34,7 +29,7 @@ const Pagination = ({ elementsPerPage, totalElements, paginate, currentPage }) =
     const handlePrevBtn = () => {
         paginate(currentPage - 1)
         setActiveLink(currentPage - 1);
-        if ((currentPage - 1) % pageNumberLimit == 0) {
+        if ((currentPage - 1) % pageNumberLimit === 0) {
             setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
             setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
         }
@@ -45,7 +40,7 @@ const Pagination = ({ elementsPerPage, totalElements, paginate, currentPage }) =
             <nav>
                 <ul className='pagination'>
                     <li className='page-item'>
-                        <button onClick={handlePrevBtn} className='page-link prev-btn' disabled={currentPage == pageNumbers[0] ? true : false}>
+                        <button onClick={handlePrevBtn} className='page-link prev-btn' disabled={currentPage === pageNumbers[0] ? true : false}>
                             {ChevronLeft}
                         </button>
                     </li>
@@ -65,7 +60,7 @@ const Pagination = ({ elementsPerPage, totalElements, paginate, currentPage }) =
                         }
                     })}
                     <li className='page-item'>
-                        <button onClick={handleNextBtn} className='page-link next-btn' disabled={currentPage == pageNumbers.length ? true : false}>
+                        <button onClick={handleNextBtn} className='page-link next-btn' disabled={currentPage === pageNumbers.length ? true : false}>
                             {ChevronRight}
                         </button>
                     </li>

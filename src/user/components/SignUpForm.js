@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import "../../shared/components/Style.css";
 import Input from "../../shared/components/FormValidation/Input";
 import ImageUpload from "../../shared/components/ImageUpload/ImageUpload";
@@ -10,7 +10,6 @@ import {
 } from "../../shared/components/FormValidation/validators";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "../../shared/components/context/auth-context";
 import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
@@ -32,7 +31,6 @@ const SignUpForm = () => {
 
   const authSubmitHandler = async event => {
     event.preventDefault();
-    console.log(formState.inputs);
     try {
       const formData = new FormData();
       formData.append("firstname", formState.inputs.firstname.value);
@@ -46,12 +44,6 @@ const SignUpForm = () => {
         "POST",
         formData
       );
-        console.log(responseData);
-      // auth.login(
-      //   responseData.username,
-      //   responseData.userId,
-      //   responseData.token
-      // );
       alert("Signed up successfully, please verify your email.");
       history.push("/");
     } catch (err) {}

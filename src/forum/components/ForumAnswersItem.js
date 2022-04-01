@@ -15,18 +15,12 @@ const ForumAnswersItem = props => {
   const [update, setUpdate] = useState(false);
   const auth = useContext(AuthContext);
   const history = useHistory();
-  console.log(props);
-  console.log(auth.userId);
   const [formState, inputHandler] = useForm(
     {
       answerText: {
         value: "",
         isValid: false
       }
-      // answerCode: {
-      //   value: "",
-      //   isValid: false,
-      // },
     },
     false
   );
@@ -67,7 +61,6 @@ const ForumAnswersItem = props => {
         "PATCH",
         JSON.stringify({
           text: formState.inputs.answerText.value
-          //text: formState.inputs.questionDescription.value
         }),
         {
           "Content-Type": "application/json",

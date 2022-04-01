@@ -75,7 +75,7 @@ const UserProfile = () => {
     };
     fetchUser();
 
-  }, [sendRequest, userId]);
+  }, [sendRequest, setFormData, userId]);
 
   const updateSubmitHandler = async event => {
     event.preventDefault();
@@ -114,8 +114,6 @@ const UserProfile = () => {
       )
     );
   }
-
-  console.log(loadedUser);
 
   return (
     <React.Fragment>

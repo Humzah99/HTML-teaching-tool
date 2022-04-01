@@ -36,7 +36,6 @@ const UpdateForumQuestion = () => {
       try {
         const responseData = await sendRequest(`http://localhost:5000/api/forum/${questionId}`);
         setLoadedQuestion(responseData.forumQuestion);
-        console.log(loadedQuestion);
         setFormData(
           {
             questionTitle: {
@@ -54,7 +53,7 @@ const UpdateForumQuestion = () => {
       catch (err) { }
     }
     fetchQuestion();
-  }, [sendRequest, questionId])
+  }, [sendRequest, loadedQuestion, setFormData, questionId])
 
   const updateSubmitHandler = async event => {
     event.preventDefault();
@@ -86,7 +85,6 @@ const UpdateForumQuestion = () => {
 
   if (!loadedQuestion && !error) {
     return (
-      console.log(questionId),
       (
         <div className="container">
           <h3 className="mt-5 text-center">Could not identify the question.</h3>

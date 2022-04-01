@@ -85,8 +85,6 @@ const Auth = () => {
   };
   const authSubmitHandler = async event => {
     event.preventDefault();
-
-    console.log(formState.inputs);
     try {
       const responseData = await sendRequest(
         "http://localhost:5000/api/user/login",
@@ -99,8 +97,6 @@ const Auth = () => {
           "Content-Type": "application/json"
         }
       );
-      console.log(responseData);
-      console.log(auth);
       auth.login(
         responseData.username,
         responseData.userId,

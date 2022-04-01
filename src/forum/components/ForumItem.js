@@ -11,7 +11,6 @@ const ForumItem = props => {
   const auth = useContext(AuthContext);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const history = useHistory();
-  console.log(props);
   const showDeleteWarningHandler = () => {
     setShowConfirmationModal(true);
   };

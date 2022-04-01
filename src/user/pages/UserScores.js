@@ -50,8 +50,6 @@ const UserScores = () => {
 
     if (!loadedUser && !error) {
         return (
-            console.log("user id: " + userId),
-            console.log(loadedUser),
             (
                 <div className="container">
                     <h3 className="mt-5 text-center">Could not find score information.</h3>
@@ -59,8 +57,6 @@ const UserScores = () => {
             )
         );
     }
-
-    console.log(loadedUser);
 
     return (
         <React.Fragment>

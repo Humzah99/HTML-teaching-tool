@@ -14,7 +14,6 @@ const VerifyEmail = () => {
         const fetchVerifyEmail = async () => {
             try {
                 const responseData = await sendRequest(`http://localhost:5000/api/user/verify/${token}`);
-                console.log(responseData);
             }
             catch (err) { }
         }

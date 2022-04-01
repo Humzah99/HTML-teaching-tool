@@ -23,14 +23,12 @@ const Forum = () => {
         const fetchForum = async () => {
             try {
                 const responseData = await sendRequest('http://localhost:5000/api/forum');
-                console.log(responseData.forumQuestions);
                 setLoadedForum(responseData.forumQuestions);
             } catch (err) { }
         };
         fetchForum();
     }, [sendRequest]);
 
-    console.log(currentPage);
 
     const questionDeletedHandler = deletedQuestionId => {
         setLoadedForum(prevQuestions => prevQuestions.filter(question => question.id !== deletedQuestionId));

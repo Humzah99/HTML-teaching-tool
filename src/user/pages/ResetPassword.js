@@ -39,7 +39,6 @@ const ResetPassword = () => {
         const fetchForgottenPassword = async () => {
             try {
                 const responseData = await sendRequest(`http://localhost:5000/api/user/verifyToken/${token}`);
-                console.log(responseData);
             }
             catch (err) { }
         }
@@ -49,8 +48,6 @@ const ResetPassword = () => {
     const authSubmitHandler = async (event) => {
         event.preventDefault();
         const {email} = jwt_decode(token);
-        console.log(formState.inputs);
-        console.log(email);
         try {
             const responseData = await sendRequest(
                 "http://localhost:5000/api/user/resetPassword",
@@ -63,7 +60,6 @@ const ResetPassword = () => {
                     "Content-Type": "application/json"
                 }
             );
-            console.log(responseData);
             alert("Password successfully resetted");
             history.push("/");
         } catch (err) { }

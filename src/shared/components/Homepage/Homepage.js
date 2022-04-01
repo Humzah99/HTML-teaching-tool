@@ -19,13 +19,11 @@ const LoggedInHomepage = () => {
   const [loadedQuiz, setLoadedQuiz] = useState();
 
   useEffect(() => {
-    console.log(auth);
     const fetchDocumentation = async () => {
       try {
         const responseData = await sendRequest(
           "http://localhost:5000/api/documentation/randDoc"
         );
-        console.log(responseData.documentation);
         setLoadedDocumentation(responseData.documentation);
       } catch (err) { }
     };
@@ -34,13 +32,12 @@ const LoggedInHomepage = () => {
         const responseData = await sendRequest(
           "http://localhost:5000/api/quiz/randQuiz"
         );
-        console.log(responseData.quiz);
         setLoadedQuiz(responseData.quiz);
       } catch (err) { }
     };
     fetchDocumentation();
     fetchQuiz();
-  }, [sendRequest]);
+  }, [sendRequest, auth]);
 
   if (isLoading) {
     return (
@@ -127,7 +124,7 @@ const LoggedInHomepage = () => {
                     </Link></p>
                   </div>
                   <figure>
-                    <img src={HtmlDocumentationCode} alt="Image description" />
+                    <img src={HtmlDocumentationCode} alt="" />
                   </figure>
                 </div>
               </li>)}
@@ -147,7 +144,7 @@ const LoggedInHomepage = () => {
                       </p>
                     </div>
                     <figure>
-                      <img src={QuizCode} alt="Image description" />
+                      <img src={QuizCode} alt="" />
                     </figure>
                   </div>
                 </li>
@@ -174,7 +171,7 @@ const LoggedInHomepage = () => {
                     <p><Link to="/documentation" className="btn btn--accent rounded-pill">View</Link></p>
                   </div>
                   <figure>
-                    <img src={HtmlDocumentationCode} alt="Image description" />
+                    <img src={HtmlDocumentationCode} alt="" />
                   </figure>
                 </div>
               </li>
@@ -186,7 +183,7 @@ const LoggedInHomepage = () => {
                     <p><Link to="/forum" className="btn btn--accent rounded-pill">View</Link></p>
                   </div>
                   <figure>
-                    <img src={UserForumCode} alt="Image description" />
+                    <img src={UserForumCode} alt="" />
                   </figure>
                 </div>
               </li>
@@ -198,7 +195,7 @@ const LoggedInHomepage = () => {
                     <p><Link to="/auth" className="btn btn--accent rounded-pill">Sign up</Link></p>
                   </div>
                   <figure>
-                    <img src={QuizCode} alt="Image description" />
+                    <img src={QuizCode} alt="" />
                   </figure>
                 </div>
               </li>

@@ -21,7 +21,6 @@ function Documentation() {
     const fetchDocumentation = async () => {
       try {
         const responseData = await sendRequest('http://localhost:5000/api/documentation');
-        console.log(responseData.documentation);
         setLoadedDocumentation(responseData.documentation);
       } catch (err) { }
     };
