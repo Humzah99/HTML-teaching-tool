@@ -9,6 +9,7 @@ import {
 import { useForm } from '../../shared/hooks/forms-hooks';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
+import Footer from "../../shared/components/Footer/Footer";
 
 
 const NewForumQuestion = () => {
@@ -108,6 +109,7 @@ const NewForumQuestion = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };

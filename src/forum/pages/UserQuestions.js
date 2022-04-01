@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 import Pagination from '../../shared/components/Pagination/Pagination';
+import Footer from '../../shared/components/Footer/Footer';
 
 const UserQuestions = () => {
     const [loadedQuestions, setLoadedQuestions] = useState();
@@ -19,6 +20,7 @@ const UserQuestions = () => {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         setActiveLink(pageNumber);
+        window.scrollTo(0, 0)
     }
 
 
@@ -69,6 +71,7 @@ const UserQuestions = () => {
                 <React.Fragment>
                     <ForumList items={loadedQuestions.slice(indexOfFirstDoc, indexOfLastDoc)} myQuestions={true} numberOfQuestions={loadedQuestions.length} onDeleteQuestion={questionDeletedHandler} />
                     {loadedQuestions.length > 4 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedQuestions.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />}
+                    <Footer />
                 </React.Fragment>
             )}
         </React.Fragment>

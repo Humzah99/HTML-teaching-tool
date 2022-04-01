@@ -14,6 +14,7 @@ import "../../shared/components/ImageUpload/ImageUpload.css";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
+import Footer from "../../shared/components/Footer/Footer";
 
 const UserProfile = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -75,7 +76,7 @@ const UserProfile = () => {
     };
     fetchUser();
 
-  }, [sendRequest, setFormData, userId]);
+  }, [sendRequest, userId]);
 
   const updateSubmitHandler = async event => {
     event.preventDefault();
@@ -319,6 +320,7 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };

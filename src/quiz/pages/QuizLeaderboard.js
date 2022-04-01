@@ -7,6 +7,7 @@ import { Modal } from "react-bootstrap";
 import { faMedal } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import Footer from "../../shared/components/Footer/Footer";
 
 const GoldMedalIcon = (
     <FontAwesomeIcon className="icon gold-medal-icon" icon={faMedal} size="4x" />
@@ -148,6 +149,7 @@ const QuizLeaderboard = () => {
                             </div>
                         </React.Fragment>
                     )}
+                <Footer />
             </>}
         </React.Fragment>
     );

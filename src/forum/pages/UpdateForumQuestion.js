@@ -10,6 +10,7 @@ import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
+import Footer from "../../shared/components/Footer/Footer";
 
 const UpdateForumQuestion = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -53,7 +54,7 @@ const UpdateForumQuestion = () => {
       catch (err) { }
     }
     fetchQuestion();
-  }, [sendRequest, loadedQuestion, setFormData, questionId])
+  }, [sendRequest, questionId])
 
   const updateSubmitHandler = async event => {
     event.preventDefault();
@@ -155,6 +156,7 @@ const UpdateForumQuestion = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };

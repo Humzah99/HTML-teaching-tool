@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { duotoneForest } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Footer from "../../shared/components/Footer/Footer";
 import "../../shared/components/Style.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Codepen from "./Codepen";
@@ -22,7 +23,7 @@ const DocumentationRender = () => {
           `http://localhost:5000/api/documentation/${documentationId}`
         );
         setLoadedDocumentation(responseData.documentation);
-      } catch (err) {}
+      } catch (err) { }
     };
     fetchDocumentation();
   }, [sendRequest, documentationId]);
@@ -75,71 +76,74 @@ const DocumentationRender = () => {
       )}
 
       {!isLoading && loadedDocumentation && (
-        <div className="container mb-5">
-          <div className="documentation-title mt-4">
-            <h2>HTML {loadedDocumentation.title}</h2>
-          </div>
-          <div className="hr-line mb-2"></div>
-          {loadedDocumentation.content.map((information, index) => {
-            return (
-              <div className="tutorial-section" key={index}>
-                <h3 className="mb-4">{information.subTitle}</h3>
-                {loadedDocumentation.content[index].information.map(
-                  (information, index) => {
-                    return (
-                      <p
-                        className="content h6 mb-3"
+        <>
+          <div className="container mb-5">
+            <div className="documentation-title mt-4">
+              <h2>HTML {loadedDocumentation.title}</h2>
+            </div>
+            <div className="hr-line mb-2"></div>
+            {loadedDocumentation.content.map((information, index) => {
+              return (
+                <div className="tutorial-section" key={index}>
+                  <h3 className="mb-4">{information.subTitle}</h3>
+                  {loadedDocumentation.content[index].information.map(
+                    (information, index) => {
+                      return (
+                        <p
+                          className="content h6 mb-3"
+                          key={index}
+                          style={{ fontSize: "15px" }}
+                        >
+                          {information}
+                        </p>
+                      );
+                    }
+                  )}
+                  {loadedDocumentation.content[index].codeString != null && (
+                    <>
+                      <SyntaxHighlighter
+                        language="javascript"
+                        style={duotoneForest}
                         key={index}
-                        style={{ fontSize: "15px" }}
+                        className="mt-4"
                       >
-                        {information}
-                      </p>
-                    );
-                  }
-                )}
-                {loadedDocumentation.content[index].codeString != null && (
-                  <>
-                    <SyntaxHighlighter
-                      language="javascript"
-                      style={duotoneForest}
+                        {beautify_html(information.codeString, {
+                          indent_size: 2
+                        })}
+                      </SyntaxHighlighter>
+                      <button
+                        className="btn try-it-yourself-btn mb-2"
+                        onClick={() => showCodePenHandler(information.codeString)}
+                      >
+                        Try it yourself
+                      </button>
+                    </>
+                  )}
+                  <div className="hr-line mt-3 mb-5"></div>
+                </div>
+              );
+            })}
+            {loadedDocumentation.chapterSummary.length > 0 && (
+              <>
+                <div className="chapter-summary-title mb-3">
+                  <h4>Chapter Summary</h4>
+                </div>
+                {loadedDocumentation.chapterSummary.map((summary, index) => {
+                  return (
+                    <p
+                      className="content h6"
                       key={index}
-                      className="mt-4"
+                      style={{ fontSize: "15px" }}
                     >
-                      {beautify_html(information.codeString, {
-                        indent_size: 2
-                      })}
-                    </SyntaxHighlighter>
-                    <button
-                      className="btn try-it-yourself-btn mb-2"
-                      onClick={() => showCodePenHandler(information.codeString)}
-                    >
-                      Try it yourself
-                    </button>
-                  </>
-                )}
-                <div className="hr-line mt-3 mb-5"></div>
-              </div>
-            );
-          })}
-          {loadedDocumentation.chapterSummary.length > 0 && (
-            <>
-              <div className="chapter-summary-title mb-3">
-                <h4>Chapter Summary</h4>
-              </div>
-              {loadedDocumentation.chapterSummary.map((summary, index) => {
-                return (
-                  <p
-                    className="content h6"
-                    key={index}
-                    style={{ fontSize: "15px" }}
-                  >
-                    {summary}
-                  </p>
-                );
-              })}
-            </>
-          )}
-        </div>
+                      {summary}
+                    </p>
+                  );
+                })}
+              </>
+            )}
+          </div>
+          <Footer />
+        </>
       )}
     </>
   );

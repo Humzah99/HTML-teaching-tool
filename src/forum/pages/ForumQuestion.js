@@ -10,8 +10,10 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import ForumAnswersList from "../components/ForumAnswersList";
 import { Modal } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import Footer from "../../shared/components/Footer/Footer";
 
 const ForumQuestion = () => {
+  var beautify_html = require('js-beautify').html
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [viewQuestion, setViewQuestion] = useState();
   const [viewAnswers, setViewAnswers] = useState();
@@ -90,52 +92,57 @@ const ForumQuestion = () => {
           </button>
         </Modal.Footer>
       </Modal>
-      {!isLoading && viewQuestion && viewAnswers && <div className="container alignment-container">
-        <div className="row">
-          <div className="col-md">
-            <h3>{viewQuestion.heading}</h3>
-          </div>
-        </div>
-        <div className="col-md">
-          <div className="card show-question-container">
-            <div className="card-body">
-              <p className="card-text">{viewQuestion.text}</p>
+      {!isLoading && viewQuestion && viewAnswers &&
+        <>
+          <div className="container alignment-container">
+            <div className="row">
+              <div className="col-md">
+                <h3>{viewQuestion.heading}</h3>
+              </div>
             </div>
-            <div class="card-footer">
-              <strong><p className="float-end text-muted"> Asked {viewQuestion.createdAt} by {viewQuestion.user.username}</p></strong>
-            </div>
-          </div>
-          {!isLoading && viewAnswers && (<ForumAnswersList items={viewAnswers} onDeleteAnswer={answerDeletedHandler} />)}
-
-          {auth.isLoggedIn && (
-            <React.Fragment>
-              <h4>Your answer</h4>
-              <div className="card form-container mt-3 mb-5">
+            <div className="col-md">
+              <div className="card show-question-container">
                 <div className="card-body">
-                  <form onSubmit={submitHandler}>
-                    <Input
-                      id="answerText"
-                      className="form-control"
-                      rows="10"
-                      placeholder="Enter answer here"
-                      validators={[VALIDATOR_REQUIRE()]}
-                      errorText="An answer is required."
-                      onInput={inputHandler}
-                    />
-                    <button
-                      className="btn mt-3"
-                      type="submit"
-                      disabled={!formState.isValid}
-                    >
-                      Post answer
-                    </button>
-                  </form>
+                  <p className="card-text">{viewQuestion.text}</p>
+                </div>
+                <div class="card-footer">
+                  <strong><p className="float-end text-muted"> Asked {viewQuestion.createdAt} by {viewQuestion.user.username}</p></strong>
                 </div>
               </div>
-            </React.Fragment>
-          )}
-        </div>
-      </div>}
+              {!isLoading && viewAnswers && (<ForumAnswersList items={viewAnswers} onDeleteAnswer={answerDeletedHandler} />)}
+
+              {auth.isLoggedIn && (
+                <React.Fragment>
+                  <h4>Your answer</h4>
+                  <div className="card form-container mt-3 mb-5">
+                    <div className="card-body">
+                      <form onSubmit={submitHandler}>
+                        <Input
+                          id="answerText"
+                          className="form-control"
+                          rows="10"
+                          placeholder="Enter answer here"
+                          validators={[VALIDATOR_REQUIRE()]}
+                          errorText="An answer is required."
+                          onInput={inputHandler}
+                        />
+                        <button
+                          className="btn mt-3"
+                          type="submit"
+                          disabled={!formState.isValid}
+                        >
+                          Post answer
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </React.Fragment>
+              )}
+            </div>
+          </div>
+          <Footer />
+        </>
+      }
     </React.Fragment>
   );
 };

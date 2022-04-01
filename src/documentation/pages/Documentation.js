@@ -3,6 +3,7 @@ import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 import DocumentationList from "../components/DocumentationList";
 import Pagination from '../../shared/components/Pagination/Pagination';
+import Footer from '../../shared/components/Footer/Footer';
 
 function Documentation() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -17,6 +18,7 @@ function Documentation() {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber)
     setActiveLink(pageNumber);
+    window.scrollTo(0, 0)
   }
 
   useEffect(() => {
@@ -56,6 +58,7 @@ function Documentation() {
         <React.Fragment>
           <DocumentationList items={loadedDocumentation.slice(indexOfFirstDoc, indexOfLastDoc)} />
           <Pagination elementsPerPage={docPerPage} totalElements={loadedDocumentation.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />
+          <Footer />
         </React.Fragment>
       )};
     </React.Fragment>

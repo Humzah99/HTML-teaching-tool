@@ -12,6 +12,7 @@ import { AuthContext } from "../context/auth-context";
 import { useHttpClient } from "../../hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import "./Homepage.css";
+import Footer from "../Footer/Footer";
 const LoggedInHomepage = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -37,7 +38,7 @@ const LoggedInHomepage = () => {
     };
     fetchDocumentation();
     fetchQuiz();
-  }, [sendRequest, auth]);
+  }, [sendRequest]);
 
   if (isLoading) {
     return (
@@ -205,6 +206,7 @@ const LoggedInHomepage = () => {
           </aside>
         </React.Fragment>
       )}
+      <Footer />
     </>
   );
 };

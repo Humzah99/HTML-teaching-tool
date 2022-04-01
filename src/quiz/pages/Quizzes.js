@@ -3,6 +3,7 @@ import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 import QuizList from "../components/QuizList";
 import Pagination from '../../shared/components/Pagination/Pagination';
+import Footer from '../../shared/components/Footer/Footer';
 function Quizzes() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedQuizzes, setLoadedQuizzes] = useState();
@@ -16,6 +17,7 @@ function Quizzes() {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber)
     setActiveLink(pageNumber)
+    window.scrollTo(0, 0)
   }
 
 
@@ -56,6 +58,7 @@ function Quizzes() {
         <React.Fragment>
           <QuizList items={loadedQuizzes.slice(indexOfFirstDoc, indexOfLastDoc)} />
           <Pagination elementsPerPage={quizPerPage} totalElements={loadedQuizzes.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />
+          <Footer />
         </React.Fragment>}
     </React.Fragment>
   );

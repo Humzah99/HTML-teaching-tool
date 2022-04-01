@@ -7,6 +7,7 @@ import "../../shared/components/ImageUpload/ImageUpload.css";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
 import Pagination from "../../shared/components/Pagination/Pagination";
+import Footer from "../../shared/components/Footer/Footer";
 
 const UserScores = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -20,9 +21,13 @@ const UserScores = () => {
     let indexOfLastDoc = currentPage * questionsPerPage;
     let indexOfFirstDoc = indexOfLastDoc - questionsPerPage;
 
+    console.log(indexOfFirstDoc);
+    console.log(indexOfLastDoc);
+
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
         setActiveLink(pageNumber);
+        window.scrollTo(0, 0)
     }
 
 
@@ -96,7 +101,7 @@ const UserScores = () => {
                             </thead>
                             <tbody>
                                 {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(indexOfFirstDoc, indexOfLastDoc).map(score => (
-                                    <tr key={score.quizDate}>
+                                    <tr key={score.id}>
                                         <td>{score.quiz.title}</td>
                                         <td>{score.quizDate}</td>
                                         <td>{score.score}</td>
@@ -124,6 +129,7 @@ const UserScores = () => {
                 </div>
             </div>
             {loadedUser.scores.length > 5 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedUser.scores.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />}
+            <Footer />
         </React.Fragment>
     );
 };

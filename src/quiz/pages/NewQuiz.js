@@ -6,6 +6,7 @@ import "../../shared/components/Style.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import { AuthContext } from "../../shared/components/context/auth-context";
+import Footer from "../../shared/components/Footer/Footer";
 
 const NewQuiz = () => {
   const quizId = useParams().quizId;
@@ -158,6 +159,7 @@ const NewQuiz = () => {
             </>
           )}
         </div>
+        <Footer />
       </>}
     </React.Fragment>
   );
