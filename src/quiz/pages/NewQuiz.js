@@ -6,6 +6,8 @@ import "../../shared/components/Style.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import { AuthContext } from "../../shared/components/context/auth-context";
+import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const NewQuiz = () => {
   const quizId = useParams().quizId;
@@ -21,7 +23,7 @@ const NewQuiz = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/api/quiz/${quizId}`);
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/quiz/${quizId}`);
         setLoadedQuiz(responseData.quiz);
       }
       catch (err) { }
@@ -38,7 +40,7 @@ const NewQuiz = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       try {
-        await sendRequest('http://localhost:5000/api/scores/', 'POST', JSON.stringify({
+        await sendRequest(process.env.REACT_APP_BACKEND_URL + '/scores/', 'POST', JSON.stringify({
           score: score,
           quiz: quizId,
           user: auth.userId
@@ -57,22 +59,13 @@ const NewQuiz = () => {
   const restartButtonHandler = () => {
     setRestart(true);
     setScore(score * 0);
-    if (restart) {
-      setShowScore(false);
-      setCurrentQuestion(0);
-    }
-    console.log(currentQuestion);
+    setShowScore(false);
+    setCurrentQuestion(0);
   };
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+     <LoadingSpinner />
     );
   }
 
@@ -120,8 +113,8 @@ const NewQuiz = () => {
                   </button>
                 </div>
                 <div className="col-sm-4 text-center">
-                  <Link to="/documentation" className="btn final-score-options">
-                    See {loadedQuiz.title} documentation
+                  <Link to={`/${loadedQuiz.id}/high-scores`} className="btn final-score-options">
+                    See {loadedQuiz.title} leaderboard
                   </Link>
                 </div>
                 <div className="col-sm-4 text-center">
@@ -142,9 +135,9 @@ const NewQuiz = () => {
                   <p>{loadedQuiz.questions[currentQuestion].questionText}</p>
                 </div>
                 <div className="answer-section">
-                  {loadedQuiz.questions[currentQuestion].answerOptions.map(
+                  {loadedQuiz.questions[currentQuestion].answerOptions.sort(() => Math.random() - 0.25).map(
                     (answerOption) => (
-                      <div className="mt-4">
+                      <div key={answerOption.id} className="mt-4">
                         <button
                           className="answer-option"
                           onClick={() =>
@@ -161,6 +154,7 @@ const NewQuiz = () => {
             </>
           )}
         </div>
+        <Footer />
       </>}
     </React.Fragment>
   );

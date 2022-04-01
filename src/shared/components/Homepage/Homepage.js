@@ -1,60 +1,51 @@
 /* eslint-disable react/react-in-jsx-scope */
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import HtmlDocumentationCode from "../../images/blurred-html-code.png";
+import WebsiteLogo from "../../images/website-logo.png";
+import HtmlDocumentationCode from "../../images/html-code.jpeg";
 import QuizCode from "../../images/quiz-ss.png";
 import UserForumCode from "../../images/user-forum-ss.png";
+import HtmlCarouselDoc from "../../images/html-carousel-doc.jpg"
+import HtmlCarouselQuizImg from "../../images/html-carousel-quiz.jpg"
+import HtmlCarouselForumImg from "../../images/html-carousel-forum.jpg"
 import { AuthContext } from "../context/auth-context";
-import Input from "../FormValidation/Input";
 import { useHttpClient } from "../../hooks/http-hook";
 import { Modal } from "react-bootstrap";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE,
-} from "../FormValidation/validators";
 import "./Homepage.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useForm } from "../../hooks/forms-hooks";
-
-const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
-
-const EyeSlash = <FontAwesomeIcon className="icon" icon={faEyeSlash} />;
+import Footer from "../Footer/Footer";
+import LoadingSpinner from "../UIElements/LoadingSpinner";
 const LoggedInHomepage = () => {
   const auth = useContext(AuthContext);
-  const [passwordShown, setPasswordShown] = useState(false);
-  //const pass = useRef();
-  const [formState, inputHandler] = useForm(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedDocumentation, setLoadedDocumentation] = useState();
+  const [loadedQuiz, setLoadedQuiz] = useState();
 
-  console.log(auth);
-  const togglePassword = () => {
-    setPasswordShown(!passwordShown);
-  };
-
-  const authSubmitHandler = async event => {
-    event.preventDefault();
-    console.log(formState.inputs);
-    try {
-      await sendRequest(
-        'http://localhost:5000/api/user/signup',
-        'POST',
-        JSON.stringify({
-          username: formState.inputs.username.value,
-          firstname: formState.inputs.firstname.value,
-          surname: formState.inputs.surname.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value
-        }),
-        {
-          'Content-Type': 'application/json'
-        })
-      auth.login();
-    } catch (err) {
+  useEffect(() => {
+    const fetchDocumentation = async () => {
+      try {
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/documentation/randDoc"
+        );
+        setLoadedDocumentation(responseData.documentation);
+      } catch (err) { }
     };
-  };
+    const fetchQuiz = async () => {
+      try {
+        const responseData = await sendRequest(
+          process.env.REACT_APP_BACKEND_URL + "/quiz/randQuiz"
+        );
+        setLoadedQuiz(responseData.quiz);
+      } catch (err) { }
+    };
+    fetchDocumentation();
+    fetchQuiz();
+  }, [sendRequest]);
+
+  if (isLoading) {
+    return (
+     <LoadingSpinner />
+    );
+  }
 
   return (
     <>
@@ -62,9 +53,7 @@ const LoggedInHomepage = () => {
         <Modal.Header className="modal-header">
           <Modal.Title>Warning!</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal-body">
-          {error}
-        </Modal.Body>
+        <Modal.Body className="modal-body">{error}</Modal.Body>
         <Modal.Footer>
           <button className="btn btn-danger" onClick={clearError}>
             Ok
@@ -72,219 +61,147 @@ const LoggedInHomepage = () => {
         </Modal.Footer>
       </Modal>
       {auth.isLoggedIn ? (
-        <div className="row">
-          <div className="col-lg-6 first-col">
-            <div className="card featured-doc-card text-center">
-              <img src={HtmlDocumentationCode} className="card-img" alt="..." />
-              <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
-                <h3 className="card-title">HTML Headings</h3>
+        <React.Fragment>
+          <header className="logged-in-homepage-header">
+            <div className="row welcome-user float-start mt-4 ms-4">
+              <h3>Welcome {auth.username}</h3>
+            </div>
+            <div id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
+              <div className="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
               </div>
-            </div>
-            <div className="featured-button-container">
-              <Link
-                to="/documentation/6"
-                className="btn rounded-pill mt-2"
-                style={{ width: "20%" }}
-              >
-                Go to featured topic
-              </Link>
-            </div>
-          </div>
-          <div className="col-lg-6">
-            <div className="card featured-quiz-card text-center">
-              <img src={QuizCode} className="card-img" alt="..." />
-              <div className="card-img-overlay h-100 d-flex flex-column justify-content-end">
-                <h3 className="card-title">HTML Tables</h3>
+              <div className="carousel-inner">
+                <div className="carousel-item active" data-bs-interval="10000">
+                  <img src={HtmlCarouselDoc} className="d-block w-100 bg-image" alt="..." />
+                  <div className="carousel-caption d-none d-md-block bg-text">
+                    <h2 style={{ backgroundColor: 'transparent' }}>HTML Documentation</h2>
+                    <p>Discover the core HTML elements through our dedicated documentation...</p>
+                  </div>
+                </div>
+                <div className="carousel-item" data-bs-interval="2000">
+                  <img src={HtmlCarouselForumImg} className="d-block w-100 bg-image" alt="..." />
+                  <div className="carousel-caption d-none d-md-block bg-text">
+                    <h2 style={{ backgroundColor: 'transparent' }}>User Forum</h2>
+                    <p>Ask and respond interatively on the go on the user forum...</p>
+                  </div>
+                </div>
+                <div className="carousel-item">
+                  <img src={HtmlCarouselQuizImg} className="d-block w-100 bg-image" alt="..." />
+                  <div className="carousel-caption d-none d-md-block bg-text">
+                    <h2 style={{ backgroundColor: 'transparent' }}>Quiz</h2>
+                    <p>Test your HTML knowledge and track your learning progress by undertaking a range of quizzes...</p>
+                  </div>
+                </div>
               </div>
+              <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Previous</span>
+              </button>
+              <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                <span className="visually-hidden">Next</span>
+              </button>
             </div>
-            <div className="featured-button-container">
-              <Link
-                to="/quiz/1"
-                className="btn rounded-pill mt-2"
-                style={{ width: "20%" }}
-              >
-                Go to featured quiz
-              </Link>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="row">
-          <div className="col-lg-6 first-col">
-            <div className="loh-container">
-              <Link to="/documentation" className="loh-carousel-link">
-                <div className="card loh-info-card">
-                  <img
-                    src={HtmlDocumentationCode}
-                    className="loh-card-img"
-                    alt="..."
-                  />
-                  <div className="card-img-overlay">
-                    <div className="bar">
-                      <div className="emptybar"></div>
-                      <div className="filledbar"></div>
-                    </div>
-                    <div className="circle">
-                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="stroke" cx="60" cy="60" r="50" />
-                      </svg>
-                    </div>
-                    <h3 className="card-title text-center">
-                      Discover each HTML element through our documentation...
-                    </h3>
-                  </div>
-                </div>
-              </Link>
-              <Link to="/forum" className="loh-carousel-link">
-                <div className="card loh-info-card">
-                  <img src={UserForumCode} className="loh-card-img" alt="..." />
-                  <div className="card-img-overlay">
-                    <div className="bar">
-                      <div className="emptybar"></div>
-                      <div className="filledbar"></div>
-                    </div>
-                    <div className="circle">
-                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="stroke" cx="60" cy="60" r="50" />
-                      </svg>
-                    </div>
-                    <h3 className="card-title text-center">
-                      Visit our dedicated user forum to view and ask
-                      questions...
-                    </h3>
-                  </div>
-                </div>
-              </Link>
-              <Link to="/quiz" className="loh-carousel-link">
-                <div className="card loh-info-card">
-                  <img src={QuizCode} className="loh-card-img" alt="..." />
-                  <div className="card-img-overlay">
-                    <div className="bar">
-                      <div className="emptybar"></div>
-                      <div className="filledbar"></div>
-                    </div>
-                    <div className="circle">
-                      <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-                        <circle className="stroke" cx="60" cy="60" r="50" />
-                      </svg>
-                    </div>
-                    <h3 className="card-title text-center">
-                      Test your HTML knowledge by undertaking a range of
-                      quizzes...
-                    </h3>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className="col-lg-6">
-            {" "}
-            <div className="container" style={{ marginTop: "25%" }}>
-              <div className="card mx-auto login-card"> {isLoading && <div class="overlay">
-                {/* <div class="d-flex justify-content-center"> */}
-                <div class="spinner-border" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                {/* </div> */}
-              </div>}
-                <h2 className="mb-5">
-                  Join the ever-growing HTML learning tool for free today!
-                </h2>
-                <form onSubmit={authSubmitHandler} style={{ width: "121%" }}>
+          </header>
+          <main>
+            <ul id="cards">
+              {!isLoading && loadedDocumentation && (<li className="homepage-card" id="card_1">
+                <div className="card__content">
                   <div>
-                    <div className="row mb-5">
-                      <div className="col-sm-5">
-                        <Input
-                          element="input"
-                          id="firstname"
-                          type="text"
-                          label="First Name"
-                          className="form-control rounded-3"
-                          validators={[VALIDATOR_REQUIRE()]}
-                          errorText="Please enter a valid first name."
-                          onInput={inputHandler}
-                        />
-                      </div>
-                      <div className="col-sm-5">
-                        <Input
-                          element="input"
-                          id="surname"
-                          type="text"
-                          label="Surname"
-                          className="form-control rounded-3"
-                          validators={[VALIDATOR_REQUIRE()]}
-                          errorText="Please enter a valid surname."
-                          onInput={inputHandler}
-                        />
-                      </div>
-                    </div>
-                    <div className="row mb-5">
-                      <div className="col-sm-10">
-                        <Input
-                          element="input"
-                          id="username"
-                          type="text"
-                          label="Username"
-                          className="form-control rounded-3"
-                          validators={[VALIDATOR_MINLENGTH(8)]}
-                          errorText="Please enter a valid username."
-                          onInput={inputHandler}
-                        />
-                      </div>
-                    </div>
+                    <h2>Featured Documentation</h2>
+                    <p>HTML {loadedDocumentation.title}</p>
+                    <p><Link
+                      to={`/documentation/${loadedDocumentation.id}`}
+                      className="btn btn--accent rounded-pill"
+                    >
+                      Go to {loadedDocumentation.title} documentation
+                    </Link></p>
                   </div>
-                  <div className="row mb-5">
-                    <div className="col-sm-10">
-                      <Input
-                        element="input"
-                        id="email"
-                        type="email"
-                        label="E-mail"
-                        className="form-control rounded-3"
-                        validators={[VALIDATOR_EMAIL()]}
-                        errorText="Please enter a valid e-mail address."
-                        onInput={inputHandler}
-                      />
+                  <figure>
+                    <img src={HtmlDocumentationCode} alt="" />
+                  </figure>
+                </div>
+              </li>)}
+              {!isLoading && loadedQuiz && (
+                <li className="homepage-card" id="card_3">
+                  <div className="card__content">
+                    <div>
+                      <h2>Featured Quiz</h2>
+                      <p>{loadedQuiz.title}</p>
+                      <p>
+                        <Link
+                          to={`/quiz/${loadedQuiz.id}`}
+                          className="btn btn--accent rounded-pill"
+                        >
+                          Go to {loadedQuiz.title} quiz
+                        </Link>
+                      </p>
                     </div>
+                    <figure>
+                      <img src={QuizCode} alt="" />
+                    </figure>
                   </div>
-                  <div className="row mb-5">
-                    <div className="col-sm-10">
-                      {passwordShown ? (
-                        <span className="eye-icon" onClick={togglePassword}>
-                          {Eye}
-                        </span>
-                      ) : (
-                        <span className="eye-icon" onClick={togglePassword}>
-                          {EyeSlash}
-                        </span>
-                      )}
-                      <Input
-                        //ref={pass}
-                        element="input"
-                        id="password"
-                        type={passwordShown ? "text" : "password"}
-                        label="Password"
-                        className="form-control rounded-3"
-                        validators={[VALIDATOR_MINLENGTH(8)]}
-                        errorText="Please enter a valid password, at least 8 characters long."
-                        onInput={inputHandler}
-                      />
-                    </div>
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn rounded-pill mt-2"
-                    style={{ width: "82%" }}
-                    disabled={!formState.isValid}
-                  >
-                    Sign up
-                  </button>
-                </form>
-              </div>
+                </li>
+              )}
+            </ul>
+          </main>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <header className="homepage-header">
+            <div>
+              <img src={WebsiteLogo} alt="Logo" className="htmlearning-logo me-4" />
+              <h1>HTMLearning</h1>
+              <p className="scroll-down-tag">👇 Scroll down.</p>
             </div>
-          </div>
-        </div>
+          </header>
+          <main>
+            <ul id="cards">
+              <li className="homepage-card" id="card_1">
+                <div className="card__content">
+                  <div>
+                    <h2>HTML Documentation</h2>
+                    <p>Discover the core HTML elements through our dedicated documentation...</p>
+                    <p><Link to="/documentation" className="btn btn--accent rounded-pill">View</Link></p>
+                  </div>
+                  <figure>
+                    <img src={HtmlDocumentationCode} alt="" />
+                  </figure>
+                </div>
+              </li>
+              <li className="homepage-card" id="card_2">
+                <div className="card__content">
+                  <div>
+                    <h2>User Forum</h2>
+                    <p>Ask and respond interatively on the go on the user forum...</p>
+                    <p><Link to="/forum" className="btn btn--accent rounded-pill">View</Link></p>
+                  </div>
+                  <figure>
+                    <img src={UserForumCode} alt="" />
+                  </figure>
+                </div>
+              </li>
+              <li className="homepage-card" id="card_3">
+                <div className="card__content">
+                  <div>
+                    <h2>Quiz</h2>
+                    <p>Test your HTML knowledge and track your learning progress by undertaking a range of quizzes...</p>
+                    <p><Link to="/auth" className="btn btn--accent rounded-pill">Sign up</Link></p>
+                  </div>
+                  <figure>
+                    <img src={QuizCode} alt="" />
+                  </figure>
+                </div>
+              </li>
+            </ul>
+          </main>
+          <aside>
+          </aside>
+        </React.Fragment>
       )}
+      <Footer />
     </>
   );
 };

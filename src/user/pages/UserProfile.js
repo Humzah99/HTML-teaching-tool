@@ -11,27 +11,18 @@ import {
 } from "../../shared/components/FormValidation/validators";
 import "../../shared/components/Style.css";
 import "../../shared/components/ImageUpload/ImageUpload.css";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
-
-const Eye = <FontAwesomeIcon className="icon" icon={faEye} />;
-
-const EyeSlash = <FontAwesomeIcon className="icon" icon={faEyeSlash} />;
+import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UserProfile = () => {
-  const [passwordShown, setPasswordShown] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const history = useHistory();
   const auth = useContext(AuthContext);
   const userId = useParams().userId;
   const [loadedUser, setLoadedUser] = useState();
-
-  console.log(auth);
   const [formState, inputHandler, setFormData] = useForm(
     {
       firstName: {
@@ -49,10 +40,6 @@ const UserProfile = () => {
       email: {
         value: "",
         isValid: false
-      },
-      password: {
-        value: "",
-        isValid: false
       }
     },
     false
@@ -62,8 +49,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/api/user/${userId}`);
-        console.log(responseData.questions);
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/${userId}`);
         setLoadedUser(responseData.user);
         setFormData(
           {
@@ -82,11 +68,7 @@ const UserProfile = () => {
             email: {
               value: responseData.user.email,
               isValid: true
-            },
-            password: {
-              value: responseData.user.password,
-              isValid: true
-            },
+            }
           },
           true
         );
@@ -97,20 +79,12 @@ const UserProfile = () => {
 
   }, [sendRequest, userId]);
 
-
-  const togglePassword = () => {
-    setPasswordShown(!passwordShown);
-  };
-
   const updateSubmitHandler = async event => {
     event.preventDefault();
     try {
-      await sendRequest(`http://localhost:5000/api/user/${userId}`, 'PATCH', JSON.stringify({
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/${userId}`, 'PATCH', JSON.stringify({
         firstname: formState.inputs.firstName.value,
         surname: formState.inputs.surname.value,
-        //username: formState.inputs.username.value,
-        //email: formState.inputs.email.value,
-        password: formState.inputs.password.value,
       }),
         {
           'Content-Type': 'application/json'
@@ -123,20 +97,12 @@ const UserProfile = () => {
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+      <LoadingSpinner />
     );
   }
 
   if (!loadedUser && !error) {
     return (
-      console.log("user id: " + userId),
-      console.log(loadedUser),
       (
         <div className="container">
           <h3 className="mt-5 text-center">Could not find user information.</h3>
@@ -144,8 +110,6 @@ const UserProfile = () => {
       )
     );
   }
-
-  console.log(loadedUser);
 
   return (
     <React.Fragment>
@@ -162,15 +126,15 @@ const UserProfile = () => {
           </button>
         </Modal.Footer>
       </Modal>
-      <div className="row">
+      <div className="row update-user-row">
         <div className="col-md-6" style={{ marginTop: "5%" }}>
           <div className="card mx-auto login-card">
-            {!isLoading && loadedUser && <form onSubmit={updateSubmitHandler} style={{ width: "121%" }}>
+            {!isLoading && loadedUser && <form onSubmit={updateSubmitHandler} className="auth-form">
               <div>
                 <div className="row mb-3">
                   <div className="col-sm-12">
                     <img className="user-profile-image"
-                      src={`http://localhost:5000/${loadedUser.image}`} alt={loadedUser.firstname + " " + loadedUser.surname}
+                      src={`${process.env.REACT_APP_ASSET_URL}/${loadedUser.image}`} alt={loadedUser.firstname + " " + loadedUser.surname}
                     />
                   </div>
                   <div className="col-sm-6">
@@ -237,31 +201,6 @@ const UserProfile = () => {
                   />
                 </div>
               </div>
-              <div className="row mb-3">
-                <div className="col-sm-12">
-                  {passwordShown ? (
-                    <span className="eye-icon" onClick={togglePassword}>
-                      {Eye}
-                    </span>
-                  ) : (
-                    <span className="eye-icon" onClick={togglePassword}>
-                      {EyeSlash}
-                    </span>
-                  )}
-                  <Input
-                    element="input"
-                    id="password"
-                    type={passwordShown ? "text" : "password"}
-                    label="Password"
-                    className="form-control rounded-3"
-                    validators={[VALIDATOR_MINLENGTH(8)]}
-                    errorText="Please enter a valid password, at least 8 characters long."
-                    onInput={inputHandler}
-                    value={loadedUser.password}
-                    valid={true}
-                  />
-                </div>
-              </div>
               <div className="row mt-5 text-center" style={{ width: '28%', marginLeft: '33%' }}>
                 <button
                   type="submit"
@@ -282,23 +221,23 @@ const UserProfile = () => {
                   <div className="col-md-3">
                     <h3>Latest Questions</h3>
                   </div>
-                  <div className="col-md-3">
-                    <button className="btn rounded-pill" to={`/forum/user/${auth.userId}`} disabled={loadedUser.questions.length <= 0}>View My Questions</button>
+                  <div className="col-md-5">
+                    <Link className="btn rounded-pill" to={`/forum/user/${auth.userId}`} disabled={loadedUser.questions.length <= 0}>View My Questions</Link>
                   </div>
                 </div>
               </div>
               {loadedUser.questions.length > 0 ? (<div className="card-body">
                 {loadedUser.questions.slice(loadedUser.questions.length - 2, loadedUser.questions.length).map(question => (
-                  <div className="card forum-list-card mt-3">
+                  <div key={question.id} className="card forum-list-card mt-3">
                     <div className="card-body">
                       <h5 className="card-title">{question.heading}</h5>
                       <p className="card-text">{question.text}</p>
                       <div className="d-flex bd-highlight">
                         <div className="p-2 flex-fill bd-highlight"></div>
                         <div className="p-2 flex-fill bd-highlight text-end">
-                          <button to={`/forum/view/${question.id}`} className="btn btn-success">
+                          <Link to={`/forum/view/${question.id}`} className="btn btn-success">
                             View question
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -330,14 +269,14 @@ const UserProfile = () => {
                   <div className="col-md-3">
                     <h3>Latest Scores</h3>
                   </div>
-                  <div className="col-md-2">
-                    <button className="btn rounded-pill" disabled={loadedUser.scores.length <= 0}>View My Scores</button>
+                  <div className="col-md-5">
+                    <Link className="btn rounded-pill" disabled={loadedUser.scores.length <= 0} to={`/userScores/${auth.userId}`}>View My Scores</Link>
                   </div>
                 </div>
               </div>
 
               {loadedUser.scores.length > 0 ? (<div className="card-body">
-                <table id="example" className="table table-striped" style={{ width: '100%' }}>
+                <table className="styled-table scores-table">
                   <thead>
                     <tr>
                       <th>Quiz Name</th>
@@ -346,8 +285,8 @@ const UserProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {loadedUser.scores.slice(loadedUser.scores.length - 3, loadedUser.scores.length).sort((a, b) => a.score.quizDate - b.score.quizDate).map(score => (
-                      <tr key={score.quizDate}>
+                    {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(loadedUser.scores.length - 3, loadedUser.scores.length).map(score => (
+                      <tr key={score.id}>
                         <td>{score.quiz.title}</td>
                         <td>{score.quizDate}</td>
                         <td>{score.score}</td>
@@ -376,6 +315,7 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };

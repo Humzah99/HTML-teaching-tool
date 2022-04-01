@@ -5,13 +5,13 @@ import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const ForumItem = props => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const history = useHistory();
-  console.log(props);
   const showDeleteWarningHandler = () => {
     setShowConfirmationModal(true);
   };
@@ -23,7 +23,7 @@ const ForumItem = props => {
   const confirmDeleteHandler = async () => {
     setShowConfirmationModal(false);
     try {
-      await sendRequest(`http://localhost:5000/api/forum/${props.id}`, 'DELETE', null, {Authorization: 'Bearer ' + auth.token});
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + `/forum/${props.id}`, 'DELETE', null, {Authorization: 'Bearer ' + auth.token});
       props.onDelete(props.id)
       history.push(`/forum`);
     }
@@ -64,16 +64,10 @@ const ForumItem = props => {
 
       <div className="card forum-list-card mt-3">
         {isLoading && (
-          <div className="overlay">
-            <div className="d-flex justify-content-center">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </div>
-          </div>
+          <LoadingSpinner />
         )}
         <div className="card-body">
-          <h5 className="card-title">{props.heading}</h5>
+          <h4 className="card-title">{props.heading}</h4>
           <p className="card-text">{props.text}</p>
           <div className="d-flex bd-highlight">
             {auth.userId === props.user.id && (
@@ -92,7 +86,7 @@ const ForumItem = props => {
             )}
             <div className="p-2 flex-fill bd-highlight"></div>
             <div className="p-2 flex-fill bd-highlight text-end">
-              <Link to={`forum/view/${props.id}`} className="btn btn-success">
+              <Link to={`/forum/view/${props.id}`} className="btn btn-success">
                 View question
               </Link>
             </div>

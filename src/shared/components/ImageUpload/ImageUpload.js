@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './ImageUpload.css';
 import DefaultAvatar from '../../images/default-avatar.png';
-import { AuthContext } from '../context/auth-context';
 const ImageUpload = props => {
     const [file, setFile] = useState();
     const [previewUrl, setPreviewUrl] = useState();
@@ -37,17 +36,15 @@ const ImageUpload = props => {
     const pickImageHandler = () => {
         filePickerRef.current.click();
     }
-
-    console.log(previewUrl);
     return (
         <div className='row'>
             <input id={props.id} ref={filePickerRef} style={{ display: 'none' }} type="file" accept=".jpg,.png,.jpeg" onChange={pickedHandler} />
             <div className='col-md-10'>
                 <div className={`image-upload ${props.center && 'center'}`}>
                     <div className='image-upload__preview'>
-                        {previewUrl ? <img src={previewUrl} alt="Profile Picture" />
+                        {previewUrl ? <img src={previewUrl} alt="" />
                             :
-                            <img src={DefaultAvatar} alt="Profile Picture" />}
+                            <img src={DefaultAvatar} alt="" />}
                     </div>
                     <button type='button' className='btn rounded-pill' onClick={pickImageHandler} style={{width: '40%'}}>Add Image</button>
                 </div>

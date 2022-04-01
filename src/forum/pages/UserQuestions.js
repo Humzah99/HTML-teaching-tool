@@ -3,17 +3,33 @@ import ForumList from '../components/ForumList';
 import { useParams } from 'react-router-dom';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
+import Pagination from '../../shared/components/Pagination/Pagination';
+import Footer from '../../shared/components/Footer/Footer';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 const UserQuestions = () => {
     const [loadedQuestions, setLoadedQuestions] = useState();
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const userId = useParams().userId;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [activeLink, setActiveLink] = useState(1);
+    const [questionsPerPage] = useState(4);
+
+    let indexOfLastDoc = currentPage * questionsPerPage;
+    let indexOfFirstDoc = indexOfLastDoc - questionsPerPage;
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        setActiveLink(pageNumber);
+        window.scrollTo(0, 0)
+    }
+
 
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/api/forum/user/${userId}`);
-                setLoadedQuestions(responseData.forumQuestions)
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/user/${userId}`);
+                setLoadedQuestions(responseData.user.questions)
             } catch (err) { }
         };
         fetchQuestions();
@@ -21,6 +37,12 @@ const UserQuestions = () => {
 
     const questionDeletedHandler = deletedQuestionId => {
         setLoadedQuestions(prevQuestions => prevQuestions.filter(question => question.id !== deletedQuestionId));
+        if (loadedQuestions.slice(indexOfFirstDoc, indexOfLastDoc).length - 1 === 0) {
+            indexOfFirstDoc -= questionsPerPage
+            indexOfLastDoc -= questionsPerPage
+            setCurrentPage(currentPage - 1);
+            setActiveLink(currentPage - 1);
+        }
     };
     return (
         <React.Fragment>
@@ -38,16 +60,14 @@ const UserQuestions = () => {
                 </Modal.Footer>
             </Modal>
             {isLoading && (
-                <div className="overlay">
-                    <div className="d-flex justify-content-center">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                </div>
+                <LoadingSpinner />
             )}
             {!isLoading && loadedQuestions && (
-                <ForumList items={loadedQuestions} onDeleteQuestion={questionDeletedHandler} />
+                <React.Fragment>
+                    <ForumList items={loadedQuestions.slice(indexOfFirstDoc, indexOfLastDoc)} myQuestions={true} numberOfQuestions={loadedQuestions.length} onDeleteQuestion={questionDeletedHandler} />
+                    {loadedQuestions.length > 4 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedQuestions.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />}
+                    <Footer />
+                </React.Fragment>
             )}
         </React.Fragment>
     );

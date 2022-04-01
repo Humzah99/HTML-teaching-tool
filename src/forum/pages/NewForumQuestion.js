@@ -9,6 +9,8 @@ import {
 import { useForm } from '../../shared/hooks/forms-hooks';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
+import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 
 const NewForumQuestion = () => {
@@ -28,9 +30,8 @@ const NewForumQuestion = () => {
   const history = useHistory();
   const submitHandler = async event => {
     event.preventDefault();
-    console.log(formState.inputs)
     try {
-      await sendRequest('http://localhost:5000/api/forum/', 'POST', JSON.stringify({
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + '/forum/', 'POST', JSON.stringify({
         heading: formState.inputs.questionTitle.value,
         text: formState.inputs.questionDescription.value,
         // image: null,
@@ -38,7 +39,9 @@ const NewForumQuestion = () => {
       }),
         { 'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token }
       );
-      history.push('/');
+
+      alert("Question successfully posted.")
+      history.push('/forum');
     }
     //Redirect user to different page
     catch (err) {
@@ -69,16 +72,10 @@ const NewForumQuestion = () => {
         </div>
         <div className="col-md">
           <div className="card ask-question-container">
-            {isLoading && <div className="overlay">
-              <div className="d-flex justify-content-center">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </div>
-            </div>}
+            {isLoading && <LoadingSpinner />}
             <div className="card-body">
               <form onSubmit={submitHandler}>
-                <h5 className="card-title">Heading</h5>
+                <h4 className="card-title">Heading</h4>
                 <Input
                   id="questionTitle"
                   className="form-control"
@@ -89,7 +86,7 @@ const NewForumQuestion = () => {
                   errorText="Enter a suitable question heading."
                   onInput={inputHandler}
                 />
-                <h5 className="card-title mt-3">Body</h5>
+                <h4 className="card-title mt-3">Body</h4>
                 <Input
                   id="questionDescription"
                   className="form-control"
@@ -107,6 +104,7 @@ const NewForumQuestion = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };

@@ -10,6 +10,8 @@ import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../shared/components/context/auth-context";
+import Footer from "../../shared/components/Footer/Footer";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UpdateForumQuestion = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -34,9 +36,8 @@ const UpdateForumQuestion = () => {
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/api/forum/${questionId}`);
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + `/forum/${questionId}`);
         setLoadedQuestion(responseData.forumQuestion);
-        console.log(loadedQuestion);
         setFormData(
           {
             questionTitle: {
@@ -59,7 +60,7 @@ const UpdateForumQuestion = () => {
   const updateSubmitHandler = async event => {
     event.preventDefault();
     try {
-      await sendRequest(`http://localhost:5000/api/forum/${questionId}`, 'PATCH', JSON.stringify({
+      await sendRequest(process.env.REACT_APP_BACKEND_URL + `/forum/${questionId}`, 'PATCH', JSON.stringify({
         heading: formState.inputs.questionTitle.value,
         text: formState.inputs.questionDescription.value
       }),
@@ -74,19 +75,12 @@ const UpdateForumQuestion = () => {
 
   if (isLoading) {
     return (
-      <div className="overlay">
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
+      <LoadingSpinner />
     );
   }
 
   if (!loadedQuestion && !error) {
     return (
-      console.log(questionId),
       (
         <div className="container">
           <h3 className="mt-5 text-center">Could not identify the question.</h3>
@@ -120,7 +114,7 @@ const UpdateForumQuestion = () => {
           <div className="card ask-question-container">
             <div className="card-body">
               {!isLoading && loadedQuestion && <form onSubmit={updateSubmitHandler}>
-                <h5 className="card-title">Heading</h5>
+                <h4 className="card-title">Heading</h4>
                 <Input
                   id="questionTitle"
                   className="form-control"
@@ -133,7 +127,7 @@ const UpdateForumQuestion = () => {
                   value={loadedQuestion.heading}
                   valid={true}
                 />
-                <h5 className="card-title mt-3">Body</h5>
+                <h4 className="card-title mt-3">Body</h4>
                 <Input
                   id="questionDescription"
                   className="form-control"
@@ -157,6 +151,7 @@ const UpdateForumQuestion = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </React.Fragment>
   );
 };

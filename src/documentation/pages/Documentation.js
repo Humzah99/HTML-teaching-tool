@@ -2,16 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 import DocumentationList from "../components/DocumentationList";
+import Pagination from '../../shared/components/Pagination/Pagination';
+import Footer from '../../shared/components/Footer/Footer';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 
 function Documentation() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedDocumentation, setLoadedDocumentation] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeLink, setActiveLink] = useState(1);
+  const [docPerPage] = useState(4);
+
+  const indexOfLastDoc = currentPage * docPerPage;
+  const indexOfFirstDoc = indexOfLastDoc - docPerPage;
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+    setActiveLink(pageNumber);
+    window.scrollTo(0, 0)
+  }
 
   useEffect(() => {
     const fetchDocumentation = async () => {
       try {
-        const responseData = await sendRequest('http://localhost:5000/api/documentation');
-        console.log(responseData.documentation);
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + '/documentation');
         setLoadedDocumentation(responseData.documentation);
       } catch (err) { }
     };
@@ -33,16 +47,15 @@ function Documentation() {
         </Modal.Footer>
       </Modal>
       {isLoading && (
-        <div className="overlay">
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <LoadingSpinner />
       )}
-      {!isLoading && loadedDocumentation &&
-        <DocumentationList items={loadedDocumentation} />};
+      {!isLoading && loadedDocumentation && (
+        <React.Fragment>
+          <DocumentationList items={loadedDocumentation.slice(indexOfFirstDoc, indexOfLastDoc)} />
+          <Pagination elementsPerPage={docPerPage} totalElements={loadedDocumentation.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />
+          <Footer />
+        </React.Fragment>
+      )};
     </React.Fragment>
   );
 }

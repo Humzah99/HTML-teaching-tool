@@ -2,15 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 import QuizList from "../components/QuizList";
+import Pagination from '../../shared/components/Pagination/Pagination';
+import Footer from '../../shared/components/Footer/Footer';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 function Quizzes() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedQuizzes, setLoadedQuizzes] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [activeLink, setActiveLink] = useState(1);
+  const [quizPerPage] = useState(12);
+
+  const indexOfLastDoc = currentPage * quizPerPage;
+  const indexOfFirstDoc = indexOfLastDoc - quizPerPage;
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+    setActiveLink(pageNumber)
+    window.scrollTo(0, 0)
+  }
+
 
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const responseData = await sendRequest('http://localhost:5000/api/quiz');
-        console.log(responseData.quizzes);
+        const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + '/quiz');
         setLoadedQuizzes(responseData.quizzes);
       } catch (err) { }
     };
@@ -32,16 +47,14 @@ function Quizzes() {
         </Modal.Footer>
       </Modal>
       {isLoading && (
-        <div className="overlay">
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <LoadingSpinner />
       )}
       {!isLoading && loadedQuizzes &&
-        <QuizList items={loadedQuizzes} />}
+        <React.Fragment>
+          <QuizList items={loadedQuizzes.slice(indexOfFirstDoc, indexOfLastDoc)} />
+          <Pagination elementsPerPage={quizPerPage} totalElements={loadedQuizzes.length} paginate={paginate} currentPage={currentPage} activeLink={activeLink} />
+          <Footer />
+        </React.Fragment>}
     </React.Fragment>
   );
 };
