@@ -92,7 +92,7 @@ const ForumItem = props => {
             )}
             <div className="p-2 flex-fill bd-highlight"></div>
             <div className="p-2 flex-fill bd-highlight text-end">
-              <Link to={`forum/view/${props.id}`} className="btn btn-success">
+              <Link to={`/forum/view/${props.id}`} className="btn btn-success">
                 View question
               </Link>
             </div>

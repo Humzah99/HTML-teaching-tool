@@ -77,7 +77,6 @@ const ForumAnswersItem = props => {
       setUpdatedAnswer(formState.inputs.answerText.value);
       setUpdate(false);
       history.push(`/forum/view/${props.question}`);
-      //window.location.reload(false);
     } catch (err) {}
   };
   return (

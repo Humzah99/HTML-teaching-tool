@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import Editor from "../components/Editor";
 import "../../shared/components/Style.css";
 //import useLocalStorage from "../../shared/hooks/useLocalStorage";
-const Codepen = ({givenHtml}) => {
-    const [html, setHtml] = useState(`${givenHtml}`);
-    const[srcDoc, setSrcDoc] = useState("");
+const Codepen = ({ givenHtml }) => {
+  var beautify_html = require('js-beautify').html
+  const [html, setHtml] = useState(`${beautify_html(givenHtml, { indent_size: 2 })}`);
+  const [srcDoc, setSrcDoc] = useState("");
   useEffect(() => {
-      const timeout = setTimeout(() => {
-        setSrcDoc( `
+    const timeout = setTimeout(() => {
+      setSrcDoc(`
             <html>
                 <body>${html}</body>
             <html>`)
-      }, 250)
+    }, 250)
 
-      return () => clearTimeout(timeout)
+    return () => clearTimeout(timeout)
   }, [html])
 
   return (

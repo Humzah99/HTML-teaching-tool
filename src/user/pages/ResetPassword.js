@@ -101,7 +101,7 @@ const ResetPassword = () => {
                     </a>
                 </div>
                 <div className="card mx-auto login-card">
-                    <form onSubmit={authSubmitHandler} style={{ width: "121%" }}>
+                    <form onSubmit={authSubmitHandler} className="auth-form">
                         <div className="row mb-3">
                             <div className="col-sm-10">
                                 {passwordShown ? (

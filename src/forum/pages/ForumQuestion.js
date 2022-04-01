@@ -65,7 +65,8 @@ const ForumQuestion = () => {
       }),
         { 'Content-Type': 'application/json' }
       )
-      history.push(`/`);
+      alert("Your answer has been submitted")
+      history.go(`/forum/${questionId}`);
     }
     //Redirect user to different page
     catch (err) {
@@ -74,8 +75,8 @@ const ForumQuestion = () => {
   };
 
   const answerDeletedHandler = deletedAnswerId => {
-    setViewAnswers(prevAnswers=> prevAnswers.filter(answer => answer.id !== deletedAnswerId));
-};
+    setViewAnswers(prevAnswers => prevAnswers.filter(answer => answer.id !== deletedAnswerId));
+  };
 
   // for (let codeResponse of identifiedQuestion.codeResponses) {
   //   const card = (
@@ -156,7 +157,7 @@ const ForumQuestion = () => {
               <strong><p className="float-end text-muted"> Asked {viewQuestion.createdAt} by {viewQuestion.user.username}</p></strong>
             </div>
           </div>
-          {!isLoading && viewAnswers && (<ForumAnswersList items={viewAnswers} onDeleteAnswer={answerDeletedHandler}/>)}
+          {!isLoading && viewAnswers && (<ForumAnswersList items={viewAnswers} onDeleteAnswer={answerDeletedHandler} />)}
 
           {auth.isLoggedIn && (
             <React.Fragment>
@@ -198,15 +199,15 @@ const ForumQuestion = () => {
                         />
                       </React.Fragment>
                     ) : ( */}
-                      <Input
-                        id="answerText"
-                        className="form-control"
-                        rows="10"
-                        placeholder="Enter answer here"
-                        validators={[VALIDATOR_REQUIRE()]}
-                        errorText="An answer is required."
-                        onInput={inputHandler}
-                      />
+                    <Input
+                      id="answerText"
+                      className="form-control"
+                      rows="10"
+                      placeholder="Enter answer here"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="An answer is required."
+                      onInput={inputHandler}
+                    />
                     {/* ) */}
 
                     <button

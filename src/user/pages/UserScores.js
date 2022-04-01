@@ -6,12 +6,23 @@ import "../../shared/components/Style.css";
 import "../../shared/components/ImageUpload/ImageUpload.css";
 import { AuthContext } from "../../shared/components/context/auth-context";
 import { Link } from "react-router-dom";
+import Pagination from "../../shared/components/Pagination/Pagination";
 
 const UserScores = () => {
     const { isLoading, error, sendRequest, clearError } = useHttpClient();
     const auth = useContext(AuthContext);
     const userId = useParams().userId;
     const [loadedUser, setLoadedUser] = useState();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [questionsPerPage] = useState(5);
+
+    let indexOfLastDoc = currentPage * questionsPerPage;
+    let indexOfFirstDoc = indexOfLastDoc - questionsPerPage;
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
+
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -77,7 +88,7 @@ const UserScores = () => {
                     </div>
 
                     {loadedUser.scores.length > 0 ? (<div className="card-body">
-                        <table className="styled-table" style={{ width: '100%' }}>
+                        <table className="styled-table scores-table">
                             <thead>
                                 <tr>
                                     <th>Quiz Name</th>
@@ -86,7 +97,7 @@ const UserScores = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).map(score => (
+                                {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(indexOfFirstDoc, indexOfLastDoc).map(score => (
                                     <tr key={score.quizDate}>
                                         <td>{score.quiz.title}</td>
                                         <td>{score.quizDate}</td>
@@ -114,6 +125,7 @@ const UserScores = () => {
                     )}
                 </div>
             </div>
+            {loadedUser.scores.length > 5 && <Pagination elementsPerPage={questionsPerPage} totalElements={loadedUser.scores.length} paginate={paginate} currentPage={currentPage} />}
         </React.Fragment>
     );
 };

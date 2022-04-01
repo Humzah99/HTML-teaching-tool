@@ -118,8 +118,8 @@ const NewQuiz = () => {
                   </button>
                 </div>
                 <div className="col-sm-4 text-center">
-                  <Link to="/documentation" className="btn final-score-options">
-                    See {loadedQuiz.title} documentation
+                  <Link to={`/${loadedQuiz.id}/high-scores`} className="btn final-score-options">
+                    See {loadedQuiz.title} leaderboard
                   </Link>
                 </div>
                 <div className="col-sm-4 text-center">

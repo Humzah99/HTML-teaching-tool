@@ -38,7 +38,9 @@ const NewForumQuestion = () => {
       }),
         { 'Content-Type': 'application/json', Authorization: 'Bearer ' + auth.token }
       );
-      history.push('/');
+      
+      alert("Question successfully posted.")
+      history.push('/forum');
     }
     //Redirect user to different page
     catch (err) {

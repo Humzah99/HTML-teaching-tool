@@ -2,10 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import { Modal } from "react-bootstrap";
 import DocumentationList from "../components/DocumentationList";
+import Pagination from '../../shared/components/Pagination/Pagination';
 
 function Documentation() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedDocumentation, setLoadedDocumentation] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [docPerPage] = useState(4);
+
+  const indexOfLastDoc = currentPage * docPerPage;
+  const indexOfFirstDoc = indexOfLastDoc - docPerPage;
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
 
   useEffect(() => {
     const fetchDocumentation = async () => {
@@ -41,8 +51,12 @@ function Documentation() {
           </div>
         </div>
       )}
-      {!isLoading && loadedDocumentation &&
-        <DocumentationList items={loadedDocumentation} />};
+      {!isLoading && loadedDocumentation && (
+        <React.Fragment>
+          <DocumentationList items={loadedDocumentation.slice(indexOfFirstDoc, indexOfLastDoc)} />
+          <Pagination elementsPerPage={docPerPage} totalElements={loadedDocumentation.length} paginate={paginate} currentPage={currentPage} />
+        </React.Fragment>
+      )};
     </React.Fragment>
   );
 }

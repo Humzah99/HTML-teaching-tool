@@ -48,7 +48,6 @@ const UserProfile = () => {
     const fetchUser = async () => {
       try {
         const responseData = await sendRequest(`http://localhost:5000/api/user/${userId}`);
-        console.log(responseData.questions);
         setLoadedUser(responseData.user);
         setFormData(
           {
@@ -108,8 +107,6 @@ const UserProfile = () => {
 
   if (!loadedUser && !error) {
     return (
-      console.log("user id: " + userId),
-      console.log(loadedUser),
       (
         <div className="container">
           <h3 className="mt-5 text-center">Could not find user information.</h3>
@@ -135,10 +132,10 @@ const UserProfile = () => {
           </button>
         </Modal.Footer>
       </Modal>
-      <div className="row">
+      <div className="row update-user-row">
         <div className="col-md-6" style={{ marginTop: "5%" }}>
           <div className="card mx-auto login-card">
-            {!isLoading && loadedUser && <form onSubmit={updateSubmitHandler} style={{ width: "121%" }}>
+            {!isLoading && loadedUser && <form onSubmit={updateSubmitHandler} className="auth-form">
               <div>
                 <div className="row mb-3">
                   <div className="col-sm-12">
@@ -230,14 +227,14 @@ const UserProfile = () => {
                   <div className="col-md-3">
                     <h3>Latest Questions</h3>
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-5">
                     <Link className="btn rounded-pill" to={`/forum/user/${auth.userId}`} disabled={loadedUser.questions.length <= 0}>View My Questions</Link>
                   </div>
                 </div>
               </div>
               {loadedUser.questions.length > 0 ? (<div className="card-body">
                 {loadedUser.questions.slice(loadedUser.questions.length - 2, loadedUser.questions.length).map(question => (
-                  <div className="card forum-list-card mt-3">
+                  <div key={question.id} className="card forum-list-card mt-3">
                     <div className="card-body">
                       <h5 className="card-title">{question.heading}</h5>
                       <p className="card-text">{question.text}</p>
@@ -278,14 +275,14 @@ const UserProfile = () => {
                   <div className="col-md-3">
                     <h3>Latest Scores</h3>
                   </div>
-                  <div className="col-md-2">
+                  <div className="col-md-5">
                     <Link className="btn rounded-pill" disabled={loadedUser.scores.length <= 0} to={`/userScores/${auth.userId}`}>View My Scores</Link>
                   </div>
                 </div>
               </div>
 
               {loadedUser.scores.length > 0 ? (<div className="card-body">
-                <table className="styled-table" style={{ width: '100%' }}>
+                <table className="styled-table scores-table">
                   <thead>
                     <tr>
                       <th>Quiz Name</th>
@@ -295,7 +292,7 @@ const UserProfile = () => {
                   </thead>
                   <tbody>
                     {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(loadedUser.scores.length - 3, loadedUser.scores.length).map(score => (
-                      <tr key={score.quizDate}>
+                      <tr key={score.id}>
                         <td>{score.quiz.title}</td>
                         <td>{score.quizDate}</td>
                         <td>{score.score}</td>

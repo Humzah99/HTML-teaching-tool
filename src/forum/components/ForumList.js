@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const ForumList = props => {
   const auth = useContext(AuthContext);
 
-  if (props.items.length === 0) {
+  if (props.numberOfQuestions === 0) {
     return (
       <div className="container">
         <div className="card no-questions-card mt-5">
@@ -31,11 +31,11 @@ const ForumList = props => {
   return (
     <div className="container alignment-container">
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-6 all-questions-heading">
         <h3>{props.myQuestions ? 'My' : 'All'} Questions</h3>
           <p>
-            {props.items.length}{" "}
-            {props.items.length === 1 ? "question" : "questions"}
+            {props.numberOfQuestions}{" "}
+            {props.numberOfQuestions === 1 ? "question" : "questions"}
           </p>
         </div>
         <div className="col-md-6">

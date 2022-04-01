@@ -91,7 +91,7 @@ const QuizLeaderboard = () => {
                                         </div>
                                         <div className="card-footer">
                                             <div className="float-start">
-                                                <h4>{score.score}/10</h4>
+                                                <h4>{score.score}/{loadedQuiz.questions.length}</h4>
                                             </div>
                                             <div className="float-end">
                                                 <h5 className="text-muted">{score.quizDate}</h5>
@@ -102,7 +102,7 @@ const QuizLeaderboard = () => {
                             ))}
                         </div>
                         {loadedQuiz.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(loadedQuiz.scores.length - (loadedQuiz.scores.length - 3), loadedQuiz.scores.length).map((score, index) => (
-                            <div className="row">
+                            <div className="row second-leaderboard-row">
                                 <div className="card forum-list-card mt-3">
                                     {isLoading && (
                                         <div className="overlay">
@@ -125,7 +125,7 @@ const QuizLeaderboard = () => {
                                             </div>
                                         </div>
                                         <div className="float-end ms-5 mt-4 text-center">
-                                            <h4>{score.score}/10</h4>
+                                            <h4>{score.score}/{loadedQuiz.questions.length}</h4>
                                             <h6 className="text-muted">{score.quizDate}</h6>
                                         </div>
                                     </div>

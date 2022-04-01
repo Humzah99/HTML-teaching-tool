@@ -82,7 +82,7 @@ const SignUpForm = () => {
           </button>
         </Modal.Footer>
       </Modal>
-      <form onSubmit={authSubmitHandler} className="mb-5" style={{ width: "121%" }}>
+      <form onSubmit={authSubmitHandler} className="mb-5 auth-form">
         <div>
           <div className="row mb-3">
             <div className="col-sm-5">

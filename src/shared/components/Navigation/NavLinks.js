@@ -78,7 +78,7 @@ const NavLinks = props => {
             style={{ marginTop: "0.3em" }}
           >
             <NavLink
-              class="nav-link dropdown-toggle"
+              className="nav-link dropdown-toggle"
               to="#"
               id="navbarDropdown"
               role="button"
@@ -87,7 +87,7 @@ const NavLinks = props => {
             >
               <span>{UserIcon}</span>
             </NavLink>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               <li className="dropdown-item text-center">
                 <NavLink to="/" onClick={auth.logout} className="btn logout-btn mt-2 me-2">
                   Log out

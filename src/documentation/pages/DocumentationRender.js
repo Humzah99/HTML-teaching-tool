@@ -54,7 +54,7 @@ const DocumentationRender = () => {
       <Modal
         show={showCodePenModal}
         onCancel={cancelCodePenHandler}
-        style={{ width: "85%" }}
+        className="codepen"
       >
         <Modal.Body className="modal-body codepen-modal">
           <Codepen givenHtml={`${currentCodeString}`} />
@@ -112,7 +112,7 @@ const DocumentationRender = () => {
                       })}
                     </SyntaxHighlighter>
                     <button
-                      className="btn mb-2"
+                      className="btn try-it-yourself-btn mb-2"
                       onClick={() => showCodePenHandler(information.codeString)}
                     >
                       Try it yourself
