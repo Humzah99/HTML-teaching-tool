@@ -103,7 +103,7 @@ const Auth = () => {
         responseData.userId,
         responseData.token
       );
-    } catch (err) {}
+    } catch (err) { }
   };
   return (
     <React.Fragment>
@@ -118,7 +118,7 @@ const Auth = () => {
           </button>
         </Modal.Footer>
       </Modal>
-      <div className="container" style={{ marginTop: "15%" }}>
+      <div className="container" style={{ marginTop: "10%" }}>
         <div className="position-absolute top-0 start-0">
           <a href="/">
             <img
@@ -142,7 +142,7 @@ const Auth = () => {
             </button>
           </div>
           {!isLogin ? (
-            <SignUpForm />
+            <SignUpForm inputHandler={inputHandler} formState={formState} />
           ) : (
             <form onSubmit={authSubmitHandler} style={{ width: "100%" }}>
               <React.Fragment>
@@ -172,7 +172,6 @@ const Auth = () => {
                       </span>
                     )}
                     <Input
-                      //ref={pass}
                       element="input"
                       id="password"
                       type={passwordShown ? "text" : "password"}

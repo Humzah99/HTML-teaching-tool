@@ -10,15 +10,12 @@ import {
 } from "../../shared/components/FormValidation/validators";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
-const SignUpForm = () => {
-  // const auth = useContext(AuthContext);
+const SignUpForm = (props) => {
   const history = useHistory();
-  const [formState, inputHandler] = useForm(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [passwordShown, setPasswordShown] = useState(false);
 
@@ -34,12 +31,12 @@ const SignUpForm = () => {
     event.preventDefault();
     try {
       const formData = new FormData();
-      formData.append("firstname", formState.inputs.firstname.value);
-      formData.append("surname", formState.inputs.surname.value);
-      formData.append("username", formState.inputs.username.value);
-      formData.append("email", formState.inputs.email.value);
-      formData.append("password", formState.inputs.password.value);
-      formData.append("image", formState.inputs.image.value);
+      formData.append("firstname", props.formState.inputs.firstname.value);
+      formData.append("surname", props.formState.inputs.surname.value);
+      formData.append("username", props.formState.inputs.username.value);
+      formData.append("email", props.formState.inputs.email.value);
+      formData.append("password", props.formState.inputs.password.value);
+      formData.append("image", props.formState.inputs.image.value);
       const responseData = await sendRequest(
         process.env.REACT_APP_BACKEND_URL + "/user/signup",
         "POST",
@@ -81,7 +78,7 @@ const SignUpForm = () => {
                 className="form-control rounded-3"
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid first name."
-                onInput={inputHandler}
+                onInput={props.inputHandler}
               />
             </div>
             <div className="col-sm-5">
@@ -93,7 +90,7 @@ const SignUpForm = () => {
                 className="form-control rounded-3"
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid surname."
-                onInput={inputHandler}
+                onInput={props.inputHandler}
               />
             </div>
           </div>
@@ -107,12 +104,12 @@ const SignUpForm = () => {
                 className="form-control rounded-3"
                 validators={[VALIDATOR_MINLENGTH(8)]}
                 errorText="Please enter a valid username."
-                onInput={inputHandler}
+                onInput={props.inputHandler}
               />
             </div>
           </div>
         </div>
-        <ImageUpload center id="image" onInput={inputHandler} />
+        <ImageUpload center id="image" onInput={props.inputHandler} />
         <div className="row mb-3">
           <div className="col-sm-10">
             <Input
@@ -123,7 +120,7 @@ const SignUpForm = () => {
               className="form-control rounded-3"
               validators={[VALIDATOR_EMAIL()]}
               errorText="Please enter a valid e-mail address."
-              onInput={inputHandler}
+              onInput={props.inputHandler}
             />
           </div>
         </div>
@@ -139,7 +136,6 @@ const SignUpForm = () => {
               </span>
             )}
             <Input
-              //ref={pass}
               element="input"
               id="password"
               type={passwordShown ? "text" : "password"}
@@ -147,7 +143,7 @@ const SignUpForm = () => {
               className="form-control rounded-3"
               validators={[VALIDATOR_MINLENGTH(8)]}
               errorText="Please enter a valid password, at least 8 characters long."
-              onInput={inputHandler}
+              onInput={props.inputHandler}
             />
           </div>
         </div>
@@ -155,7 +151,7 @@ const SignUpForm = () => {
           type="submit"
           className="btn rounded-pill mt-2"
           style={{ width: "82%" }}
-          disabled={!formState.isValid}
+          disabled={!props.formState.isValid}
         >
           Sign up
         </button>
