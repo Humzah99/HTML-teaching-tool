@@ -14,7 +14,7 @@ const VerifyEmail = () => {
     useEffect(() => {
         const fetchVerifyEmail = async () => {
             try {
-                const responseData = await sendRequest(`${process.env.process.env.REACT_APP_BACKEND_URL}/user/verify/${token}`);
+                const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/user/verify/${token}`);
             }
             catch (err) { }
         }
