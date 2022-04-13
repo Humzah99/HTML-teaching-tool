@@ -28,6 +28,22 @@ p {
   font-family: "Roboto", sans-serif !important;
 }
 
+h2,
+h3 {
+  background-color: #fcedda;
+  color: #f5816e;
+}
+
+h1,
+h4,
+h5,
+p {
+  color: #f5816e;
+}
+
+/*
+  NAVIGATION BAR STYLING
+*/
 .navbar-custom,
 .card,
 .modal-header,
@@ -94,6 +110,9 @@ p {
   transition: 0.5s;
 }
 
+/*
+  BUTTON STYLING
+*/
 .code-editor-active,
 .nav-link.active {
   border-bottom: 2px solid #f5816e;
@@ -112,9 +131,18 @@ p {
   opacity: 0.8;
   transition: 0.3s;
 }
+
 .btn:hover {
   color: #fcedda;
   opacity: 1;
+}
+
+a,
+button {
+  text-decoration: none;
+  color: #f5816e;
+  opacity: 0.6;
+  transition: 0.3s;
 }
 
 .nav-icon {
@@ -124,18 +152,22 @@ p {
   border-radius: 1em;
 }
 
-h2,
-h3 {
-  background-color: #fcedda;
+.anchor-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
   color: #f5816e;
+  opacity: 0.6;
 }
 
-h1,
-h4,
-h5,
-p {
-  color: #f5816e;
+.anchor-link:hover {
+  transition: 0.3s;
+  opacity: 1;
 }
+
+/*
+  CARD STYLING
+*/
 
 .doc-card,
 .quiz-list-card,
@@ -156,21 +188,62 @@ p {
   transform: translate(-5px, -5px);
 }
 
+.doc-card {
+  height: 100%;
+}
+
+.login-card {
+  box-shadow: none;
+  border: none;
+  color: black;
+  font-weight: lighter;
+  width: 25rem;
+  height: 30rem;
+}
+
+.no-questions-card {
+  width: 40% !important;
+  margin-left: 33%;
+}
+
+.no-quiz-leaderboard {
+  margin-right: 40%;
+  margin-left: 40%;
+}
+
+.no-quiz-leaderboard .card-title h3 {
+  background-color: transparent !important;
+}
+
+.latest-scores-card {
+  margin-top: 5%;
+}
+.latest-scores-card,
+.latest-questions-card,
+.no-user-questions-card,
+.no-scores-card {
+  margin-right: 20%;
+}
+
+.ls-card-item,
+.lq-card-item {
+  border-radius: 3%;
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(39, 40, 46, 0.2);
+}
+
+.user-scores-card {
+  margin-right: 20%;
+  margin-left: 20%;
+}
+
+/*
+  FORM STYLING
+*/
+
 .alignment-container {
   margin-top: 5%;
 }
 
-a,
-button {
-  text-decoration: none;
-  color: #f5816e;
-  opacity: 0.6;
-  transition: 0.3s;
-}
-
-.doc-card {
-  height: 100%;
-}
 
 .input-form--invalid label,
 .input-form--invalid p {
@@ -183,41 +256,8 @@ button {
   background: #ffd1d1;
 }
 
-.login-card {
-  box-shadow: none;
-  border: none;
-  color: black;
-  font-weight: lighter;
-  width: 25rem;
-  height: 30rem;
-}
-
 .auth-form {
   width: 121%;
-}
-
-.loh-carousel-card {
-  width: 30rem;
-  height: 30rem;
-  border-radius: 10%;
-}
-
-.loh-carousel-image {
-  width: 100%;
-  height: 100%;
-}
-
-.anchor-link {
-  background: none !important;
-  border: none;
-  padding: 0 !important;
-  color: #f5816e;
-  opacity: 0.6;
-}
-
-.anchor-link:hover {
-  transition: 0.3s;
-  opacity: 1;
 }
 
 .eye-icon {
@@ -225,83 +265,6 @@ button {
   margin-right: 6px;
   position: relative;
   z-index: 2;
-}
-
-.top-pane {
-  background-color: hsl(225, 6%, 25%);
-}
-
-.pane {
-  height: 35vh;
-  display: flex;
-}
-
-.editor-container {
-  flex-grow: 1;
-  flex-basis: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 0.5rem;
-}
-
-.editor-container.collapsed {
-  flex-grow: 0;
-}
-
-.editor-container.collapsed .CodeMirror-scroll {
-  position: absolute;
-  overflow: hidden !important;
-}
-
-.editor-title {
-  display: flex;
-  justify-content: space-between;
-  background-color: hsl(225, 6%, 13%);
-  color: #ffffff;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem;
-}
-.CodeMirror {
-  height: 100% !important;
-}
-
-.code-mirror-wrapper {
-  flex-grow: 1;
-  border-bottom-right-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
-  overflow: hidden;
-}
-
-div.hr-line {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  border-bottom: 1px solid rgb(228, 228, 228);
-}
-
-.codepen-modal {
-  width: 185%;
-}
-
-iframe {
-  height: 100%;
-}
-
-.overlay {
-  background-color: #efefef;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  opacity: 0.5;
-  filter: alpha(opacity=50);
-}
-
-.no-questions-card {
-  width: 40% !important;
-  margin-left: 33%;
 }
 
 .user-profile-image {
@@ -361,39 +324,102 @@ iframe {
   float: left;
 }
 
-.no-quiz-leaderboard {
-  margin-right: 40%;
-  margin-left: 40%;
-}
-
-.no-quiz-leaderboard .card-title h3 {
-  background-color: transparent !important;
-}
-
-.latest-scores-card {
-  margin-top: 5%;
-}
-.latest-scores-card,
-.latest-questions-card,
-.no-user-questions-card,
-.no-scores-card {
-  margin-right: 20%;
-}
-
-.ls-card-item,
-.lq-card-item {
-  border-radius: 3%;
-  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05), 0 15px 40px rgba(39, 40, 46, 0.2);
-}
-
-.user-scores-card {
-  margin-right: 20%;
-  margin-left: 20%;
-}
-
 .login-input {
   width: 121%;
 }
+
+/*
+  HOMEPAGE STYLING
+*/
+
+.loh-carousel-card {
+  width: 30rem;
+  height: 30rem;
+  border-radius: 10%;
+}
+
+.loh-carousel-image {
+  width: 100%;
+  height: 100%;
+}
+
+/*
+  CODE EDITOR STYLING
+*/
+
+.top-pane {
+  background-color: hsl(225, 6%, 25%);
+}
+
+.pane {
+  height: 35vh;
+  display: flex;
+}
+
+.editor-container {
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+
+.editor-container.collapsed {
+  flex-grow: 0;
+}
+
+.editor-container.collapsed .CodeMirror-scroll {
+  position: absolute;
+  overflow: hidden !important;
+}
+
+.editor-title {
+  display: flex;
+  justify-content: space-between;
+  background-color: hsl(225, 6%, 13%);
+  color: #ffffff;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+
+.CodeMirror {
+  height: 100% !important;
+}
+
+.code-mirror-wrapper {
+  flex-grow: 1;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  overflow: hidden;
+}
+
+div.hr-line {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  border-bottom: 1px solid rgb(228, 228, 228);
+}
+
+.codepen-modal {
+  width: 185%;
+}
+
+iframe {
+  height: 100%;
+}
+
+.overlay {
+  background-color: #efefef;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
 
 /*
   STYLING USER SCORES TABLE

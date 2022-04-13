@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Editor from "../components/Editor";
 import "../../shared/components/Style.css";
-//import useLocalStorage from "../../shared/hooks/useLocalStorage";
 const Codepen = ({ givenHtml }) => {
   var beautify_html = require('js-beautify').html
   const [html, setHtml] = useState(`${beautify_html(givenHtml, { indent_size: 2 })}`);
