@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "../Style.css";
-import WebsiteIcon from "../../../shared/images/website-logo.png";
+import WebsiteIcon from "../../../shared/images/website-logo.PNG";
 import { AuthContext } from "../context/auth-context";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -59,7 +59,7 @@ const NavLinks = props => {
         <div className="position-absolute top-0 start-50">
           <NavLink to="/">
             <img
-              className="nav-icon shadow-lg"
+              className="nav-icon"
               src={WebsiteIcon}
               alt="Website-Logo"
             />

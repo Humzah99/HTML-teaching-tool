@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../../shared/components/Style.css";
-import WebsiteIcon from "../../shared/images/website-logo.png";
+import WebsiteIcon from "../../shared/images/website-logo.PNG";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom";
@@ -40,7 +40,7 @@ const VerifyEmail = () => {
                 <div className="position-absolute top-0 start-0">
                     <a href="/">
                         <img
-                            className="nav-icon shadow-lg"
+                            className="nav-icon auth-icon"
                             src={WebsiteIcon}
                             alt="Website-Logo"
                         />
