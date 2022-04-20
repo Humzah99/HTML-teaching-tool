@@ -8,7 +8,7 @@ import {
 import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import "../../shared/components/Style.css";
-import WebsiteIcon from "../../shared/images/website-logo.png";
+import WebsiteIcon from "../../shared/images/website-logo.PNG";
 import { AuthContext } from "../../shared/components/context/auth-context";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -122,7 +122,7 @@ const Auth = () => {
         <div className="position-absolute top-0 start-0">
           <a href="/">
             <img
-              className="nav-icon shadow-lg"
+              className="nav-icon auth-icon"
               src={WebsiteIcon}
               alt="Website-Logo"
             />

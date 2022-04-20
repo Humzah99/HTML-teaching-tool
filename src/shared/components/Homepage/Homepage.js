@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import WebsiteLogo from "../../images/website-logo.png";
+import WebsiteIcon from "../../images/website-logo.PNG";
 import HtmlDocumentationCode from "../../images/html-code.jpeg";
 import QuizCode from "../../images/quiz-ss.png";
 import UserForumCode from "../../images/user-forum-ss.png";
@@ -43,7 +43,7 @@ const LoggedInHomepage = () => {
 
   if (isLoading) {
     return (
-     <LoadingSpinner />
+      <LoadingSpinner />
     );
   }
 
@@ -152,8 +152,7 @@ const LoggedInHomepage = () => {
         <React.Fragment>
           <header className="homepage-header">
             <div>
-              <img src={WebsiteLogo} alt="Logo" className="htmlearning-logo me-4" />
-              <h1>HTMLearning</h1>
+              <img src={WebsiteIcon} alt="Logo" className="htmlearning-logo" />
               <p className="scroll-down-tag">👇 Scroll down.</p>
             </div>
           </header>

@@ -146,12 +146,23 @@ button {
 }
 
 .nav-icon {
-  max-width: 80px;
+  max-width: 250px;
   max-height: 100%;
-  border: 2px solid #f5816e;
-  border-radius: 1em;
+  margin-left: -50% !important;
+  margin-top: 1% !important;
+  opacity: 0.8;
+  transition: 0.3s;
 }
 
+.nav-icon:hover {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.auth-icon {
+  margin-left: 10% !important;
+  margin-top: 5% !important;
+}
 .anchor-link {
   background: none !important;
   border: none;
