@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "teachingtoolhtml"
-  }
+    "default": "teachingtoolhtml",
+    "htmltool": "teachinghtmltool",
+    "teachingtoolhtml": "teachingtoolhtml"
+  },
+  "targets": {}
 }
