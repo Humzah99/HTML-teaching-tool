@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "../Style.css";
-import WebsiteIcon from "../../../shared/images/website-logo.PNG";
+import WebsiteIcon from "../../../shared/images/website-logo.png";
 import { AuthContext } from "../context/auth-context";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

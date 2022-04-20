@@ -2,7 +2,7 @@ import React from "react";
 import Input from "../../shared/components/FormValidation/Input";
 import { useForm } from "../../shared/hooks/forms-hooks";
 import "../../shared/components/Style.css";
-import WebsiteIcon from "../../shared/images/website-logo.PNG";
+import WebsiteIcon from "../../shared/images/website-logo.png";
 import { VALIDATOR_EMAIL } from "../../shared/components/FormValidation/validators";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";

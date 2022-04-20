@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "../../shared/components/Style.css";
-import WebsiteIcon from "../../shared/images/website-logo.PNG";
+import WebsiteIcon from "../../shared/images/website-logo.png";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom";

@@ -8,7 +8,7 @@ import {
 import { useForm } from "../../shared/hooks/forms-hooks";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import "../../shared/components/Style.css";
-import WebsiteIcon from "../../shared/images/website-logo.PNG";
+import WebsiteIcon from "../../shared/images/website-logo.png";
 import { AuthContext } from "../../shared/components/context/auth-context";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

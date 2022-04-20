@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import WebsiteIcon from "../../images/website-logo.PNG";
+import WebsiteIcon from "../../images/website-logo.png";
 import HtmlDocumentationCode from "../../images/html-code.jpeg";
 import QuizCode from "../../images/quiz-ss.png";
 import UserForumCode from "../../images/user-forum-ss.png";
