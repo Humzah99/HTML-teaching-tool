@@ -285,7 +285,7 @@ const UserProfile = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(loadedUser.scores.length - 3, loadedUser.scores.length).map(score => (
+                    {loadedUser.scores.sort((a, b) => (a.score < b.score) ? 1 : -1).slice(0, 3).map(score => (
                       <tr key={score.id}>
                         <td>{score.quiz.title}</td>
                         <td>{score.quizDate}</td>
